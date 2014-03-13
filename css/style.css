@@ -1,0 +1,273 @@
+input:focus, textarea:focus 
+{
+//    background-color: yellow;
+}
+#div_navi_top
+{
+  position: fixed;
+        top: 0%;
+        left: 0%;
+        width: 95%;
+        height: 50px;
+        z-index: 0;
+      }
+      #div_navi_logout
+      {
+        position: fixed;
+        top: 0%;
+        right: 0%;
+        width: 5%;
+        height: 50px;
+        z-index: 0;
+      }
+
+
+    span.help
+    {
+      position:relative;
+      cursor:pointer;
+    }
+    span.help div
+    {
+      display:none;
+      position:absolute;
+      top:20px;
+      left:90px;
+      padding:5px;
+      border:1px dotted gray;
+      width:400px;
+      background: white;
+      z-index: 20;
+    }
+    span.help:hover div
+    {
+      display:block;
+    }
+      table td
+      {
+        vertical-align: top;
+        border-bottom: 1px solid grey;
+        border-left: 1px solid grey;
+	white-space: nowrap;
+      }
+      table th
+      {
+        vertical-align: top;
+        border-bottom: 2px solid grey;
+	white-space: nowrap;
+      }
+        #div_delete_data_ask
+        {
+          position: fixed;
+          top:20%;
+          left: 0%;
+          width:100%;
+          height:80%;
+          visibility: hidden;
+          background-color: #999999;
+          z-index: 3;
+        }
+
+        #div_operator_change
+        {
+          position: fixed;
+          top:20%;
+          left: 0%;
+          width:100%;
+          height:80%;
+          visibility: hidden;
+          background-color: #999999;
+          z-index: 2;
+        }
+        #div_operators
+        {
+          position: absolute;
+          top: 10%;
+          left: 0%;
+          width: 100%;
+          height: 1000px;
+          z-index: 1;
+          visibility: hidden;
+          overflow:auto;
+        }
+        #div_project_change
+        {
+          position: fixed;
+          top:20%;
+          left: 0%;
+          width:100%;
+          height:80%;
+          visibility: hidden;
+          background-color: #999999;
+          z-index: 2;
+        }
+        #div_projects
+        {
+          position: absolute;
+          top: 10%;
+          left: 0%;
+          width: 100%;
+          height: 1000px;
+          z-index: 1;
+          visibility: hidden;
+          overflow:auto;
+        }
+       #div_logs
+        {
+          position: absolute;
+          top: 10%;
+          left: 0%;
+          width: 100%;
+          height: 1000px;
+          z-index: 1;
+          overflow:auto;
+        }
+        #div_log_import
+        {
+          position: fixed;
+          top:20%;
+          left: 0%;
+          width:100%;
+          height:60%;
+          visibility: hidden;
+          background-color: #999999;
+          z-index: 2;
+        }
+        #div_log_export
+        {
+          position: fixed;
+          top:20%;
+          left: 0%;
+          width:100%;
+          height:60%;
+          visibility: hidden;
+          background-color: #999999;
+          z-index: 2;
+        }
+
+        #div_log_change
+        {
+          position: fixed;
+          top:0%;
+          left: 0%;
+          width:100%;
+          height:100%;
+          visibility: hidden;
+          background-color: #999999;
+          z-index: 2;
+        }
+	#div_log_change_form
+	{
+          position: fixed;
+          left: 0%;
+          width:100%;
+          height:20%;
+          z-index: 2;
+// border-width:1px;
+//  border-style:solid;
+//  border-color:blue;
+	}
+
+	#div_log_change_callinfo1
+	{
+          position: fixed;
+          left: 0%;
+          width:40%;
+          height:20%;
+	  top: 20%;
+          z-index: 2;
+// border-width:1px;
+//  border-style:solid;
+//  border-color:blue;
+	}
+	#div_log_change_callinfo1_picture
+	{
+          position: fixed;
+          left: 30%;
+          width:10%;
+          height:20%;
+	  top: 20%;
+          z-index: 2;
+// border-width:1px;
+//  border-style:solid;
+//  border-color:blue;
+text-align:right;
+	}
+
+
+
+
+	#div_log_change_callinfo2
+	{
+          position: fixed;
+          left: 40%;
+          width:20%;
+          height:20%;
+	  top: 20%;
+          z-index: 2;
+// border-width:1px;
+//  border-style:solid;
+//  border-color:blue;
+	}
+#div_log_change_callinfo3
+{
+          position: fixed;
+          left: 60%;
+          width:20%;
+          height:15%;
+	  top: 20%;
+          z-index: 2;
+// border-width:1px;
+//  border-style:solid;
+//  border-color:blue;
+	}
+#div_log_change_error
+{
+          position: fixed;
+          left: 60%;
+          width:20%;
+          height:5%;
+	  top: 35%;
+          z-index: 2;
+// border-width:1px;
+//  border-style:solid;
+//  border-color:blue;
+	}
+
+#div_log_change_callinfo4
+{
+          position: fixed;
+          left: 80%;
+          width:20%;
+          height:20%;
+	  top: 20%;
+          z-index: 2;
+// border-width:1px;
+//  border-style:solid;
+//  border-color:blue;
+	}
+
+#div_log_change_logsfromme
+{
+          position: fixed;
+          left: 0%;
+          width:100%;
+          height:30%;
+	  top: 40%;
+          z-index: 2;
+// border-width:1px;
+//  border-style:solid;
+//  border-color:blue;
+	}
+#div_log_change_logsfromall
+{
+          position: fixed;
+          left: 0%;
+          width:100%;
+          height:30%;
+	  top: 70%;
+          z-index: 2;
+// border-width:1px;
+//  border-style:solid;
+//  border-color:blue;
+	}
