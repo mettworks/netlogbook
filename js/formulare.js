@@ -71,10 +71,9 @@ function change_log(log_id)
     log_loc="";
     log_manager="";
     var now = new Date();
-    var monat = 1 + parseInt(now.getMonth());
-    $('#log_time_hr_date').datetimepicker({value: ('0'+now.getDate()).slice(-2)+'.'+('0'+monat).slice(-2)+'.'+now.getFullYear()});
-    $('#log_time_hr_time').datetimepicker({value: ('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2)});
-
+    var monat = 1 + parseInt(now.getUTCMonth());
+    $('#log_time_hr_date').datetimepicker({value: ('0'+now.getUTCDate()).slice(-2)+'.'+('0'+monat).slice(-2)+'.'+now.getUTCFullYear()});
+    $('#log_time_hr_time').datetimepicker({value: ('0'+now.getUTCHours()).slice(-2)+':'+('0'+now.getUTCMinutes()).slice(-2)});
   }
   if(log_freq > 1000)
   {

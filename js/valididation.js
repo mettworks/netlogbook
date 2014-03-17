@@ -59,9 +59,9 @@ function write_data(typ,id)
     if(log_time_auto)
     {
       var now = new Date();
-      var monat = 1 + parseInt(now.getMonth());
-      $('#log_time_hr_date').datetimepicker({value: ('0'+now.getDate()).slice(-2)+'.'+('0'+monat).slice(-2)+'.'+now.getFullYear()});
-      $('#log_time_hr_time').datetimepicker({value: ('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2)});
+      var monat = 1 + parseInt(now.getUTCMonth());
+      $('#log_time_hr_date').datetimepicker({value: ('0'+now.getUTCDate()).slice(-2)+'.'+('0'+monat).slice(-2)+'.'+now.getUTCFullYear()});
+      $('#log_time_hr_time').datetimepicker({value: ('0'+now.getUTCHours()).slice(-2)+':'+('0'+now.getUTCMinutes()).slice(-2)});
     }
     var log_time_hr_date=$('#log_time_hr_date').val();
     var log_time_hr_time=$('#log_time_hr_time').val();
@@ -164,22 +164,3 @@ function delete_data(typ,id)
     );
 
 }
-/*
-function remove_operator(operator_id)
-{
-  var operator_id=$('#operator_id').val();
-
-  $.ajax
-    (
-      {
-        type: "GET",
-        url: "save.php",
-        data: "action=del&typ=operator&operator_id="+operator_id,
-        success: function(html)
-        {
-          $("div#div_error").html(html);
-        }
-      }
-    );
-}
-*/
