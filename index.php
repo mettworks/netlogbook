@@ -397,7 +397,7 @@
 		<input class='class_log_change' type='text' name='log_time_hr_time' id='log_time_hr_time' value=''>
 	      </td>
 	      <td>
-		<input tabindex="1" class='class_log_change' type='text' name='log_call' id='log_call' onChange="display_callinfo(this.value,'1')" value=''>
+		<input size="12" tabindex="1" class='class_log_change' type='text' name='log_call' id='log_call' onChange="display_callinfo(this.value,'1')" value=''>
 	      </td>
 	      <td>
 		<input class='class_log_change' type='text' name='log_freq' id='log_freq' value=''>
@@ -423,7 +423,7 @@
 		<input tabindex="9" class='class_log_change' type='text' name='log_qth' id='log_qth' value=''>
 	      </td>
 	      <td>
-		<input onchange='log_change_loc();' class='class_log_change' type='text' name='log_loc' id='log_loc' value=''>
+		<input onchange='log_change_loc();' size="6" class='class_log_change' type='text' name='log_loc' id='log_loc' value=''>
 	      </td>
 	      <td>
                 <input onchange='log_change_time();' class='class_log_change' type='checkbox' id='log_time_auto' name='log_time_auto'>
