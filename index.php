@@ -108,7 +108,6 @@
 		  }
 
 		]
-
 	    });
 	    table_logsfromme=$('#table_logsfromme').dataTable
 	    (
@@ -167,9 +166,7 @@
 		    null,
 
 		]
-
 	    });
-
 
 	    table_operators=$('#table_operators').dataTable
 	    (

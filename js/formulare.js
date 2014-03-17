@@ -168,6 +168,7 @@ function change_log(log_id)
 
   shortcut.add("Ctrl+S",function() 
   {
+    display_callinfo('','1');
     completed='0';
     write_data('log')
   });
@@ -179,7 +180,8 @@ function change_log(log_id)
   {
     $('#log_call').focus(); //set focus
   }
-  interval_log_change=setInterval("reload_tables_log_change()",5000); 
+  //interval_log_change=setInterval("reload_tables_log_change()",5000); 
+  interval_log_change='NULL';
   table_logsfromme.fnDraw();
   table_logsfromall.fnDraw();
   // $(document).ready(function() { document.title = 'Netlogbook v0.1 - neues Log erfassen'; });
