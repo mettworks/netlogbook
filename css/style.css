@@ -36,7 +36,7 @@ input:focus, textarea:focus
       padding:5px;
       border:1px dotted gray;
       width:400px;
-      background: white;
+      background: orange;
       z-index: 20;
     }
     span.help:hover div
@@ -46,8 +46,8 @@ input:focus, textarea:focus
       table td
       {
         vertical-align: top;
-        border-bottom: 1px solid grey;
-        border-left: 1px solid grey;
+        border-bottom: 1px solid white;
+        border-left: 1px solid white;
 	white-space: nowrap;
       }
       table th
@@ -114,13 +114,13 @@ input:focus, textarea:focus
         }
        #div_logs
         {
-          position: absolute;
-          top: 10%;
-          left: 0%;
-          width: 100%;
-          height: 1000px;
-          z-index: 1;
-          overflow:auto;
+	position: absolute;
+	top: 92px;
+	left: 2px;
+	width: 100%;
+	height: 1000px;
+	z-index: 1;
+	overflow: auto;
         }
         #div_log_import
         {

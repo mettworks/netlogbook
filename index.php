@@ -11,18 +11,19 @@
       <link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css">
     </head>
     <body>
-      <script src="js/jquery-2.1.0.js"></script>
-      <script src="js/DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
-      <script src="js/formulare.js"></script>
-      <script src="js/getdata.js"></script> 
-      <script src="js/valididation.js"></script>
-      <script src="js/functions.js"></script>
-      <script type="text/javascript" src="js/shortcut.js"></script>
-      <script type="text/javascript" src="js/jquery.ui.widget.js"></script>
-      <script type="text/javascript" src="js/jquery.iframe-transport.js"></script>
-      <script type="text/javascript" src="js/jquery.fileupload.js"></script>
-      <script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
-      <script>
+      <p>
+        <script src="js/jquery-2.1.0.js"></script>
+        <script src="js/DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
+        <script src="js/formulare.js"></script>
+        <script src="js/getdata.js"></script> 
+        <script src="js/valididation.js"></script>
+        <script src="js/functions.js"></script>
+        <script type="text/javascript" src="js/shortcut.js"></script>
+        <script type="text/javascript" src="js/jquery.ui.widget.js"></script>
+        <script type="text/javascript" src="js/jquery.iframe-transport.js"></script>
+        <script type="text/javascript" src="js/jquery.fileupload.js"></script>
+        <script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
+        <script>
 	modes=get_data('mode','');
 	operators=get_data('operator','');
 	$(function() {
@@ -215,7 +216,7 @@
             });
 	  });
       //interval_log=setInterval("reload_tables_log()",5000);
-      </script>
+      </script></p>
       <div id="div_navi_top">
 	<?php
 	if($_SESSION['operator_role']==0)
@@ -333,7 +334,7 @@
 	    </tr>
 	  </table>
 	</form>
-	<a>Datensatz speichern mit STRG + S</a>
+	<a>Datensatz speichern mit STRG+S</a>
 	</div>
 	<div id="div_log_change_callinfo4">
 	</div>
@@ -341,37 +342,37 @@
 	  <form method="POST" action="" class="form" id="form_log_change">
 	  <table>
 	    <tr>
-	      <td>
+	      <td width="40">
 		<span class='help'>Datum<div>DD-MM-YYYY</div></span>
 	      </td>
-	      <td>
+	      <td width="20">
 		<span class='help'>Zeit<div>HHMM</div></span>
 	      </td>
 	      <td>
 		<span class='help'>Rufzeichen<div>Callsign</div></span>
 	      </td>
-	      <td>
+	      <td width="8">
 		<span class='help'>Frequenz<div>QRG (kHz)</div></span>
 	      </td>
-	      <td>
+	      <td width="6">
 		<span class='help'>Modulation<div>Mode</div></span>
 	      </td>
-	      <td>
+	      <td width="3">
 		<span class='help'>RST TX<div>RST TX</div></span>
 	      </td>
-	      <td>
+	      <td width="3">
 		<span class='help'>RST RX<div>RST RX</div></span>
 	      </td>
-	      <td>
+	      <td width="43">
 		<span class='help'>Name<div>Name</div></span>
 	      </td>
-	      <td>
+	      <td width="37">
 		<span class='help'>QTH<div>QTH</div></span>
 	      </td>
-	      <td>
+	      <td width="6">
 		<span class='help'>Locator<div>Locator</div></span>
 	      </td>
-	      <td>
+	      <td width="10">
 		<span class='help'>Automatikzeit<div>Automatikzeit</div></span>
 	      </td>
 	    </tr>
