@@ -320,7 +320,7 @@
 	  <table>
 	    <tr>
 	      <td>
-		<input class="class_log_change" type="button" onclick="completed='0';write_data('log')"; value="Speichern & Weiter" name="Speichern & Weiter">
+		<input tabindex="13" class="class_log_change" type="button" onclick="completed='0';write_data('log')"; value="Speichern & Weiter" name="Speichern & Weiter">
 	      </td>
 	    </tr>
 	    <tr>
@@ -385,7 +385,7 @@
 		<input class='class_log_change' type='text' name='log_time_hr_time' id='log_time_hr_time' value=''>
 	      </td>
 	      <td>
-		<input tabindex="0" class='class_log_change' type='text' name='log_call' id='log_call' onChange="display_callinfo(this.value,'1')" value=''>
+		<input tabindex="1" class='class_log_change' type='text' name='log_call' id='log_call' onChange="display_callinfo(this.value,'1')" value=''>
 	      </td>
 	      <td>
 		<input class='class_log_change' type='text' name='log_freq' id='log_freq' value=''>
@@ -395,20 +395,20 @@
 		</select">
 	      </td>
 	      <td>
-		<input tabindex="1" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_0' id='log_rst_tx_0' value=''>
-		<input tabindex="2" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_1' id='log_rst_tx_1' value=''>
-		<input class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_2' id='log_rst_tx_2' value=''>
+		<input tabindex="2" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_0' id='log_rst_tx_0' value=''>
+		<input tabindex="3" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_1' id='log_rst_tx_1' value=''>
+		<input tabindex="4" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_2' id='log_rst_tx_2' value=''>
 	      </td>
 	      <td>
-		<input tabindex="4" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_0' id='log_rst_rx_0' value=''>
-		<input tabindex='5' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_1' id='log_rst_rx_1' value=''>
-		<input class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_2' id='log_rst_rx_2' value=''>
+		<input tabindex="5" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_0' id='log_rst_rx_0' value=''>
+		<input tabindex="6" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_1' id='log_rst_rx_1' value=''>
+		<input tabindex="7" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_2' id='log_rst_rx_2' value=''>
 	      </td>
 	      <td>
-		<input tabindex="7" class='class_log_change' type='text' name='log_name' id='log_name' value=''>
+		<input tabindex="8" class='class_log_change' type='text' name='log_name' id='log_name' value=''>
 	      </td>
 	      <td>
-		<input tabindex="8" class='class_log_change' type='text' name='log_qth' id='log_qth' value=''>
+		<input tabindex="9" class='class_log_change' type='text' name='log_qth' id='log_qth' value=''>
 	      </td>
 	      <td>
 		<input onchange='log_change_loc();' class='class_log_change' type='text' name='log_loc' id='log_loc' value=''>
@@ -430,13 +430,13 @@
 	    </tr>
 	    <tr>
 	      <td colspan="8">
-		<input tabindex="11" class='class_log_change' type='text' name='log_notes' id='log_notes' value=''>
+		<input tabindex="12" class='class_log_change' type='text' name='log_notes' id='log_notes' value=''>
 	    </td>
 	    <td>
-	      <input tabindex="9" class='class_log_change' type='text' name='log_dok' id='log_dok' value=''>
+	      <input tabindex="10" class='class_log_change' type='text' name='log_dok' id='log_dok' value=''>
 	      </td>
 	      <td>
-		<input tabindex="10" class='class_log_change' type='text' name='log_manager' id='log_manager' value=''>
+		<input tabindex="11" class='class_log_change' type='text' name='log_manager' id='log_manager' value=''>
 	      </td>
 	    </tr>
 	  </table>
