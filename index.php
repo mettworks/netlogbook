@@ -343,7 +343,7 @@
 	  <form method="POST" action="" class="form" id="form_log_change">
 	  <table>
 	    <tr>
-	      <td width="40">
+	      <td>
 		<span class='help'>Datum<div>DD-MM-YYYY</div></span>
 	      </td>
 	      <td width="20">
@@ -385,7 +385,7 @@
 		<input class='class_log_change' type='text' name='log_time_hr_time' id='log_time_hr_time' value=''>
 	      </td>
 	      <td>
-		<input class='class_log_change' type='text' name='log_call' id='log_call' onChange="display_callinfo(this.value,'1')" value=''>
+		<input tabindex="0" class='class_log_change' type='text' name='log_call' id='log_call' onChange="display_callinfo(this.value,'1')" value=''>
 	      </td>
 	      <td>
 		<input class='class_log_change' type='text' name='log_freq' id='log_freq' value=''>
@@ -395,20 +395,20 @@
 		</select">
 	      </td>
 	      <td>
-		<input tabindex='5' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_0' id='log_rst_tx_0' value=''>
-		<input tabindex='6' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_1' id='log_rst_tx_1' value=''>
-		<input tabindex='7' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_2' id='log_rst_tx_2' value=''>
+		<input tabindex="1" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_0' id='log_rst_tx_0' value=''>
+		<input tabindex="2" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_1' id='log_rst_tx_1' value=''>
+		<input class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_2' id='log_rst_tx_2' value=''>
 	      </td>
 	      <td>
-		<input tabindex='2' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_0' id='log_rst_rx_0' value=''>
-		<input tabindex='3' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_1' id='log_rst_rx_1' value=''>
-		<input tabindex='4' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_2' id='log_rst_rx_2' value=''>
+		<input tabindex="4" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_0' id='log_rst_rx_0' value=''>
+		<input tabindex='5' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_1' id='log_rst_rx_1' value=''>
+		<input class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_2' id='log_rst_rx_2' value=''>
 	      </td>
 	      <td>
-		<input class='class_log_change' type='text' name='log_name' id='log_name' value=''>
+		<input tabindex="7" class='class_log_change' type='text' name='log_name' id='log_name' value=''>
 	      </td>
 	      <td>
-		<input class='class_log_change' type='text' name='log_qth' id='log_qth' value=''>
+		<input tabindex="8" class='class_log_change' type='text' name='log_qth' id='log_qth' value=''>
 	      </td>
 	      <td>
 		<input onchange='log_change_loc();' class='class_log_change' type='text' name='log_loc' id='log_loc' value=''>
@@ -430,99 +430,17 @@
 	    </tr>
 	    <tr>
 	      <td colspan="8">
-		<input class='class_log_change' type='text' name='log_notes' id='log_notes' value=''>
+		<input tabindex="11" class='class_log_change' type='text' name='log_notes' id='log_notes' value=''>
 	    </td>
 	    <td>
-	      <input class='class_log_change' type='text' name='log_dok' id='log_dok' value=''>
+	      <input tabindex="9" class='class_log_change' type='text' name='log_dok' id='log_dok' value=''>
 	      </td>
 	      <td>
-		<input class='class_log_change' type='text' name='log_manager' id='log_manager' value=''>
+		<input tabindex="10" class='class_log_change' type='text' name='log_manager' id='log_manager' value=''>
 	      </td>
 	    </tr>
 	  </table>
 	</div>
-
-  <!--
-	  <table>
-	    <tr>
-	      <td>
-		<span class='help'>Call<div>Call</div></span>
-	      </td>
-	      <td>
-		<input tabindex='1' class='class_log_change' onChange="display_callinfo(this.value)" type='text' name='log_call' id='log_call' value=''>
-	      </td>
-	      <td>
-	        <span class='help'>Frequenz<div>Frequenz, xxxk ist kHz, xxxM ist Mhz, xxxG ist Gigahertz.</div></span>
-	      </td>
-	      <td>
-	        <input class='class_log_change' type='text' name='log_freq' id='log_freq' value=''>
-	      </td>
-	      <td>
-	    </tr>
-	    <tr>
-	      <td> 
-		<span class='help'>Betriebsart<div>Betriebsart</div></span>     
-	      </td>
-	      <td>
-		<select onchange='log_change_mod();' name='mode_id' id='mode_id'>
-		</select">
-	      </td>
-	      <td>
-		<span class='help'>Zeiteingabe/Auto<div>Zeit, in UTC ODER automatische Zeit&uuml;bernahme beim abspeichern.</div></span>
-	      </td>
-	      <td>
-	        <input class='class_log_change' type='text' name='log_time_hr' id='log_time_hr' value=''>
-		<input onchange='log_change_time();' class='class_log_change' type='checkbox' id='log_time_auto' name='log_time_auto'>
-	      </td>
-	    </tr>
-	    <tr>
-	      <td>
-		<span class='help'>RST RX<div>Rapport F&Uuml;R die Gegenstation</div></span>
-	      </td>
-	      <td>
-		<input tabindex='2' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_0' id='log_rst_rx_0' value=''>
-		<input tabindex='3' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_1' id='log_rst_rx_1' value=''>
-		<input tabindex='4' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_2' id='log_rst_rx_2' value=''>
-	      </td>
-	      <td>
-		<span class='help'>RST TX<div>Rapport VON der Gegenstation</div></span>
-	      </td>
-	      <td>
-	        <input tabindex='5' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_0' id='log_rst_tx_0' value=''>
-		<input tabindex='6' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_1' id='log_rst_tx_1' value=''>
-		<input tabindex='7' class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_2' id='log_rst_tx_2' value=''>
-	      </td>
-	    </tr>
-	    <tr>
-	      <td>
-		<span class='help'>DOK<div>DOK</div></span>
-	      </td>
-	      <td>
-	        <input class='class_log_change' type='text' onkeyup='upper(this.id)' name='log_dok' id='log_dok' value=''>
-	      </td>
-	      <td>
-	        <span class='help'>IOTA<div>IOATA</div></span>
-	      </td>
-	      <td>  
-	        <input class='class_log_change' type='text' name='log_iota' id='log_iota' value=''>
-	      </td>
-	    </tr>
-	    <tr>
-	      <td>
-	        <span class='help'>via<div>Relais, D-Star Repeater usw.</div></span>
-	      </td>
-	      <td>
-	        <input class='class_log_change' type='text' name='log_via' id='log_via' value=''>
-	      </td>
-	      <td>
-	        <span class='help'>Bemerkungen<div>Bemerkungen</div></span>
-	      </td>
-	      <td>
-	        <input class='class_log_change' type='text' name='log_notes' id='log_notes' value=''>
-	      </td>
-	    </tr>
-	  </table>
-	-->
 	  <input class='class_log_change' type='hidden' name='log_id' id='log_id' value=''>
       </div>
       <div id="div_operator_change">
@@ -648,11 +566,6 @@
       </div>
       <div id="div_error">
       </div>
-      <!--
-      <div id="div_display_callinfo1">
-	<table id="table_display_callinfo1"></table>
-      </div>
-      -->
     <div id="div_logs">
     <table id="table_logs">
       <thead>

@@ -352,7 +352,7 @@
 	div_err("Passwoerter sind unterschiedlich");
 	die();
       }
-      if(strlen($data_temp['operator_pass1'] < 4))
+      if(strlen($data_temp['operator_pass1']) > 4)
       {
 	$data['operator_pass']=md5($data_temp['operator_pass1']);
       }
