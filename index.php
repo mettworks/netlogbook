@@ -61,7 +61,8 @@
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=logs",
-		"bStateSave": true,
+		//"bStateSave": true,
+		//"bPaginate": false,
                 "aoColumns":
 		[
 		    null,
@@ -104,10 +105,10 @@
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=logsfromme",
-		"bStateSave": true,
 		"bInfo": false,
 		"bPaginate": false,
 		"bFilter": false,
+		"bSort": false,
                 "aoColumns":
 		[
 		    null,
@@ -133,8 +134,8 @@
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=logsfromall",
-		"bStateSave": true,
 		"bInfo": false,
+		"bSort": false,
 		"bPaginate": false,
 		"bFilter": false,
                 "aoColumns":

@@ -12,6 +12,7 @@
   function vergleich($wert_a, $wert_b)
   {
     global $key;
+    global $direction;
     // Sortierung nach dem zweiten Wert des Array (Index: 1)
     $a = $wert_a[$key];
     $b = $wert_b[$key];
@@ -20,7 +21,14 @@
     {
       return 0;
     }
-    return ($a < $b) ? -1 : +1;
+    if($direction == "asc")
+    {
+      return ($a > $b) ? -1 : +1;
+    }
+    else
+    {
+      return ($a < $b) ? -1 : +1;
+    } 
  }
 
   function ar_sortieren($array)
@@ -251,6 +259,18 @@
   
   if($typ == "datatable")
   {
+    if(($_GET['iSortCol_0'] == '0') || ($_GET['iSortCol_0'] == '3'))
+    {
+      $key=$_GET['iSortCol_0'];
+      $direction=$_GET['sSortDir_0'];
+      $data_c=ar_sortieren($data_c); 
+    }
+    if(!isset($_GET['iSortCol_0']))
+    {
+      $key=0;
+      $data_c=ar_sortieren($data_c);
+    }
+
     //
     // After Sorting, there should be some translations...
     if(($table == "logs") || ($table == "logsfromme") || ($table == "logsfromall"))
@@ -278,17 +298,12 @@
 	$data_c[$data_c_id][3]=preg_replace('/\./',',',$freq);
       }
     }
-
-    if ( isset( $_GET['iSortCol_0'] ) )
+    if(($_GET['iSortCol_0'] != '0') && ($_GET['iSortCol_0'] != '3'))
     {
       $key=$_GET['iSortCol_0'];
+      $direction=$_GET['sSortDir_0'];
+      $data_c=ar_sortieren($data_c);
     }
-    else
-    {
-      $key=0;
-    }
-    $data_c=ar_sortieren($data_c); 
-
     $count_total=count($data_c);
 
     // 
