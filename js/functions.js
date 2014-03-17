@@ -1,3 +1,31 @@
+
+function logs_autoreload()
+{
+  var logs_autoreload=$('#logs_autoreload').prop('checked');
+  if(logs_autoreload == true)
+  {
+    interval_log=setInterval("reload_tables_log()",5000);
+  }
+  else
+  {
+    clearInterval(interval_log);
+  }
+}
+function logs_onlyoperator()
+{
+  var logs_onlyoperator=$('#logs_onlyoperator').prop('checked');
+  if(logs_onlyoperator == true)
+  {
+    save_settings('1');
+    table_logs.fnDraw();
+  }
+  else
+  {
+    save_settings('0');
+    table_logs.fnDraw();
+  }
+}
+
 function reload_tables_log_change()
 {
   table_logsfromall.fnDraw();

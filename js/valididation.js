@@ -1,3 +1,19 @@
+function save_settings(onlyoperator)
+{
+  var datastring="action=savesettings&onlyoperator="+onlyoperator;
+  $.ajax
+  (
+    {
+      type: "GET",
+      url: "save.php",
+      data: datastring,
+      success: function(html)
+      {
+	$("div#div_error").html(html);
+      }
+    }
+  );
+}
 function import_log_file(filename)
 {
   var datastring="action=import&typ=log&filename="+filename;

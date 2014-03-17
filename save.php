@@ -12,6 +12,11 @@
   //firebug_debug($_GET);
   //die();
 
+  if($action == "savesettings")
+  {
+    $_SESSION['onlyoperator']=$_GET['onlyoperator'];
+  }
+
   if($typ == "log")
   {
     if(($action=="mod") || ($action=="import"))

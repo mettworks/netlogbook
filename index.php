@@ -63,6 +63,18 @@
 		"sAjaxSource": "/getdata.php?typ=datatable&table=logs",
 		//"bStateSave": true,
 		//"bPaginate": false,
+
+		"oLanguage": 
+		{
+		  "sLengthMenu": 'Display <select>'+
+		    '<option value="10">10</option>'+
+		    '<option value="50">50</option>'+
+		    '<option value="100">100</option>'+
+		    '<option value="500">500</option>'+
+		    '<option value="1000">1000</option>'+
+		    '<option value="-1">All</option>'+
+		  '</select> records'
+		},
                 "aoColumns":
 		[
 		    null,
@@ -567,6 +579,8 @@
       <div id="div_error">
       </div>
     <div id="div_logs">
+    <input onchange='logs_autoreload();' type="checkbox" name="logs_autoreload" id="logs_autoreload" value="logs_autoreload">Auto Reload/30s</>
+    <input onchange='logs_onlyoperator();' type="checkbox" name="logs_onlyoperator" id="logs_onlyoperator" value="logs_onlyoperator">nur meine zeigen</>
     <table id="table_logs">
       <thead>
 	<tr>

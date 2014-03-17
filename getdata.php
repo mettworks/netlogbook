@@ -80,6 +80,10 @@
     $operators=mysql_fragen('SELECT operators.* FROM operators INNER JOIN rel_operators_projects WHERE project_id='.$_SESSION['project_id'],"operator_id");
     $modes=mysql_fragen('SELECT * FROM modes;','mode_id');
     $sql="SELECT * FROM logs WHERE project_id=".$_SESSION['project_id'];
+    if($_SESSION['onlyoperator'] == "1")
+    {
+      $sql.=" AND operator_id=".$_SESSION['operator_id'];
+    }
     $i=0;
     if($data_plain=mysql_fragen($sql,'log_id',$id))
     {
