@@ -252,14 +252,19 @@
     <?
   }
 
-  function end_edit($typ,$completed='0')
+  function end_edit($typ,$completed='1')
   {
     ?>
     <script>
     $("div#div_fehler").html('');
     document.getElementById('div_error').style.visibility='hidden';
-    document.getElementById('div_<?=$typ?>_change').style.visibility='hidden';
     <?
+    if($completed == "1") 
+    {
+      ?>
+      document.getElementById('div_<?=$typ?>_change').style.visibility='hidden';
+      <?
+    }
     if($typ == "log")
     { 
       ?>
@@ -274,7 +279,6 @@
       else
       {
 	?>
-	//document.getElementById('div_display_callinfo').style.visibility='hidden';
 	shortcut.remove("Ctrl+S");
 	clearInterval(interval_log_change);
 	<?
