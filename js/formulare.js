@@ -166,12 +166,21 @@ function change_log(log_id)
   log_change_time();
   log_change_mod();
 
-  shortcut.add("Ctrl+S",function() 
+  shortcut.add("Ctrl+Y",function() 
   {
+    //jQuery.noop();
     display_callinfo('','1');
     completed='0';
     write_data('log')
   });
+  shortcut.add("Ctrl+S",function() 
+  {
+    //jQuery.noop();
+    display_callinfo('','1');
+    completed='0';
+    write_data('log')
+  });
+
   if(log_id)
   {
     display_callinfo('1');
