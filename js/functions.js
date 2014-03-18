@@ -141,22 +141,22 @@ function display_callinfo(call,formchange)
 	log_change_loc();
       }
     }
-    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>Anzahl Total/ich: "+callinfo.callinfo_total_project['0']['COUNT(*)']+" / "+callinfo.callinfo_total_operator['0']['COUNT(*)']+")</a><br class='class_log_change_callinfo'>"); 
+    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>Anzahl Total/ich:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>"+callinfo.callinfo_total_project['0']['COUNT(*)']+" / "+callinfo.callinfo_total_operator['0']['COUNT(*)']+"</a><br class='class_log_change_callinfo'></b>"); 
     if(callinfo.callinfo_project == null)
     {
-      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt: N/A</a><br class='class_log_change_callinfo'>"); 
+      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>N/A</a></b><br class='class_log_change_callinfo'>"); 
     } 
     else
     {
-      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt: "+callinfo.callinfo_project['0']['log_freq']+" / "+callinfo.callinfo_project['0']['log_time']+" / "+callinfo.callinfo_project['0'].mode_name+"(gesamt: "+callinfo.callinfo_project.length+")</a><br class='class_log_change_callinfo'>");
+      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>"+callinfo.callinfo_project['0']['log_freq']+"kHz / "+callinfo.callinfo_project['0']['log_time']+" / "+callinfo.callinfo_project['0'].mode_name+" (gesamt: "+callinfo.callinfo_project.length+")</a><br class='class_log_change_callinfo'></b>");
     }
     if(callinfo.callinfo_operator == null)
     {
-      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir: N/A</a><br class='class_log_change_callinfo'>");
+      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>N/A</a></b><br class='class_log_change_callinfo'>");
     }
     else
     { 
-      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir: "+callinfo.callinfo_operator['0']['log_freq']+" / "+callinfo.callinfo_operator['0']['log_time']+" / "+callinfo.callinfo_operator['0'].mode_name+"(gesamt: "+callinfo.callinfo_operator.length+")</a><br class='class_log_change_callinfo'>");
+      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>"+callinfo.callinfo_operator['0']['log_freq']+"kHz / "+callinfo.callinfo_operator['0']['log_time']+" / "+callinfo.callinfo_operator['0'].mode_name+" (gesamt: "+callinfo.callinfo_operator.length+")</a><br class='class_log_change_callinfo'></b>");
     }
   }
 }

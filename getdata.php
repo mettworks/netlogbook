@@ -150,7 +150,7 @@
           $data_c[$i][9]=$data_temp['log_loc'];
           $data_c[$i][10]=$data_temp['log_dok'];
           $data_c[$i][11]=$data_temp['log_notes'];
-          $data_c[$i][12]=$data_temp['log_manager'];
+          //$data_c[$i][12]=$data_temp['log_manager'];
 	  $i++;
 	}
       }

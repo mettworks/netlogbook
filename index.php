@@ -134,9 +134,7 @@
 		    null,
 		    null,
 		    null,
-		    null,
 		]
-
 	    });
 	    table_logsfromall=$('#table_logsfromall').dataTable
 	    (
@@ -288,13 +286,12 @@
 		<th>Locator</th>
 		<th>DOK</th>
 		<th>Bemerkungen</th>
-		<th>Manager</th>
 	      </tr>
 	    </thead>
 	  </table>
 	</div>
 	<div id="div_log_change_logsfromall">
-	  <a>alle Logs des aktuellen Projektes (automatischer Reload)</a>
+	  <a>alle Logs des aktuellen Projektes (<b>KEIN</b> automatischer Reload)</a>
 	  <table id="table_logsfromall">
 	    <thead>
 	      <tr>
@@ -355,35 +352,35 @@
 	      <td>
 		<span class='help'>Datum<div>DD-MM-YYYY</div></span>
 	      </td>
-	      <td width="20">
+	      <td>
 		<span class='help'>Zeit<div>HHMM</div></span>
 	      </td>
 	      <td>
 		<span class='help'>Rufzeichen<div>Callsign</div></span>
 	      </td>
-	      <td width="8">
+	      <td>
 		<span class='help'>Frequenz<div>QRG (kHz)</div></span>
 	      </td>
-	      <td width="6">
-		<span class='help'>Modulation<div>Mode</div></span>
+	      <td>
+		<span class='help'>Mode<div>Mode</div></span>
 	      </td>
-	      <td width="3">
+	      <td>
 		<span class='help'>RST TX<div>RST TX</div></span>
 	      </td>
-	      <td width="3">
+	      <td>
 		<span class='help'>RST RX<div>RST RX</div></span>
 	      </td>
-	      <td width="43">
+	      <td>
 		<span class='help'>Name<div>Name</div></span>
 	      </td>
-	      <td width="37">
+	      <td>
+		<span class='help'>LOC<div>Locator, z.B. JO53DM</div></span>
+	      </td>
+	      <td>
 		<span class='help'>QTH<div>QTH</div></span>
 	      </td>
-	      <td width="6">
-		<span class='help'>Locator<div>Locator</div></span>
-	      </td>
-	      <td width="10">
-		<span class='help'>Automatikzeit<div>Automatikzeit</div></span>
+	      <td>
+		<span class='help'>Zeit<div>Zeit wird automatisch beim abspeichern &uuml;bernommen</div></span>
 	      </td>
 	    </tr>
 	    <tr>
@@ -394,7 +391,7 @@
 		<input class='class_log_change' type='text' name='log_time_hr_time' id='log_time_hr_time' value=''>
 	      </td>
 	      <td>
-		<input size="12" tabindex="1" class='class_log_change' type='text' name='log_call' id='log_call' onChange="display_callinfo(this.value,'1')" value=''>
+		<input tabindex="1" class='class_log_change' type='text' name='log_call' id='log_call' onChange="display_callinfo(this.value,'1')" value=''>
 	      </td>
 	      <td>
 		<input class='class_log_change' type='text' name='log_freq' id='log_freq' value=''>
@@ -404,9 +401,9 @@
 		</select">
 	      </td>
 	      <td>
-		<input tabindex="2" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_0' id='log_rst_tx_0' value=''>
-		<input tabindex="3" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_1' id='log_rst_tx_1' value=''>
-		<input tabindex="4" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_tx_2' id='log_rst_tx_2' value=''>
+		<input tabindex="2" class='class_log_change' type='text' size="1" name='log_rst_tx_0' id='log_rst_tx_0' value=''>
+		<input tabindex="3" class='class_log_change' type='text' size="1" name='log_rst_tx_1' id='log_rst_tx_1' value=''>
+		<input tabindex="4" class='class_log_change' type='text' size="1" name='log_rst_tx_2' id='log_rst_tx_2' value=''>
 	      </td>
 	      <td>
 		<input tabindex="5" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_0' id='log_rst_rx_0' value=''>
@@ -417,10 +414,10 @@
 		<input tabindex="8" class='class_log_change' type='text' name='log_name' id='log_name' value=''>
 	      </td>
 	      <td>
-		<input tabindex="9" class='class_log_change' type='text' name='log_qth' id='log_qth' value=''>
+		<input onchange='log_change_loc();' class='class_log_change' type='text' name='log_loc' id='log_loc' value=''>
 	      </td>
 	      <td>
-		<input onchange='log_change_loc();' size="6" class='class_log_change' type='text' name='log_loc' id='log_loc' value=''>
+		<input tabindex="9" class='class_log_change' type='text' name='log_qth' id='log_qth' value=''>
 	      </td>
 	      <td>
                 <input onchange='log_change_time();' class='class_log_change' type='checkbox' id='log_time_auto' name='log_time_auto'>
