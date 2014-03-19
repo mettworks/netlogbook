@@ -14,6 +14,32 @@ function save_settings(onlyoperator)
     }
   );
 }
+function save_settings_import(qrzcache)
+{
+  var qrzcache=$('#log_import_qrzcache').prop('checked');
+
+  if(qrzcache)
+  {
+    var datastring="action=savesettingsimport&qrzcache=1";
+  }
+  else
+  {
+    var datastring="action=savesettingsimport&qrzcache=0";
+  }
+  $.ajax
+  (
+    {
+      type: "GET",
+      url: "save.php",
+      data: datastring,
+      success: function(html)
+      {
+	$("div#div_error").html(html);
+      }
+    }
+  );
+}
+
 function import_log_file(filename)
 {
   var datastring="action=import&typ=log&filename="+filename;

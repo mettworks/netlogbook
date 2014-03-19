@@ -16,6 +16,11 @@
   {
     $_SESSION['onlyoperator']=$_GET['onlyoperator'];
   }
+  if($action == "savesettingsimport")
+  {
+    $_SESSION['qrzcache']=$_GET['qrzcache'];
+  }
+
 
   if($typ == "log")
   {
@@ -296,8 +301,10 @@
 	firebug_debug("schreiben:");
 	firebug_debug($data);
 	*/
-	qrz_lookup_call($data['log_call']);
-
+	if($_SESSION['qrzcache'] == 1)
+	{
+	  qrz_lookup_call($data['log_call']);
+	}
 	mysql_write_array('logs',$data,'log_id',$data_temp['log_id']);
       }
 
