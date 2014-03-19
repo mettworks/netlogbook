@@ -1,6 +1,7 @@
 <?php
   include('functions.php');
   checklogin();
+  include('settings.php');
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
   <html>
@@ -24,6 +25,21 @@
         <script type="text/javascript" src="js/jquery.fileupload.js"></script>
         <script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
         <script>
+	/*
+	var cronjob=get_data('cronjob','');
+	//var now = +new Date;
+	var now=new Date().getTime();
+	//now=now/1000;
+	console.log(cronjob);
+	if(cronjob['lastrun'] > now)
+	{
+	  alert('ja');
+	}
+	else
+	{
+	  alert('nein');
+	}
+	*/
 	modes=get_data('mode','');
 	operators=get_data('operator','');
 	$(function() {
@@ -259,7 +275,7 @@
 	      <td>
 		<select class='class_log_export' type='select' id='log_export_typ' name='log_export_typ'>
 		  <option value="complete">komplett</option>
-		  <option value="project">projekt</option>
+		  <option value="operator">nur meine</option>
 		</input>
 	      </td>
 	    </tr>

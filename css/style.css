@@ -10,10 +10,11 @@ html, body
   position: absolute;
   //overflow: auto;
   font-size:1em;
+  font-size: large
 }
 input:focus, textarea:focus 
 {
-  background-color: yellow;
+  background-color: orange;
 }
 .class_log_change_callinfo, .class_log_change_locinfo
 {

@@ -43,12 +43,15 @@
   {
     $data_plain=locinfo($_GET['loc']);
   }
+  else if($table == "cronjob")
+  {
+    $data_plain=mysql_fragen("SELECT * FROM cronjob");
+  }
 
   else if($table == "callinfo")
   {
     $modes=mysql_fragen('SELECT * FROM modes;','mode_id');
-    $data_plain=qrz_lookup_call($_GET['call']);
-    //firebug_debug($data_plain);
+    $data_plain['qrzcom']=qrz_lookup_call($_GET['call']);
     $i=0;
     if($temp=mysql_fragen("SELECT * FROM logs log_time WHERE log_call='".$_GET['call']."' AND project_id=".$_SESSION['project_id']." ORDER BY log_time DESC"))
     foreach($temp as $data_temp)

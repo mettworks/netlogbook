@@ -1,5 +1,5 @@
 <?php
-
+  include('settings.php');
   date_default_timezone_set('Europe/Berlin');
 
   function stringtoadif($string,$name)
@@ -171,18 +171,73 @@
 
   function qrz_lookup_call($call)
   {
-    $project=mysql_fragen('SELECT * from projects','project_id',$_SESSION['project_id']);
-    // TODO 300s gilt die Session?
-    if((strlen($project[$_SESSION['project_id']]['project_qrz_sess_created']) < 1 ) || (time() - $project[$_SESSION['project_id']]['project_qrz_sess_created'] > 300))
-    {	
-      qrz_session();
-      $project=mysql_fragen('SELECT * from projects','project_id',$_SESSION['project_id']);
+    if(strlen($call) != 0)
+    {
+      global $qrzcom_cachetime;
+
+      if(preg_match('/^([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
+      {
+	$call=preg_replace('/^(([a-z0-9])+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$1',$call);
+      }
+      else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i',$call))
+      {
+	$call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i','$3',$call);
+      }
+      else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
+      {
+	$call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$3',$call);
+      }
+
+      $timestamp=time()-$qrzcom_cachetime;
+      if($data_temp=mysql_fragen("SELECT * FROM qrz_cache WHERE qrz_call='".$call."' AND timestamp >= '".$timestamp."'"))
+      {
+	$return=$data_temp['0'];
+      }
+      else
+      {
+	$project=mysql_fragen('SELECT * from projects','project_id',$_SESSION['project_id']);
+	// TODO 300s gilt die Session?
+	if((strlen($project[$_SESSION['project_id']]['project_qrz_sess_created']) < 1 ) || (time() - $project[$_SESSION['project_id']]['project_qrz_sess_created'] > 300))
+	{	
+	  qrz_session();
+	  $project=mysql_fragen('SELECT * from projects','project_id',$_SESSION['project_id']);
+	}
+	$qrz_sess=$project[$_SESSION['project_id']]['project_qrz_sess'];
+
+	$response=xmlget('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call);
+	if($data_temp=mysql_fragen("SELECT qrz_cache_id FROM qrz_cache WHERE qrz_call='".$call."'"))
+	{
+	  $id=$data_temp['0']['qrz_cache_id'];
+	}
+
+	$data2write['fname']=$response['Callsign']['fname'];
+	$data2write['name']=$response['Callsign']['name'];
+	$data2write['addr1']=$response['Callsign']['addr1'];
+	$data2write['addr2']=$response['Callsign']['addr2'];
+	$data2write['url']=$response['Callsign']['url'];
+	$data2write['grid']=$response['Callsign']['grid'];
+	$data2write['qslmgr']=$response['Callsign']['qslmgr'];
+	$data2write['qrz_call']=$call;
+	$data2write['timestamp']=time();
+	$data2write['error']=$response['Session']['Error'];
+
+	if(isset($response['Callsign']['image']))
+	{
+	  $temp=explode(".",strrev(basename($response['Callsign']['image'])));
+	  $destname=strtoupper($call).".".strrev($temp['0']);
+	  $data2write['image']=$destname;
+	  file_put_contents('/usr/local/www/dxpad/cache/qrzcom/'.$destname, file_get_contents($response['Callsign']['image']));
+	}
+	else
+	{
+	  $data2write['image']=NULL;
+	}
+	mysql_write_array('qrz_cache',$data2write,'qrz_cache_id',$id);
+
+	$return=$data2write;
+      }
+      return ($return);
     }
-    $qrz_sess=$project[$_SESSION['project_id']]['project_qrz_sess'];
-    $response=xmlget('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call);
-    //$response['Callsign']['distance']=distance($response['Callsign']['grid']);
-    //$response['Callsign']['bearing']=bearing($response['Callsign']['grid']);
-    return ($response);
   }
 
   function qrz_session()
@@ -329,9 +384,9 @@
     $string1=preg_replace('/\,$/','',$string1);
     $string2=preg_replace('/\,$/','',$string2);
 
-    if(is_numeric($id))
+    if(is_numeric($id)) 
     {
-      $sql="UPDATE ".$table." SET ".$string1." WHERE ".$idname."=".$id.";";
+      $sql="UPDATE ".$table." SET ".$string1." WHERE ".$idname."='".$id."';";
     }
     else
     {
@@ -357,9 +412,14 @@
   // MySQL Connect
   function mysql_c()
   {
-    if($mysql=mysql_connect('localhost','dxpad','blafaselpeng'))
+    global $mysql_host;
+    global $mysql_user;
+    global $mysql_pass;
+    global $mysql_db;
+
+    if($mysql=mysql_connect($mysql_host,$mysql_user,$mysql_pass))
     {
-      mysql_select_db('dxpad');
+      mysql_select_db($mysql_db);
       return $mysql;
     }
     else

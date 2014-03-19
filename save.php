@@ -296,6 +296,8 @@
 	firebug_debug("schreiben:");
 	firebug_debug($data);
 	*/
+	qrz_lookup_call($data['log_call']);
+
 	mysql_write_array('logs',$data,'log_id',$data_temp['log_id']);
       }
 
