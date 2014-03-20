@@ -126,7 +126,18 @@ function display_callinfo(call,formchange)
     $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo' href="+callinfo['qrzcom']['url']+" target=_blank>"+callinfo['qrzcom']['url']+"</a>");
     if(callinfo['qrzcom']['image'] != null)
     {
-      $('#div_log_change_callinfo1_picture').append("<img class='class_log_change_callinfo' height='100%' src='/cache/qrzcom/"+callinfo['qrzcom']['image']+"'</img>");
+      var div_width=$('#div_log_change_callinfo1_picture').width();
+      var div_height=$('#div_log_change_callinfo1_picture').height();
+
+      if(div_width/callinfo['qrzcom']['imagewidth'] > div_height/callinfo['qrzcom']['imageheight'])
+      {
+	size='height';
+      }
+      else
+      {
+	size='width';
+      }
+      $('#div_log_change_callinfo1_picture').append("<img class='class_log_change_callinfo' "+size+"='100%' src='/cache/qrzcom/"+callinfo['qrzcom']['image']+"'</img>");
     }
     else
     {

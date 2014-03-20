@@ -210,6 +210,9 @@
 	  $id=$data_temp['0']['qrz_cache_id'];
 	}
 
+	$imagedata=preg_split('/:/',$response['Callsign']['imageinfo']);
+	//$imageratio=(float)str_replace(',', '.',  round($imagedata[0]/$imagedata[1],2));;
+
 	$data2write['fname']=$response['Callsign']['fname'];
 	$data2write['name']=$response['Callsign']['name'];
 	$data2write['addr1']=$response['Callsign']['addr1'];
@@ -219,6 +222,8 @@
 	$data2write['qslmgr']=$response['Callsign']['qslmgr'];
 	$data2write['qrz_call']=$call;
 	$data2write['timestamp']=time();
+	$data2write['imageheight']=$imagedata[0];
+	$data2write['imagewidth']=$imagedata[1];
 	$data2write['error']=$response['Session']['Error'];
 
 	if(isset($response['Callsign']['image']))

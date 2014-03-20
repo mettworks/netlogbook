@@ -20,6 +20,12 @@ input:focus, textarea:focus
 {
   font-size:0.9m;
 }
+/*
+#log_change_picture_om
+{
+  //position: relative;
+}
+*/
 #log_rst_tx_0
 {
   width: 1em;
@@ -253,7 +259,7 @@ span.help div
   height:20%;
   top: 20%;
   z-index: 2;
-  text-align:right;
+  //text-align:right;
 }
 #div_log_change_callinfo2
 {
