@@ -1,3 +1,9 @@
+function show_picture(image)
+{
+  $('.class_complete').remove();
+  document.getElementById('div_complete').style.visibility='visible';
+  $('#div_complete').append('<a class="class_complete" href="#" onclick="document.getElementById(\'div_complete\').style.visibility=\'hidden\';"><img class="class_complete" src="'+image+'"</img></a>')
+}
 
 function logs_autoreload()
 {
@@ -126,6 +132,7 @@ function display_callinfo(call,formchange)
     $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo' href="+callinfo['qrzcom']['url']+" target=_blank>"+callinfo['qrzcom']['url']+"</a>");
     if(callinfo['qrzcom']['image'] != null)
     {
+      var op_picture="/cache/qrzcom/"+callinfo['qrzcom']['image'];
       var div_width=$('#div_log_change_callinfo1_picture').width();
       var div_height=$('#div_log_change_callinfo1_picture').height();
 
@@ -137,7 +144,7 @@ function display_callinfo(call,formchange)
       {
 	size='width';
       }
-      $('#div_log_change_callinfo1_picture').append("<img class='class_log_change_callinfo' "+size+"='100%' src='/cache/qrzcom/"+callinfo['qrzcom']['image']+"'</img>");
+      $('#div_log_change_callinfo1_picture').append('<a class="class_log_change_callinfo" href="#" onclick="show_picture(\''+op_picture+'\');"><img class="class_log_change_callinfo" '+size+'="100%" src="'+op_picture+'"</img></a>');
     }
     else
     {

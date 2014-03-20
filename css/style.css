@@ -20,12 +20,6 @@ input:focus, textarea:focus
 {
   font-size:0.9m;
 }
-/*
-#log_change_picture_om
-{
-  //position: relative;
-}
-*/
 #log_rst_tx_0
 {
   width: 1em;
@@ -81,6 +75,23 @@ input:focus, textarea:focus
 #log_notes
 {
   width: 50em;
+}
+#div_complete
+{
+  background: white;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+  visibility: hidden;
+}
+img.class_complete
+{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 #div_navi_top
 {

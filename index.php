@@ -253,6 +253,8 @@
 	}
 	?>
       </div>
+      <div id="div_complete">
+      </div>
       <div id="div_navi_logout">
 	<form method="POST" action="/login.php?aktion=kaputtmachen" class="form" id="form_navi_logout">
 	  <input type="submit" name="submit" value="logout"> 
