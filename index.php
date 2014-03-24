@@ -599,6 +599,9 @@
       <div id="div_error">
       </div>
     <div id="div_logs">
+    <input onclick="change_log();" type="button" value="neues Log erfassen" name="">
+    <input onclick="import_log();" type="button" value="Log importieren" name="">
+    <input onclick="export_log();" type="button" value="Log exportieren" name=""><br>
     <input onchange='logs_autoreload();' type="checkbox" name="logs_autoreload" id="logs_autoreload" value="logs_autoreload">Auto Reload/30s</>
     <input onchange='logs_onlyoperator();' type="checkbox" name="logs_onlyoperator" id="logs_onlyoperator" value="logs_onlyoperator">nur meine zeigen</>
     <table id="table_logs">
@@ -624,9 +627,6 @@
 	</tr>
       </thead>
     </table>
-    <input onclick="change_log();" type="button" value="neues Log erfassen" name="">
-    <input onclick="import_log();" type="button" value="Log importieren" name="">
-    <input onclick="export_log();" type="button" value="Log exportieren" name="">
     </div>
     <div id="div_operators">
     <table id="table_operators">
