@@ -340,6 +340,7 @@
       {
 	?>
 	shortcut.remove("Ctrl+S");
+	shortcut.remove("Ctrl+X");
 	clearInterval(interval_log_change);
 	<?
       }

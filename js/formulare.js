@@ -168,14 +168,12 @@ function change_log(log_id)
 
   shortcut.add("Ctrl+Y",function() 
   {
-    //jQuery.noop();
     display_callinfo('','1');
     completed='0';
     write_data('log')
   });
   shortcut.add("Ctrl+S",function() 
   {
-    //jQuery.noop();
     display_callinfo('','1');
     completed='0';
     write_data('log')
