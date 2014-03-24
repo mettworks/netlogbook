@@ -180,7 +180,18 @@
   {
     $temp=explode(".",strrev(basename($url)));
     $destname=strtoupper($call).".".strrev($temp['0']);
-    file_put_contents('/usr/local/www/dxpad/cache/qrzcom/'.$destname, file_get_contents($url));
+    $opts = array('http' =>
+      array(
+        'method'  => 'GET',
+        //'header'  => "Content-Type: text/xml\r\n",
+        //'content' => $body,
+	'timeout' => 5
+      )
+    );
+
+    $context  = stream_context_create($opts);
+
+    file_put_contents('/usr/local/www/dxpad/cache/qrzcom/'.$destname, file_get_contents($url,false,$context));
     if(filesize('/usr/local/www/dxpad/cache/qrzcom/'.$destname) != $size)
     {
       return false;
