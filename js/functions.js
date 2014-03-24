@@ -62,8 +62,16 @@ function log_change_loc()
   loc=$('#log_loc').val();
   locinfo=get_locinfo(loc);
   $('.class_log_change_locinfo').remove();
-  $('#div_log_change_callinfo2').append("<a class='class_log_change_locinfo'>QRB: "+locinfo['distance']+"km</a><br class='class_log_change_locinfo'>");
-  $('#div_log_change_callinfo2').append("<a class='class_log_change_locinfo'>Bearing: "+locinfo['bearing']+"</a><br class='class_log_change_locinfo'>");
+  if(typeof(locinfo['distance']) == "number")
+  {
+    $('#div_log_change_callinfo2').append("<a class='class_log_change_locinfo'>QRB: "+locinfo['distance']+"km</a><br class='class_log_change_locinfo'>");
+    $('#div_log_change_callinfo2').append("<a class='class_log_change_locinfo'>Bearing: "+locinfo['bearing']+"</a><br class='class_log_change_locinfo'>");
+  }
+  else
+  {
+    $('#div_log_change_callinfo2').append("<a class='class_log_change_locinfo'>QRB: N/A</a><br class='class_log_change_locinfo'>");
+    $('#div_log_change_callinfo2').append("<a class='class_log_change_locinfo'>Bearing: N/A</a><br class='class_log_change_locinfo'>");
+  }
 }
 
 // aa -> AA
@@ -120,17 +128,21 @@ function display_callinfo(call,formchange)
   call=$('#log_call').val();
   callinfo=get_callinfo(call);
   $('.class_log_change_callinfo').remove();
+  $('.error_text').remove();
   if(typeof(callinfo['qrzcom']['error']) == 'string')
   {
     $('#div_log_change_error').append("<a class='class_log_change_callinfo'>Error QRZ.COM:"+callinfo['qrzcom']['error']+"</a>");
+    callinfo['qrzcom']['fname']="";
+    callinfo['qrzcom']['name']="";
+    callinfo['qrzcom']['addr1']="";
+    callinfo['qrzcom']['addr2']="";
+    callinfo['qrzcom']['url']="";
+    callinfo['qrzcom']['grid']="";
+    callinfo['qrzcom']['qslmgr']="";
   }
   else
   {
-    $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['fname']+" "+callinfo['qrzcom']['name']+"</a><br class='class_log_change_callinfo'>");
-    $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['addr1']+"</a><br class='class_log_change_callinfo'>");
-    $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['addr2']+"</a><br class='class_log_change_callinfo'><br class='class_log_change_callinfo'>");
-    $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo' href="+callinfo['qrzcom']['url']+" target=_blank>"+callinfo['qrzcom']['url']+"</a>");
-    if(callinfo['qrzcom']['image'] != null)
+    if(callinfo['qrzcom']['imagestatus'] == "0")
     {
       var op_picture="/cache/qrzcom/"+callinfo['qrzcom']['image'];
       var div_width=$('#div_log_change_callinfo1_picture').width();
@@ -146,41 +158,49 @@ function display_callinfo(call,formchange)
       }
       $('#div_log_change_callinfo1_picture').append('<a class="class_log_change_callinfo" href="#" onclick="show_picture(\''+op_picture+'\');"><img class="class_log_change_callinfo" '+size+'="100%" src="'+op_picture+'"</img></a>');
     }
+    else if(callinfo['qrzcom']['imagestatus'] == "1")
+    {
+      $('#div_log_change_callinfo1_picture').append("<a class='class_log_change_callinfo'>TEMP FEHLER</a>"); 
+    }
     else
     {
       $('#div_log_change_callinfo1_picture').append("<a class='class_log_change_callinfo'>KEIN BILD</a>"); 
     }
-    if(formchange == '1')
-    {
-      $('#log_loc').val(callinfo['qrzcom']['grid']);
-      $('#log_qth').val(callinfo['qrzcom']['addr2']);
-      $('#log_name').val(callinfo['qrzcom']['fname']);
-      $('#log_manager').val(callinfo['qrzcom']['qslmgr']);
-    }
-    log_change_loc();
-    if(callinfo.callinfo_total_project == null)
-    {
-      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>Anzahl Total/ich:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>NA / NA</a><br class='class_log_change_callinfo'></b>"); 
-    }
-    else
-    {
-      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>Anzahl Total/ich:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>"+callinfo.callinfo_total_project['0']['COUNT(*)']+" / "+callinfo.callinfo_total_operator['0']['COUNT(*)']+"</a><br class='class_log_change_callinfo'></b>"); 
-    }
-    if(callinfo.callinfo_project == null)
-    {
-      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>N/A</a></b><br class='class_log_change_callinfo'>"); 
-    } 
-    else
-    {
-      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>"+callinfo.callinfo_project['0']['log_freq']+"kHz / "+callinfo.callinfo_project['0']['log_time']+" / "+callinfo.callinfo_project['0'].mode_name+" (gesamt: "+callinfo.callinfo_project.length+")</a><br class='class_log_change_callinfo'></b>");
-    }
-    if(callinfo.callinfo_operator == null)
-    {
-      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>N/A</a></b><br class='class_log_change_callinfo'>");
-    }
-    else
-    { 
-      $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>"+callinfo.callinfo_operator['0']['log_freq']+"kHz / "+callinfo.callinfo_operator['0']['log_time']+" / "+callinfo.callinfo_operator['0'].mode_name+" (gesamt: "+callinfo.callinfo_operator.length+")</a><br class='class_log_change_callinfo'></b>");
-    }
   }
+  if(formchange == '1')
+  {
+    $('#log_loc').val(callinfo['qrzcom']['grid']);
+    $('#log_qth').val(callinfo['qrzcom']['addr2']);
+    $('#log_name').val(callinfo['qrzcom']['fname']);
+    $('#log_manager').val(callinfo['qrzcom']['qslmgr']);
+  }
+  log_change_loc();
+  if(callinfo.callinfo_total_project == null)
+  {
+    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>Anzahl Total/ich:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>NA / NA</a><br class='class_log_change_callinfo'></b>"); 
+  }
+  else
+  {
+    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>Anzahl Total/ich:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>"+callinfo.callinfo_total_project['0']['COUNT(*)']+" / "+callinfo.callinfo_total_operator['0']['COUNT(*)']+"</a><br class='class_log_change_callinfo'></b>"); 
+  }
+  if(callinfo.callinfo_project == null)
+  {
+    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>N/A</a></b><br class='class_log_change_callinfo'>"); 
+  } 
+  else
+  {
+    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>"+callinfo.callinfo_project['0']['log_freq']+"kHz / "+callinfo.callinfo_project['0']['log_time']+" / "+callinfo.callinfo_project['0'].mode_name+" (gesamt: "+callinfo.callinfo_project.length+")</a><br class='class_log_change_callinfo'></b>");
+  }
+  if(callinfo.callinfo_operator == null)
+  {
+    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>N/A</a></b><br class='class_log_change_callinfo'>");
+  }
+  else
+  { 
+    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>"+callinfo.callinfo_operator['0']['log_freq']+"kHz / "+callinfo.callinfo_operator['0']['log_time']+" / "+callinfo.callinfo_operator['0'].mode_name+" (gesamt: "+callinfo.callinfo_operator.length+")</a><br class='class_log_change_callinfo'></b>");
+  }
+  $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['fname']+" "+callinfo['qrzcom']['name']+"</a><br class='class_log_change_callinfo'>");
+  $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['addr1']+"</a><br class='class_log_change_callinfo'>");
+  $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['addr2']+"</a><br class='class_log_change_callinfo'><br class='class_log_change_callinfo'>");
+  $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo' href="+callinfo['qrzcom']['url']+" target=_blank>"+callinfo['qrzcom']['url']+"</a>");
 }

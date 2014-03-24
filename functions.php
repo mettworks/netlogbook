@@ -42,7 +42,6 @@
     }
   }
 
-
   function locator2degree($locator_temp)
   {
     //print "<pre>";
@@ -164,9 +163,32 @@
 
   function locinfo($loc)
   {
-    $data['distance']=distance($loc);
-    $data['bearing']=bearing($loc);
+    if(strlen($loc) != 0)
+    {
+      $data['distance']=distance($loc);
+      $data['bearing']=bearing($loc);
+    }
+    else
+    {
+      $data['distance']="";
+      $data['bearing']="";
+    }
     return $data;
+  }
+
+  function qrz_fetch_image($url,$call,$size)
+  {
+    $temp=explode(".",strrev(basename($url)));
+    $destname=strtoupper($call).".".strrev($temp['0']);
+    file_put_contents('/usr/local/www/dxpad/cache/qrzcom/'.$destname, file_get_contents($url));
+    if(filesize('/usr/local/www/dxpad/cache/qrzcom/'.$destname) != $size)
+    {
+      return false;
+    }
+    else
+    {
+      return $destname;
+    } 
   }
 
   function qrz_lookup_call($call)
@@ -192,6 +214,15 @@
       if($data_temp=mysql_fragen("SELECT * FROM qrz_cache WHERE qrz_call='".$call."' AND timestamp >= '".$timestamp."'"))
       {
 	$return=$data_temp['0'];
+	if($data_temp['0']['imagestatus']=="1")
+	{
+	  if($img=qrz_fetch_image($data_temp['0']['imageurl'],$call,$data_temp['0']['imagesize']))
+	  {
+	    $data2write['image']=$img;
+	    $data2write['imagestatus']="0";
+	    mysql_write_array('qrz_cache',$data2write,'qrz_cache_id',$data_temp['0']['qrz_cache_id']);
+	  }
+	}
       }
       else
       {
@@ -204,45 +235,81 @@
 	}
 	$qrz_sess=$project[$_SESSION['project_id']]['project_qrz_sess'];
 
-	$response=xmlget('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call);
-	if($data_temp=mysql_fragen("SELECT qrz_cache_id FROM qrz_cache WHERE qrz_call='".$call."'"))
+	if($response=xmlget('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call))
 	{
-	  $id=$data_temp['0']['qrz_cache_id'];
-	}
+	  //firebug_debug($response);
+	  if(!isset($response['Session']['Error']))
+	  {
+	    if($data_temp=mysql_fragen("SELECT qrz_cache_id FROM qrz_cache WHERE qrz_call='".$call."'"))
+	    {
+	      $id=$data_temp['0']['qrz_cache_id'];
+	    }
 
-	$imagedata=preg_split('/:/',$response['Callsign']['imageinfo']);
-	//$imageratio=(float)str_replace(',', '.',  round($imagedata[0]/$imagedata[1],2));;
+	    $imagedata=preg_split('/:/',$response['Callsign']['imageinfo']);
+	    //$imageratio=(float)str_replace(',', '.',  round($imagedata[0]/$imagedata[1],2));;
 
-	$data2write['fname']=$response['Callsign']['fname'];
-	$data2write['name']=$response['Callsign']['name'];
-	$data2write['addr1']=$response['Callsign']['addr1'];
-	$data2write['addr2']=$response['Callsign']['addr2'];
-	$data2write['url']=$response['Callsign']['url'];
-	$data2write['grid']=$response['Callsign']['grid'];
-	$data2write['qslmgr']=$response['Callsign']['qslmgr'];
-	$data2write['qrz_call']=$call;
-	$data2write['timestamp']=time();
-	$data2write['imageheight']=$imagedata[0];
-	$data2write['imagewidth']=$imagedata[1];
-	$data2write['error']=$response['Session']['Error'];
+	    $data2write['fname']=$response['Callsign']['fname'];
+	    $data2write['name']=$response['Callsign']['name'];
+	    $data2write['addr1']=$response['Callsign']['addr1'];
+	    $data2write['addr2']=$response['Callsign']['addr2'];
+	    $data2write['url']=$response['Callsign']['url'];
+	    $data2write['grid']=$response['Callsign']['grid'];
+	    $data2write['qslmgr']=$response['Callsign']['qslmgr'];
+	    $data2write['qrz_call']=$call;
+	    $data2write['timestamp']=time();
+	    $data2write['imageheight']=$imagedata[0];
+	    $data2write['imagewidth']=$imagedata[1];
+	    $data2write['imagesize']=$imagedata[2];
+	    $data2write['error']=$response['Session']['Error'];
+	    $data2write['imageurl']=$response['Callsign']['image'];
 
-	if(isset($response['Callsign']['image']))
-	{
-	  $temp=explode(".",strrev(basename($response['Callsign']['image'])));
-	  $destname=strtoupper($call).".".strrev($temp['0']);
-	  $data2write['image']=$destname;
-	  file_put_contents('/usr/local/www/dxpad/cache/qrzcom/'.$destname, file_get_contents($response['Callsign']['image']));
+	    if(isset($response['Callsign']['image']))
+	    {
+	      if($img=qrz_fetch_image($response['Callsign']['image'],$call,$imagedata[2]))
+	      {
+		$data2write['image']=$img;
+		$data2write['imagestatus']="0";
+	      }
+	      else
+	      {
+		$data2write['imagestatus']="1";
+	      } 
+	    }
+	    else
+	    {
+	      $data2write['imagestatus']="2";
+	    }
+	    mysql_write_array('qrz_cache',$data2write,'qrz_cache_id',$id);
+
+	    $return=$data2write;
+	  }
+	  else
+	  {
+	    $return['error']=$response['Session']['Error'];
+	  }
 	}
 	else
 	{
-	  $data2write['image']=NULL;
+	  $return['error']="Problem bei der QRZ.COM Abfrage";
 	}
-	mysql_write_array('qrz_cache',$data2write,'qrz_cache_id',$id);
-
-	$return=$data2write;
       }
-      return ($return);
     }
+    else
+    {
+      $return['fname']="";
+      $return['name']="";
+      $return['addr1']="";
+      $return['addr2']="";
+      $return['url']="";
+      $return['grid']="";
+      $return['qslmgr']="";
+      $return['qrz_call']="";
+      $return['timestamp']="";
+      $return['imageheight']="";
+      $return['imagewidth']="";
+      $return['error']="kein Call";
+    }
+    return($return);
   }
 
   function qrz_session()
@@ -263,22 +330,28 @@
 	'method'  => 'GET',
 	'header'  => "Content-Type: text/xml\r\n",
 	'content' => $body,
-      'timeout' => 60
+      'timeout' => 5
       )
     );
                        
     $context  = stream_context_create($opts);
-    $xmlstring = file_get_contents($url, false, $context, -1, 40000);
-    $xml = new SimpleXMLElement($xmlstring);
-    $xml=(array)$xml;
-    foreach($xml as $name => $key)
+    if($xmlstring = file_get_contents($url, false, $context, -1, 40000))
     {
-      foreach($key as $key2 => $value)
+      $xml = new SimpleXMLElement($xmlstring);
+      $xml=(array)$xml;
+      foreach($xml as $name => $key)
       {
-	$return[$name][$key2]=strval($value);
+	foreach($key as $key2 => $value)
+	{
+	  $return[$name][$key2]=strval($value);
+	}
       }
+      return $return;
     }
-    return $return;
+    else
+    {
+      return false;
+    }
   }
 
   function div_err($msg,$typ='')

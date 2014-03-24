@@ -1,7 +1,7 @@
 <?php
   include('functions.php');
   checklogin();
-
+  ini_set('display_errors', '0');
   $table=$_GET['table'];
   $typ=$_GET['typ'];
   $id=$_GET['id'];

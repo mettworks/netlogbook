@@ -15,6 +15,7 @@ function change_log(log_id)
 {
   $('.class_log_change_callinfo').remove();
   $('.class_log_change_locinfo').remove();
+  $('.error_text').remove();
 
   modes=get_data('rel_project_mode','');
   if(log_id)
