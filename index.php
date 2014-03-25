@@ -331,6 +331,7 @@
       <div id="div_log_import">
 	  <input id="fileupload" type="file" name="files[]" data-url="/upload.php" multiple>
 	  <input class='class_log_import' type='button' onclick=document.getElementById('div_log_import').style.visibility='hidden';document.getElementById('div_error').style.visibility='hidden'; value='Abbruch' name='Abbruch'>
+	  <!--
 	  <table>
 	    <tr>
 	      <td><span class="help">qrz.com Cache fuellen<div>Wenn aktiv, wird beim Import der Cache fuer qrz.com gefuellt. <b>Dauert bedeutend laenger!</b></div></span></td>
@@ -339,6 +340,7 @@
 	      <td><input class='class_log_import' type='checkbox' id='log_import_qrzcache' onChange="save_settings_import()" name='log_import_qrzcache'></td>
 	    </tr>
 	  </table>
+	  -->
 	</form>
       </div>
       <div id="div_log_export">

@@ -543,6 +543,7 @@
       print mysql_error()."\n";
       die();
     }
+    //firebug_debug($sql);
     if(mysql_num_rows($result) != 0 )
     {
       if(strlen($idname) == 0)

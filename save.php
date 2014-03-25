@@ -66,7 +66,7 @@
 	$file="files/".$data_temp['filename'];
 	$import=file_get_contents($file);
 	
-	//unlink($file);
+	unlink($file);
 	// Zeilenumbruch weg, Header weg
 	$import=preg_replace('/\n+/','',$import);
 	$import=preg_replace('/^.*<eoh>/','',$import);
@@ -80,7 +80,7 @@
 	  {
 	    break;
 	  }
-	  $temp=preg_split('/(<[a-z:_0-9]*>)/',$log,'-1', PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+	  $temp=preg_split('/(<[a-z:_0-9]*>)/i',$log,'-1', PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 	  $c=0;
 	  while($c < count($temp))
 	  {
@@ -89,6 +89,7 @@
 	    if(preg_match('/<call:.*/i',$key))
 	    {
 	      $data_all[$i]['log_call']=strtoupper($value);
+	      firebug_debug($call);
 	    }
 	    else if(preg_match('/<freq:.*/i',$key))
 	    {
@@ -125,7 +126,7 @@
 	      $data_all[$i]['log_rst_rx_1']=$rst['1'];
 	      $data_all[$i]['log_rst_rx_2']=$rst['2'];
 	    }
-	    else if(preg_match('/<rst_sent:.*/i',$key))
+	    else if(preg_match('/<rst_sent:.*/',$key))
 	    {
 	      $rst=str_split($value);
 	      $data_all[$i]['log_rst_tx_0']=$rst['0'];
@@ -140,7 +141,6 @@
 	    {
 	      $temp_time=$value;
 	    }
-	    
 	    $c=$c+2;
 	  }
 	  // date and time string to timestamp
@@ -233,7 +233,6 @@
 	      firebug_debug($data);
 	      $error=1; 
 	    }
-
 	    div_err("keine valide Frequenz erkannt! (Frequenz: ".$data['log_freq'].")","logs");
 	    die();
 	  }
@@ -315,17 +314,22 @@
 
       //firebug_debug($data_all);
       //die();  
-      foreach($data_all_complete as $data)
+      if(is_array($data_all_complete))
       {
-	/*
-	firebug_debug("schreiben:");
-	firebug_debug($data);
-	*/
-	if($_SESSION['qrzcache'] == 1)
+	foreach($data_all_complete as $data)
 	{
-	  qrz_lookup_call($data['log_call']);
+	  /*
+	  firebug_debug("schreiben:");
+	  firebug_debug($data);
+	  */
+	  /*
+	  if($_SESSION['qrzcache'] == 1)
+	  {
+	    qrz_lookup_call($data['log_call']);
+	  }
+	  */
+	  mysql_write_array('logs',$data,'log_id',$data_temp['log_id']);
 	}
-	mysql_write_array('logs',$data,'log_id',$data_temp['log_id']);
       }
 
       if($action == "mod")

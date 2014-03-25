@@ -42,6 +42,29 @@ INSERT INTO `bands` VALUES (1,'2m',144000,146000),(2,'70cm',430000,440000),(3,'2
 UNLOCK TABLES;
 
 --
+-- Table structure for table `cronjob`
+--
+
+DROP TABLE IF EXISTS `cronjob`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cronjob` (
+  `lastrun` int(10) DEFAULT NULL,
+  `id` int(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cronjob`
+--
+
+LOCK TABLES `cronjob` WRITE;
+/*!40000 ALTER TABLE `cronjob` DISABLE KEYS */;
+INSERT INTO `cronjob` VALUES (1395163594,0);
+/*!40000 ALTER TABLE `cronjob` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `logs`
 --
 
@@ -72,7 +95,7 @@ CREATE TABLE `logs` (
   `time` int(10) NOT NULL,
   `typ` int(1) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11841 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13874 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,8 +187,46 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,'OZ2014',NULL,'do7ale','Egowaloho988','d2bd221f97e3f4c548c3aa154d9e5f2f','1392495943',1395147761,'jo51is'),(2,'testprojekt',NULL,'','1234','',NULL,1394538797,'');
+INSERT INTO `projects` VALUES (1,'OZ2014',NULL,'do7ale','Egowaloho988','95998e61a918d72dffbd13254d183484','1392495943',1395759263,'jo51is'),(2,'testprojekt',NULL,'','1234','',NULL,1394538797,'');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `qrz_cache`
+--
+
+DROP TABLE IF EXISTS `qrz_cache`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `qrz_cache` (
+  `qrz_call` varchar(20) NOT NULL,
+  `timestamp` int(10) NOT NULL,
+  `fname` varchar(20) DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `addr1` varchar(40) DEFAULT NULL,
+  `addr2` varchar(40) DEFAULT NULL,
+  `url` varchar(40) DEFAULT NULL,
+  `grid` varchar(6) DEFAULT NULL,
+  `qslmgr` varchar(60) DEFAULT NULL,
+  `error` varchar(60) DEFAULT NULL,
+  `image` varchar(25) DEFAULT NULL,
+  `imageheight` int(10) DEFAULT NULL,
+  `imagewidth` int(10) DEFAULT NULL,
+  `imageurl` varchar(200) DEFAULT NULL,
+  `imagestatus` int(1) DEFAULT NULL,
+  `imagesize` int(10) DEFAULT NULL,
+  `qrz_cache_id` int(12) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`qrz_cache_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=414 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `qrz_cache`
+--
+
+LOCK TABLES `qrz_cache` WRITE;
+/*!40000 ALTER TABLE `qrz_cache` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrz_cache` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -180,7 +241,7 @@ CREATE TABLE `rel_bands_projects` (
   `band_id` int(4) NOT NULL,
   `id` int(4) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=365 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=435 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,7 +250,7 @@ CREATE TABLE `rel_bands_projects` (
 
 LOCK TABLES `rel_bands_projects` WRITE;
 /*!40000 ALTER TABLE `rel_bands_projects` DISABLE KEYS */;
-INSERT INTO `rel_bands_projects` VALUES (2,2,115),(0,1,291),(0,2,292),(0,3,293),(0,4,294),(0,5,295),(0,6,296),(0,7,297),(1,1,355),(1,2,356),(1,3,357),(1,4,358),(1,5,359),(1,6,360),(1,7,361),(1,8,362),(1,9,363),(1,10,364);
+INSERT INTO `rel_bands_projects` VALUES (2,2,115),(0,1,291),(0,2,292),(0,3,293),(0,4,294),(0,5,295),(0,6,296),(0,7,297),(1,1,425),(1,2,426),(1,3,427),(1,4,428),(1,5,429),(1,6,430),(1,7,431),(1,8,432),(1,9,433),(1,10,434);
 /*!40000 ALTER TABLE `rel_bands_projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +266,7 @@ CREATE TABLE `rel_modes_projects` (
   `mode_id` int(4) NOT NULL,
   `id` int(4) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=302 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=331 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +275,7 @@ CREATE TABLE `rel_modes_projects` (
 
 LOCK TABLES `rel_modes_projects` WRITE;
 /*!40000 ALTER TABLE `rel_modes_projects` DISABLE KEYS */;
-INSERT INTO `rel_modes_projects` VALUES (2,1,158),(2,2,159),(2,3,160),(2,4,161),(0,1,262),(0,2,263),(0,3,264),(0,4,265),(1,1,298),(1,2,299),(1,3,300),(1,4,301);
+INSERT INTO `rel_modes_projects` VALUES (1,1,323),(1,2,324),(1,3,325),(1,4,326),(1,5,327),(1,6,328),(1,7,329),(1,8,330);
 /*!40000 ALTER TABLE `rel_modes_projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,8 +291,10 @@ CREATE TABLE `rel_operators_projects` (
   `operator_id` int(4) NOT NULL,
   `id` int(4) NOT NULL AUTO_INCREMENT,
   `setting_log_time_auto` int(1) DEFAULT NULL,
+  `setting_incrementell_export_complete` int(10) DEFAULT NULL,
+  `setting_incrementell_export_operator` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -240,23 +303,9 @@ CREATE TABLE `rel_operators_projects` (
 
 LOCK TABLES `rel_operators_projects` WRITE;
 /*!40000 ALTER TABLE `rel_operators_projects` DISABLE KEYS */;
-INSERT INTO `rel_operators_projects` VALUES (2,5,39,NULL),(0,1,113,NULL),(0,3,114,NULL),(0,4,115,NULL),(0,6,116,NULL),(1,1,149,1),(1,3,150,1),(1,4,151,1),(1,6,152,NULL);
+INSERT INTO `rel_operators_projects` VALUES (1,1,177,NULL,NULL,NULL),(1,3,178,1,NULL,NULL),(1,4,179,1,NULL,NULL),(1,6,180,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `rel_operators_projects` ENABLE KEYS */;
 UNLOCK TABLES;
-
-DROP TABLE IF EXISTS `qrz_cache`;
-CREATE TABLE `qrz_cache` (
-  `call` varchar(20) NOT NULL,
-  `timestamp` int(10) NOT NULL,
-  `fname` varchar(20),
-  `addr1` varchar(40),
-  `addr2` varchar(40),
-  `url` varchar(40),
-  `grid` varchar(6),
-  `qslmgr` varchar(60),
-  PRIMARY KEY (`call`)
-);
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -267,4 +316,4 @@ CREATE TABLE `qrz_cache` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-03-18 14:09:11
+-- Dump completed on 2014-03-25 16:19:03
