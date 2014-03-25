@@ -142,11 +142,12 @@ function display_callinfo(call,formchange)
   }
   else
   {
+    var div_width=$('#div_log_change_callinfo1_picture').width();
+    var div_height=$('#div_log_change_callinfo1_picture').height();
+
     if(callinfo['qrzcom']['imagestatus'] == "0")
     {
       var op_picture="/cache/qrzcom/"+callinfo['qrzcom']['image'];
-      var div_width=$('#div_log_change_callinfo1_picture').width();
-      var div_height=$('#div_log_change_callinfo1_picture').height();
 
       if(div_width/callinfo['qrzcom']['imagewidth'] > div_height/callinfo['qrzcom']['imageheight'])
       {
@@ -160,11 +161,27 @@ function display_callinfo(call,formchange)
     }
     else if(callinfo['qrzcom']['imagestatus'] == "1")
     {
-      $('#div_log_change_callinfo1_picture').append("<a class='class_log_change_callinfo'>TEMP FEHLER</a>"); 
+      if(div_width/180 > div_height/180)
+      {
+	size='height';
+      }
+      else
+      {
+	size='width';
+      }
+      $('#div_log_change_callinfo1_picture').append('<a class="class_log_change_callinfo"><img class="class_log_change_callinfo" '+size+'="100%" src="images/qrzcom_error.png"</img></a>');
     }
     else
     {
-      $('#div_log_change_callinfo1_picture').append("<a class='class_log_change_callinfo'>KEIN BILD</a>"); 
+      if(div_width/180 > div_height/180)
+      {
+	size='height';
+      }
+      else
+      {
+	size='width';
+      }
+      $('#div_log_change_callinfo1_picture').append('<a class="class_log_change_callinfo"><img class="class_log_change_callinfo" '+size+'="100%" src="images/qrzcom_dummy.png"</img></a>');
     }
   }
   if(formchange == '1')
