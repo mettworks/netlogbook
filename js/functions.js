@@ -1,3 +1,24 @@
+function set_reload_monitor(stat)
+{
+  if(stat == "0") 
+  {
+    clearInterval(interval_monitor);
+  }
+  else
+  {
+    interval_monitor=setInterval("reload_monitor()",5000);
+  }
+}
+
+function reload_monitor()
+{
+  table_monitor_logs.fnDraw();
+  table_monitor_modes.fnDraw();
+  table_monitor_bands.fnDraw();
+  table_monitor_qsos.fnDraw();
+  table_monitor_total.fnDraw();
+}
+
 function show_picture(image)
 {
   $('.class_complete').remove();

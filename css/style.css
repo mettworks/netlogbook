@@ -8,7 +8,6 @@ html, body
   height: 100%;
   width: 100%;
   position: absolute;
-  //overflow: auto;
   font-size:1em;
   font-size: large
 }
@@ -100,7 +99,7 @@ img.class_complete
   left: 0%;
   width: 95%;
   height: 50px;
-  z-index: 0;
+  z-index: 1;
 }
 #div_navi_logout
 {
@@ -121,130 +120,171 @@ span.help div
   display:none;
   position:absolute;
   top:20px;
-      left:90px;
-      padding:5px;
-      border:1px dotted gray;
-      width:400px;
-      background: orange;
-      z-index: 20;
-    }
-    span.help:hover div
-    {
-      display:block;
-    }
-      table td
-      {
-        vertical-align: top;
-        border-bottom: 1px solid white;
-        border-left: 1px solid white;
-	white-space: nowrap;
-      }
-      table th
-      {
-        vertical-align: top;
-        border-bottom: 2px solid grey;
-	white-space: nowrap;
-      }
-        #div_delete_data_ask
-        {
-          position: fixed;
-          top:20%;
-          left: 0%;
-          width:100%;
-          height:80%;
-          visibility: hidden;
-          background-color: #999999;
-          z-index: 3;
-        }
-
-        #div_operator_change
-        {
-          position: fixed;
-          top:20%;
-          left: 0%;
-          width:100%;
-          height:80%;
-          visibility: hidden;
-          background-color: #999999;
-          z-index: 2;
-        }
-        #div_operators
-        {
-          position: absolute;
-          top: 10%;
-          left: 0%;
-          width: 100%;
-          height: 1000px;
-          z-index: 1;
-          visibility: hidden;
-          //overflow:auto;
-        }
-        #div_project_change
-        {
-          position: fixed;
-          top:20%;
-          left: 0%;
-          width:100%;
-          height:80%;
-          visibility: hidden;
-          background-color: #999999;
-          z-index: 2;
-        }
-        #div_projects
-        {
-          position: absolute;
-          top: 10%;
-          left: 0%;
-          width: 100%;
-          height: 1000px;
-          z-index: 1;
-          visibility: hidden;
-          //overflow:auto;
-        }
-       #div_logs
-        {
-	position: absolute;
-	top: 92px;
-	left: 2px;
-	width: 100%;
-	height: 1000px;
-	z-index: 1;
-	//overflow: auto;
-        }
-        #div_log_import
-        {
-          position: fixed;
-          top:20%;
-          left: 0%;
-          width:100%;
-          height:60%;
-          visibility: hidden;
-          background-color: #999999;
-          z-index: 2;
-        }
-        #div_log_export
-        {
-          position: fixed;
-          top:20%;
-          left: 0%;
-          width:100%;
-          height:60%;
-          visibility: hidden;
-          background-color: #999999;
-          z-index: 2;
-        }
-
-        #div_log_change
-        {
-          position: fixed;
-          top:0%;
-          left: 0%;
-          width:100%;
-          height:100%;
-          visibility: hidden;
-          background-color: #999999;
-          z-index: 2;
-        }
+  left:90px;
+  padding:5px;
+  border:1px dotted gray;
+  width:400px;
+  background: orange;
+  z-index: 20;
+}
+span.help:hover div
+{
+  display:block;
+}
+table td
+{
+  vertical-align: top;
+  border-bottom: 1px solid white;
+  border-left: 1px solid white;
+  white-space: nowrap;
+}
+table th
+{
+  vertical-align: top;
+  border-bottom: 2px solid grey;
+  white-space: nowrap;
+}
+#div_monitor
+{
+  position: fixed;
+  top:92px;
+  width: 100%;
+  height: 1000px;
+  visibility: hidden;
+}
+#div_monitor_table_logs
+{
+  position: fixed;
+  top:92px;
+  width: 70%;
+  height: 50%;
+}
+#div_monitor_table_total
+{
+  position: fixed;
+  top:92px%;
+  left: 70%;
+  width: 30%;
+  height: 50%;
+}
+#div_monitor_table_modes
+{
+  position: fixed;
+  top:50%;
+  width: 33%;
+  height: 50%;
+}
+#div_monitor_table_bands
+{
+  position: fixed;
+  top:50%;
+  left: 33%;
+  width: 33%;
+  height: 50%;
+}
+#div_monitor_table_qsos
+{
+  position: fixed;
+  top:50%;
+  left: 66%;
+  width: 33%;
+  height: 50%;
+}
+#div_delete_data_ask
+{
+  position: fixed;
+  top:20%;
+  left: 0%;
+  width:100%;
+  height:80%;
+  visibility: hidden;
+  background-color: #999999;
+  z-index: 3;
+}
+#div_operator_change
+{
+  position: fixed;
+  top:20%;
+  left: 0%;
+  width:100%;
+  height:80%;
+  visibility: hidden;
+  background-color: #999999;
+  z-index: 2;
+}
+#div_operators
+{
+  position: absolute;
+  top: 10%;
+  left: 0%;
+  width: 100%;
+  height: 1000px;
+  z-index: 1;
+  visibility: hidden;
+}
+#div_project_change
+{
+  position: fixed;
+  top:20%;
+  left: 0%;
+  width:100%;
+  height:80%;
+  visibility: hidden;
+  background-color: #999999;
+  z-index: 2;
+}
+#div_projects
+{
+  position: absolute;
+  top: 10%;
+  left: 0%;
+  width: 100%;
+  height: 1000px;
+  z-index: 1;
+  visibility: hidden;
+}
+#div_logs
+{
+  position: absolute;
+  top: 92px;
+  left: 2px;
+  width: 100%;
+  height: 1000px;
+  z-index: 1;
+}
+#div_log_import
+{
+  position: fixed;
+  top:20%;
+  left: 0%;
+  width:100%;
+  height:60%;
+  visibility: hidden;
+  background-color: #999999;
+  z-index: 3;
+}
+#div_log_export
+{
+  position: fixed;
+  top:20%;
+  left: 0%;
+  width:100%;
+  height:60%;
+  visibility: hidden;
+  background-color: #999999;
+  z-index: 3;
+}
+#div_log_change
+{
+  position: fixed;
+  top:0%;
+  left: 0%;
+  width:100%;
+  height:100%;
+  visibility: hidden;
+  background-color: #999999;
+  z-index: 3;
+}
 #div_log_change_form
 {
   position: fixed;

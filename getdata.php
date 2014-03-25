@@ -126,13 +126,112 @@
       }
     }
   }
+
+  else if($table == "monitor_total")
+  {
+    if($result=mysql_query("SELECT COUNT(*) FROM logs WHERE project_id=".$_SESSION['project_id'].";"))
+    {
+      $data_plain=array();
+      $count=mysql_result($result,0); 
+      $data_c[0][0]=$count;
+    }
+  }
+
+  else if(($table == "monitor_modes") || ($table == "monitor_bands") || ($table == "monitor_qsos"))
+  {
+    $data_plain=array();
+    if($result=mysql_query("SELECT COUNT(*) FROM logs WHERE project_id=".$_SESSION['project_id'].";"))
+    {
+      $total=mysql_result($result,0); 
+    }
+    if($table == "monitor_modes")
+    {
+      $modes=mysql_fragen('SELECT modes.mode_name,modes.mode_id FROM modes INNER JOIN rel_modes_projects ON rel_modes_projects.mode_id=modes.mode_id WHERE rel_modes_projects.project_id='.$_SESSION['project_id'],'mode_id'); 
+      foreach($modes as $mode)
+      {
+	if($result=mysql_query("SELECT COUNT(*) FROM logs WHERE mode_id=".$mode['mode_id'].";"))
+	{
+	  $count=mysql_result($result,0); 
+	  $percent=round((($count*100)/$total),1);
+	  if($percent != 0)
+	  {
+	    $counter[$mode['mode_name']]=round($percent,1);
+	  }
+	}
+      }
+    }
+    if($table == "monitor_bands")
+    {
+      $bands=mysql_fragen('SELECT bands.band_name,bands.band_id FROM bands INNER JOIN rel_bands_projects ON rel_bands_projects.band_id=bands.band_id WHERE rel_bands_projects.project_id='.$_SESSION['project_id'],'band_id'); 
+      foreach($bands as $band)
+      {
+	if($result=mysql_query("SELECT COUNT(*) FROM logs WHERE band_id=".$band['band_id'].";"))
+	{
+	  $count=mysql_result($result,0); 
+	  $percent=round((($count*100)/$total),1);
+	  if($percent != 0)
+	  { 
+	    $counter[$band['band_name']]=$percent;
+	  }
+	}
+      }
+    }
+    if($table == "monitor_qsos")
+    {
+      $operators=mysql_fragen('SELECT operators.operator_call,operators.operator_id FROM operators INNER JOIN rel_operators_projects ON rel_operators_projects.operator_id=operators.operator_id WHERE rel_operators_projects.project_id='.$_SESSION['project_id'],'operator_id');
+      foreach($operators as $operator)
+      {
+	if($result=mysql_query("SELECT COUNT(*) FROM logs WHERE operator_id=".$operator['operator_id'].";"))
+	{
+	  $count=mysql_result($result,0); 
+	  $percent=round((($count*100)/$total),1);
+	  if($percent != 0)
+	  { 
+	    $counter[$operator['operator_call']]=$percent;
+	  }
+	}
+      }
+
+    }
+
+    $counter=array_slice($counter,'0','5');
+    asort($counter);
+    $i=0;
+    foreach($counter as $name => $counts)
+    {
+      $data_c[$i][0]=$name;
+      $data_c[$i][1]=$counts;
+      $i++;
+    }
+  }
+
+  else if($table == "monitor_logs")
+  {
+    $modes=mysql_fragen('SELECT * FROM modes;','mode_id');
+    $operators=mysql_fragen('SELECT operators.* FROM operators INNER JOIN rel_operators_projects WHERE project_id='.$_SESSION['project_id'],"operator_id");
+    $sql="SELECT * FROM logs WHERE project_id=".$_SESSION['project_id']." ORDER BY log_time DESC LIMIT 5";
+    $i=0;
+    if($data_plain=mysql_fragen($sql,'log_id',$id))
+    {
+      asort($data_plain);
+      if($typ == "datatable")
+      {
+	foreach($data_plain as $data_temp)
+	{
+          $data_c[$i][0]=$data_temp['log_call'];
+          $data_c[$i][1]=$data_temp['log_freq'];
+          $data_c[$i][2]=$modes[$data_temp['mode_id']]['mode_name'];
+          $data_c[$i][3]=$data_temp['log_qth'];
+          $data_c[$i][4]=$operators[$data_temp['operator_id']]['operator_call'];
+	  $i++;
+	}
+      }
+    }
+  }
+
   else if($table == "logsfromme")
   {
     $modes=mysql_fragen('SELECT * FROM modes;','mode_id');
-    // TODO SORT!
-
-    //SELECT * FROM logs ORDER BY log_time DESC LIMIT 5;
-
     $sql="SELECT * FROM logs WHERE project_id=".$_SESSION['project_id']." AND operator_id=".$_SESSION['operator_id']." ORDER BY log_time DESC LIMIT 5";
     $i=0;
     if($data_plain=mysql_fragen($sql,'log_id',$id))
@@ -263,19 +362,23 @@
   {
     $data_c=array(); 
   }
-  
-  if($typ == "datatable")
+ 
+  if($typ == "datatable") 
   {
-    if(($_GET['iSortCol_0'] == '0') || ($_GET['iSortCol_0'] == '3'))
+    if(!preg_match('/^monitor_.*$/',$table))
     {
-      $key=$_GET['iSortCol_0'];
-      $direction=$_GET['sSortDir_0'];
-      $data_c=ar_sortieren($data_c); 
-    }
-    if(!isset($_GET['iSortCol_0']))
-    {
-      $key=0;
-      $data_c=ar_sortieren($data_c);
+      // TODO: ahh... bloed...
+      if(($_GET['iSortCol_0'] == '0') || ($_GET['iSortCol_0'] == '3'))
+      {
+	$key=$_GET['iSortCol_0'];
+	$direction=$_GET['sSortDir_0'];
+	$data_c=ar_sortieren($data_c); 
+      }
+      if(!isset($_GET['iSortCol_0']))
+      {
+	$key=0;
+	$data_c=ar_sortieren($data_c);
+      }
     }
 
     //

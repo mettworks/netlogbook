@@ -25,21 +25,6 @@
         <script type="text/javascript" src="js/jquery.fileupload.js"></script>
         <script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
         <script>
-	/*
-	var cronjob=get_data('cronjob','');
-	//var now = +new Date;
-	var now=new Date().getTime();
-	//now=now/1000;
-	console.log(cronjob);
-	if(cronjob['lastrun'] > now)
-	{
-	  alert('ja');
-	}
-	else
-	{
-	  alert('nein');
-	}
-	*/
 	modes=get_data('mode','');
 	operators=get_data('operator','');
 	$(function() {
@@ -64,12 +49,98 @@
 	    datepicker: false,
 	    format:'H:i',
 	    step:15,
-	    //maxTime:0,
 	  });
 	});
 	$(document).ready(
 	  function() 
 	  {
+	    table_monitor_logs=$('#table_monitor_logs').dataTable
+	    (
+	      {
+		"bProcessing": true,
+		"bServerSide": true,
+		"bUseRendered": false,
+		"sAjaxSource": "/getdata.php?typ=datatable&table=monitor_logs",
+		"bInfo": false,
+		"bPaginate": false,
+		"bFilter": false,
+		"bSort": false,
+                "aoColumns":
+		[
+		    null,
+		    null,
+		    null,
+		    null,
+		    null,
+		]
+	    });
+	    table_monitor_modes=$('#table_monitor_modes').dataTable
+	    (
+	      {
+		"bProcessing": true,
+		"bServerSide": true,
+		"bUseRendered": false,
+		"sAjaxSource": "/getdata.php?typ=datatable&table=monitor_modes",
+		"bInfo": false,
+		"bPaginate": false,
+		"bFilter": false,
+		"bSort": false,
+                "aoColumns":
+		[
+		    null,
+		    null,
+		]
+	    });
+	    table_monitor_bands=$('#table_monitor_bands').dataTable
+	    (
+	      {
+		"bProcessing": true,
+		"bServerSide": true,
+		"bUseRendered": false,
+		"sAjaxSource": "/getdata.php?typ=datatable&table=monitor_bands",
+		"bInfo": false,
+		"bPaginate": false,
+		"bFilter": false,
+		"bSort": false,
+                "aoColumns":
+		[
+		    null,
+		    null,
+		]
+	    });
+	    table_monitor_qsos=$('#table_monitor_qsos').dataTable
+	    (
+	      {
+		"bProcessing": true,
+		"bServerSide": true,
+		"bUseRendered": false,
+		"sAjaxSource": "/getdata.php?typ=datatable&table=monitor_qsos",
+		"bInfo": false,
+		"bPaginate": false,
+		"bFilter": false,
+		"bSort": false,
+                "aoColumns":
+		[
+		    null,
+		    null,
+		]
+	    });
+	    table_monitor_total=$('#table_monitor_total').dataTable
+	    (
+	      {
+		"bProcessing": true,
+		"bServerSide": true,
+		"bUseRendered": false,
+		"sAjaxSource": "/getdata.php?typ=datatable&table=monitor_total",
+		"bInfo": false,
+		"bPaginate": false,
+		"bFilter": false,
+		"bSort": false,
+                "aoColumns":
+		[
+		    null,
+		]
+	    });
 	    table_logs=$('#table_logs').dataTable
 	    (
 	      {
@@ -77,9 +148,7 @@
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=logs",
-		//"bStateSave": true,
-		//"bPaginate": false,
-
+		"bStateSave": true,
 		"oLanguage": 
 		{
 		  "sLengthMenu": 'Display <select>'+
@@ -122,7 +191,6 @@
 		      return '<input onclick="delete_data_ask(\'log\',\''+oObj.aData[14]+'\');" type="button" value="loeschen" name="loeschen" >';
 		    }
 		  }
-
 		]
 	    });
 	    table_logsfromme=$('#table_logsfromme').dataTable
@@ -181,7 +249,6 @@
 
 		]
 	    });
-
 	    table_operators=$('#table_operators').dataTable
 	    (
 	      {
@@ -242,13 +309,14 @@
       //interval_log=setInterval("reload_tables_log()",5000);
       </script></p>
       <div id="div_navi_top">
+	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Log">
+	<input type="button" onclick="set_reload_monitor('1');document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Monitor">
 	<?php
 	if($_SESSION['operator_role']==0)
 	{
 	  ?>
-	  <input type="button" onclick="document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Log">
-	  <input type="button" onclick="document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';" value="Projekte">
-	  <input type="button" onclick="document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';" value="OP's">
+	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';" value="Projekte">
+	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';" value="OP's">
 	<?php
 	}
 	?>
@@ -370,6 +438,65 @@
 	<a>Datensatz speichern mit STRG+S</a>
 	</div>
 	<div id="div_log_change_callinfo4">
+	</div>
+	<div id="div_monitor">
+	  <div id="div_monitor_table_logs">
+	    <a>Logs</a>
+	    <table id="table_monitor_logs">
+	      <thead>
+		<tr>
+		  <th>Call</th>
+		  <th>QRG</th>
+	  	  <th>Mode</th>
+		  <th>QTH</th>
+	  	  <th>QSO</th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
+	  <div id="div_monitor_table_total">
+	    <a>Summe</a>
+	    <table id="table_monitor_total">
+	      <thead>
+		<tr>
+		  <th></th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
+	  <div id="div_monitor_table_modes">
+	    <a>Modes</a>
+	    <table id="table_monitor_modes">
+	      <thead>
+		<tr>
+		  <th>Betriebsart</th>
+		  <th>%</th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
+	  <div id="div_monitor_table_bands">
+	    <a>Band</a>
+	    <table id="table_monitor_bands">
+	      <thead>
+		<tr>
+		  <th>B&auml;nder</th>
+		  <th>%</th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
+	  <div id="div_monitor_table_qsos">
+	    <a>QSO's</a>
+	    <table id="table_monitor_qsos">
+	      <thead>
+		<tr>
+		  <th>QSO</th>
+		  <th>%</th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
 	</div>
 	<div id="div_log_change_form">
 	  <form method="POST" action="" class="form" id="form_log_change">
