@@ -21,7 +21,6 @@
     $_SESSION['qrzcache']=$_GET['qrzcache'];
   }
 
-
   if($typ == "log")
   {
     if(($action=="mod") || ($action=="import"))
@@ -87,40 +86,61 @@
 	  {
 	    $key=trim($temp[$c]);
 	    $value=trim($temp[$c+1]);
-	    if(preg_match('/<call:.*/',$key))
+	    if(preg_match('/<call:.*/i',$key))
 	    {
 	      $data_all[$i]['log_call']=strtoupper($value);
 	    }
-	    else if(preg_match('/<freq:.*/',$key))
+	    else if(preg_match('/<freq:.*/i',$key))
 	    {
 	      $data_all[$i]['log_freq']=$value*1000;
 	    }
-	    else if(preg_match('/<mode:.*/',$key))
+	    else if(preg_match('/<mode:.*/i',$key))
 	    {
 	      $data_all[$i]['mode_id']=$modes[$value]['mode_id'];
 	    }
-	    else if(preg_match('/<rst_rcvd:.*/',$key))
+	    else if(preg_match('/<gridsquare:.*/i',$key))
+	    {
+	      $data_all[$i]['log_loc']=$value;
+	    }
+	    else if(preg_match('/<qth:.*/i',$key))
+	    {
+	      $data_all[$i]['log_qth']=$value;
+	    }
+	    else if(preg_match('/<name:.*/i',$key))
+	    {
+	      $data_all[$i]['log_name']=$value;
+	    }
+	    else if(preg_match('/<notes:.*/i',$key))
+	    {
+	      $data_all[$i]['log_notes']=$value;
+	    }
+	    else if(preg_match('/<qsl_via:.*/i',$key))
+	    {
+	      $data_all[$i]['log_manager']=$value;
+	    }
+	    else if(preg_match('/<rst_rcvd:.*/i',$key))
 	    {
 	      $rst=str_split($value);
 	      $data_all[$i]['log_rst_rx_0']=$rst['0'];
 	      $data_all[$i]['log_rst_rx_1']=$rst['1'];
 	      $data_all[$i]['log_rst_rx_2']=$rst['2'];
 	    }
-	    else if(preg_match('/<rst_sent:.*/',$key))
+	    else if(preg_match('/<rst_sent:.*/i',$key))
 	    {
 	      $rst=str_split($value);
 	      $data_all[$i]['log_rst_tx_0']=$rst['0'];
 	      $data_all[$i]['log_rst_tx_1']=$rst['1'];
 	      $data_all[$i]['log_rst_tx_2']=$rst['2'];
 	    }
-    	    else if(preg_match('/<qso_date:.*/',$key))
+    	    else if(preg_match('/<qso_date:.*/i',$key))
 	    {
 	      $temp_date=$value;
 	    }
-	    else if(preg_match('/<time_on:.*/',$key))
+	    else if(preg_match('/<time_on:.*/i',$key))
 	    {
 	      $temp_time=$value;
 	    }
+	    
 	    $c=$c+2;
 	  }
 	  // date and time string to timestamp

@@ -427,9 +427,9 @@
 		</select">
 	      </td>
 	      <td>
-		<input tabindex="2" class='class_log_change' type='text' size="1" name='log_rst_tx_0' id='log_rst_tx_0' value=''>
-		<input tabindex="3" class='class_log_change' type='text' size="1" name='log_rst_tx_1' id='log_rst_tx_1' value=''>
-		<input tabindex="4" class='class_log_change' type='text' size="1" name='log_rst_tx_2' id='log_rst_tx_2' value=''>
+		<input tabindex="2" class='class_log_change' type='text' maxlength="1" size="1" name='log_rst_tx_0' id='log_rst_tx_0' value=''>
+		<input tabindex="3" class='class_log_change' type='text' maxlength="1" size="1" name='log_rst_tx_1' id='log_rst_tx_1' value=''>
+		<input tabindex="4" class='class_log_change' type='text' maxlength="1" size="1" name='log_rst_tx_2' id='log_rst_tx_2' value=''>
 	      </td>
 	      <td>
 		<input tabindex="5" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_0' id='log_rst_rx_0' value=''>
