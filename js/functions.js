@@ -2,7 +2,10 @@ function set_reload_monitor(stat)
 {
   if(stat == "0") 
   {
-    clearInterval(interval_monitor);
+    if(typeof(interval_monitor) != 'undefined')
+    {
+      clearInterval(interval_monitor);
+    }
   }
   else
   {

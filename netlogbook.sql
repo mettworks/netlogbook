@@ -60,7 +60,6 @@ CREATE TABLE `cronjob` (
 
 LOCK TABLES `cronjob` WRITE;
 /*!40000 ALTER TABLE `cronjob` DISABLE KEYS */;
-INSERT INTO `cronjob` VALUES (1395163594,0);
 /*!40000 ALTER TABLE `cronjob` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +94,7 @@ CREATE TABLE `logs` (
   `time` int(10) NOT NULL,
   `typ` int(1) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13874 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +146,7 @@ CREATE TABLE `operators` (
   `operator_pass` varchar(40) DEFAULT NULL,
   `operator_role` varchar(1) DEFAULT NULL,
   PRIMARY KEY (`operator_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +155,7 @@ CREATE TABLE `operators` (
 
 LOCK TABLES `operators` WRITE;
 /*!40000 ALTER TABLE `operators` DISABLE KEYS */;
-INSERT INTO `operators` VALUES ('DO7ALE',NULL,1,'do7ale@do7ale.de','3e19be3bb0f081c9754a52aec3edce39','0'),('DC7VS',NULL,3,'christian@dc7vs.de','fde68a79d7ba89c4aa145190784d78c0','0'),('DG2RON',NULL,4,'dg2ron@yahoo.de','7b347eae9a00cc7c4accc2e668d0a906','0'),('TESTOP',NULL,6,'abcdefg@blacktux.de','3e19be3bb0f081c9754a52aec3edce39','0');
+INSERT INTO `operators` VALUES ('ADMIN','admin',1,NULL,'21232f297a57a5a743894a0e4a801fc3','0');
 /*!40000 ALTER TABLE `operators` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +177,7 @@ CREATE TABLE `projects` (
   `project_qrz_sess_created` int(10) DEFAULT NULL,
   `project_locator` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`project_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +186,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,'OZ2014',NULL,'do7ale','Egowaloho988','95998e61a918d72dffbd13254d183484','1392495943',1395759263,'jo51is'),(2,'testprojekt',NULL,'','1234','',NULL,1394538797,'');
+INSERT INTO `projects` VALUES (1,'project',NULL,NULL,NULL,'',NULL,1395767987,NULL);
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,9 +214,9 @@ CREATE TABLE `qrz_cache` (
   `imageurl` varchar(200) DEFAULT NULL,
   `imagestatus` int(1) DEFAULT NULL,
   `imagesize` int(10) DEFAULT NULL,
-  `qrz_cache_id` int(12) NOT NULL AUTO_INCREMENT,
+  `qrz_cache_id` int(4) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`qrz_cache_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=414 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +240,7 @@ CREATE TABLE `rel_bands_projects` (
   `band_id` int(4) NOT NULL,
   `id` int(4) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=435 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,7 +249,6 @@ CREATE TABLE `rel_bands_projects` (
 
 LOCK TABLES `rel_bands_projects` WRITE;
 /*!40000 ALTER TABLE `rel_bands_projects` DISABLE KEYS */;
-INSERT INTO `rel_bands_projects` VALUES (2,2,115),(0,1,291),(0,2,292),(0,3,293),(0,4,294),(0,5,295),(0,6,296),(0,7,297),(1,1,425),(1,2,426),(1,3,427),(1,4,428),(1,5,429),(1,6,430),(1,7,431),(1,8,432),(1,9,433),(1,10,434);
 /*!40000 ALTER TABLE `rel_bands_projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +264,7 @@ CREATE TABLE `rel_modes_projects` (
   `mode_id` int(4) NOT NULL,
   `id` int(4) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=331 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +273,6 @@ CREATE TABLE `rel_modes_projects` (
 
 LOCK TABLES `rel_modes_projects` WRITE;
 /*!40000 ALTER TABLE `rel_modes_projects` DISABLE KEYS */;
-INSERT INTO `rel_modes_projects` VALUES (1,1,323),(1,2,324),(1,3,325),(1,4,326),(1,5,327),(1,6,328),(1,7,329),(1,8,330);
 /*!40000 ALTER TABLE `rel_modes_projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +291,7 @@ CREATE TABLE `rel_operators_projects` (
   `setting_incrementell_export_complete` int(10) DEFAULT NULL,
   `setting_incrementell_export_operator` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,7 +300,6 @@ CREATE TABLE `rel_operators_projects` (
 
 LOCK TABLES `rel_operators_projects` WRITE;
 /*!40000 ALTER TABLE `rel_operators_projects` DISABLE KEYS */;
-INSERT INTO `rel_operators_projects` VALUES (1,1,177,NULL,NULL,NULL),(1,3,178,1,NULL,NULL),(1,4,179,1,NULL,NULL),(1,6,180,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `rel_operators_projects` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -316,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-03-25 16:19:03
+-- Dump completed on 2014-03-25 18:20:13
