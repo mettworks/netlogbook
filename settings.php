@@ -1,9 +1,9 @@
 <?php
-  $mysql_user="dxpad";
+  $mysql_user="netlogbook";
   $mysql_pass="blafaselpeng";
   $mysql_host="localhost";
-  $mysql_db="dxpad";
+  $mysql_db="netlogbook";
 
   $qrzcom_cachetime='864000'; // 1 Week
-  $cachepath='/usr/local/www/dxpad/cache/';
+  $cachepath='/var/www/dxpad/cache/';
 ?>

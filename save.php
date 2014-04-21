@@ -49,6 +49,7 @@
 	$data_all[0]['log_loc']=strtoupper($data_temp['log_loc']);
 	$data_all[0]['log_qth']=$data_temp['log_qth'];
 	$data_all[0]['log_name']=$data_temp['log_name'];
+	$data_all[0]['log_id']=$data_temp['log_id'];
 	$temp=explode(".",$data_temp['log_time_hr_date']);
 	$data_all[0]['log_time']=mktime('0','0','0',$temp['1'],$temp['0'],$temp['2']);
 	$temp=explode(':',$data_temp['log_time_hr_time']);
@@ -72,7 +73,7 @@
 	$import=preg_replace('/^.*<eoh>/','',$import);
 	$import=preg_replace('/\r+/','',$import);
 
-	$logs=preg_split('/<eor>/',$import);
+	$logs=preg_split('/<eor>/i',$import);
 	$i=0;
 	foreach($logs as $log)
 	{
@@ -89,7 +90,6 @@
 	    if(preg_match('/<call:.*/i',$key))
 	    {
 	      $data_all[$i]['log_call']=strtoupper($value);
-	      firebug_debug($call);
 	    }
 	    else if(preg_match('/<freq:.*/i',$key))
 	    {
@@ -185,9 +185,8 @@
       foreach($data_all as $dataid => $data)
       {
 	$error=0;
-	//firebug_debug($data_all);
 	// Doubles?
-	if(mysql_fragen('SELECT log_id FROM logs WHERE project_id="'.$_SESSION['project_id'].'" AND operator_id="'.$_SESSION['operator_id'].'" AND log_call="'.$data['log_call'].'" AND log_time="'.$data['log_time'].'"'))
+	if((mysql_fragen('SELECT log_id FROM logs WHERE project_id="'.$_SESSION['project_id'].'" AND operator_id="'.$_SESSION['operator_id'].'" AND log_call="'.$data['log_call'].'" AND log_time="'.$data['log_time'].'"')) && (!is_numeric($data['log_id'])))
 	{
 	  /*
 	  firebug_debug("DUP:");
@@ -311,17 +310,12 @@
 	    $counter_error++;
 	  }
 	}
-
-      //firebug_debug($data_all);
-      //die();  
       if(is_array($data_all_complete))
       {
 	foreach($data_all_complete as $data)
 	{
-	  /*
 	  firebug_debug("schreiben:");
 	  firebug_debug($data);
-	  */
 	  /*
 	  if($_SESSION['qrzcache'] == 1)
 	  {

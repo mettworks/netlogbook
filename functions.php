@@ -185,14 +185,14 @@
         'method'  => 'GET',
         //'header'  => "Content-Type: text/xml\r\n",
         //'content' => $body,
-	'timeout' => 5
+	'timeout' => 8
       )
     );
 
     $context  = stream_context_create($opts);
 
-    file_put_contents('/usr/local/www/dxpad/cache/qrzcom/'.$destname, file_get_contents($url,false,$context));
-    if(filesize('/usr/local/www/dxpad/cache/qrzcom/'.$destname) != $size)
+    file_put_contents('/var/www/netlogbook/cache/qrzcom/'.$destname, file_get_contents($url,false,$context));
+    if(filesize('/var/www/netlogbook/cache/qrzcom/'.$destname) != $size)
     {
       return false;
     }
@@ -234,6 +234,7 @@
 	    mysql_write_array('qrz_cache',$data2write,'qrz_cache_id',$data_temp['0']['qrz_cache_id']);
 	  }
 	}
+	//firebug_debug($return);
       }
       else
       {
@@ -435,7 +436,6 @@
     <?php
   }
 
-
   function checklogin()
   {
     session_start();
@@ -456,19 +456,19 @@
       if(is_numeric($id))
       {
 	// update
-	if(strlen($value) > 0)
-	{
+	//if(strlen($value) > 0)
+	//{
 	  $string1.=$name."='".$value."',";
-	}
+	//}
       }
       else
       {
-	if(strlen($value) > 0)
-	{
+	//if(strlen($value) > 0)
+	//{
 	  // insert
 	  $string1.=$name.",";
 	  $string2.="'".$value."',";
-	}
+	//}
       }
     }
     $string1=preg_replace('/\,$/','',$string1);

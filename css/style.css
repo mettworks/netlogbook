@@ -15,6 +15,10 @@ input:focus, textarea:focus
 {
   background-color: orange;
 }
+.counter
+{
+  text-align: right;  
+}
 .class_log_change_callinfo, .class_log_change_locinfo
 {
   font-size:0.9m;
@@ -151,6 +155,8 @@ table th
   width: 100%;
   height: 1000px;
   visibility: hidden;
+ font-family: 'Lucida Grande', Helvetica, Arial, sans-serif; 
+  font-size: 20pt;
 }
 #div_monitor_table_logs
 {
@@ -165,19 +171,19 @@ table th
   top:92px%;
   left: 70%;
   width: 30%;
-  height: 50%;
+  height: 55%;
 }
 #div_monitor_table_modes
 {
   position: fixed;
-  top:50%;
+  top:55%;
   width: 33%;
   height: 50%;
 }
 #div_monitor_table_bands
 {
   position: fixed;
-  top:50%;
+  top:55%;
   left: 33%;
   width: 33%;
   height: 50%;
@@ -185,7 +191,7 @@ table th
 #div_monitor_table_qsos
 {
   position: fixed;
-  top:50%;
+  top:55%;
   left: 66%;
   width: 33%;
   height: 50%;

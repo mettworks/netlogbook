@@ -1,7 +1,7 @@
 <?php
   include('functions.php');
-  $mysql = mysql_connect("localhost","root","pAnibu27!","dxpad") or die("Error " . mysql_error($mysql));   
-  mysql_select_db('dxpad',$mysql); 
+  $mysql = mysql_connect("localhost","netlogbook","blafaselpeng","netlogbook") or die("Error " . mysql_error($mysql));   
+  mysql_select_db('netlogbook',$mysql); 
   if($_GET['aktion'] == "kaputtmachen")
   {
     session_start();
@@ -10,6 +10,12 @@
   }
   if($_SERVER['REQUEST_METHOD'] == 'POST')
   {
+    ini_set('session.gc_maxlifetime', 168*60*60); // 1 woche
+    ini_set('session.cookie_lifetime', 168*60*60); // 1 woche
+    ini_set('session.gc_probability', 1);
+    ini_set('session.gc_divisor', 100);
+    ini_set('session.cookie_secure', FALSE);
+    ini_set('session.use_only_cookies', TRUE);
     session_start();
     $uname=mysql_real_escape_string($_POST['uname']);
     $pass=md5(mysql_real_escape_string($_POST['pass']));

@@ -119,10 +119,14 @@
 		"bPaginate": false,
 		"bFilter": false,
 		"bSort": false,
+		"columnClasses": "column",
                 "aoColumns":
 		[
 		    null,
 		    null,
+		    { 
+		      "sClass": "counter",
+		    } 
 		]
 	    });
 	    table_monitor_total=$('#table_monitor_total').dataTable
@@ -495,6 +499,7 @@
 		<tr>
 		  <th>QSO</th>
 		  <th>%</th>
+		  <th>Anzahl</th>
 		</tr>
 	      </thead>
 	    </table>

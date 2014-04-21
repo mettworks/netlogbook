@@ -155,7 +155,7 @@
 	  $percent=round((($count*100)/$total),1);
 	  if($percent != 0)
 	  {
-	    $counter[$mode['mode_name']]=round($percent,1);
+	    $counter[$mode['mode_name']]['percent']=round($percent,1);
 	  }
 	}
       }
@@ -171,7 +171,7 @@
 	  $percent=round((($count*100)/$total),1);
 	  if($percent != 0)
 	  { 
-	    $counter[$band['band_name']]=$percent;
+	    $counter[$band['band_name']]['percent']=$percent;
 	  }
 	}
       }
@@ -187,20 +187,22 @@
 	  $percent=round((($count*100)/$total),1);
 	  if($percent != 0)
 	  { 
-	    $counter[$operator['operator_call']]=$percent;
+	    $counter[$operator['operator_call']]['percent']=$percent;
+	    $counter[$operator['operator_call']]['count']=$count;
 	  }
 	}
       }
-
     }
 
+    arsort($counter);
     $counter=array_slice($counter,'0','5');
     asort($counter);
     $i=0;
     foreach($counter as $name => $counts)
     {
       $data_c[$i][0]=$name;
-      $data_c[$i][1]=$counts;
+      $data_c[$i][1]=$counts['percent'];
+      $data_c[$i][2]=$counts['count'];
       $i++;
     }
   }

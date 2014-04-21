@@ -95,7 +95,7 @@ function write_data(typ,id)
     // durch den Zeilenumbruchkram wird es leserlicher...
     var datastring="action=mod&typ=log&"+
 					  "log_id="+log_id+"&"+
-					  "log_call="+log_call+"&"+
+					  "log_call="+escape(log_call)+"&"+
 					  "log_time_hr_date="+log_time_hr_date+"&"+
 					  "log_time_hr_time="+log_time_hr_time+"&"+
 					  "log_freq="+log_freq+"&"+
@@ -106,13 +106,13 @@ function write_data(typ,id)
 					  "log_rst_tx_0="+log_rst_tx_0+"&"+
 					  "log_rst_tx_1="+log_rst_tx_1+"&"+
 					  "log_rst_tx_2="+log_rst_tx_2+"&"+
-					  "log_dok="+log_dok+"&"+
-					  "log_name="+log_name+"&"+
+					  "log_dok="+escape(log_dok)+"&"+
+					  "log_name="+escape(log_name)+"&"+
 					  "log_time_auto="+log_time_auto+"&"+
-					  "log_notes="+log_notes+"&"+
-					  "log_qth="+log_qth+"&"+
-					  "log_loc="+log_loc+"&"+
-					  "log_manager="+log_manager;
+					  "log_notes="+escape(log_notes)+"&"+
+					  "log_qth="+escape(log_qth)+"&"+
+					  "log_loc="+escape(log_loc)+"&"+
+					  "log_manager="+escape(log_manager);
 
   }
 
