@@ -506,7 +506,7 @@
 	  </div>
 	</div>
 	<div id="div_log_change_form">
-	  <form method="POST" action="" class="form" id="form_log_change">
+	  <form method="POST" action="" class="form" id="form_log_change" accept-charset="UTF-8">
 	  <table>
 	    <tr>
 	      <td>

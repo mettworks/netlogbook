@@ -5,5 +5,5 @@
   $mysql_db="netlogbook";
 
   $qrzcom_cachetime='864000'; // 1 Week
-  $cachepath='/var/www/dxpad/cache/';
+  $cachepath='/usr/local/www/netlogbook/cache/';
 ?>

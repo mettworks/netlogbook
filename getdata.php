@@ -6,6 +6,8 @@
   $typ=$_GET['typ'];
   $id=$_GET['id'];
   //print "<pre>";
+  //print_r($_SESSION);
+  //die();
 
   // http://www.phpbar.de/w/Multidimensionales_Array_sortieren
   // Vergleichsfunktion
@@ -364,7 +366,7 @@
   {
     $data_c=array(); 
   }
- 
+
   if($typ == "datatable") 
   {
     if(!preg_match('/^monitor_.*$/',$table))
@@ -410,6 +412,8 @@
 	$data_c[$data_c_id][3]=preg_replace('/\./',',',$freq);
       }
     }
+
+
     if(($_GET['iSortCol_0'] != '0') && ($_GET['iSortCol_0'] != '3'))
     {
       $key=$_GET['iSortCol_0'];
@@ -481,5 +485,15 @@
   {
     $output=$data_plain;
   }
-  echo json_encode($output);
+  //firebug_debug($output);
+  if(json_encode($output))
+  {
+    echo json_encode($output);
+  }
+  else
+  { 
+    firebug_debug("kaputt!");
+    firebug_debug($json_errors[json_last_error()]);
+    //echo 'Letzter Fehler : ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
+  }
 ?>

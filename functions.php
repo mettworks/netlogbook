@@ -191,8 +191,10 @@
 
     $context  = stream_context_create($opts);
 
-    file_put_contents('/var/www/netlogbook/cache/qrzcom/'.$destname, file_get_contents($url,false,$context));
-    if(filesize('/var/www/netlogbook/cache/qrzcom/'.$destname) != $size)
+    // TODO TODO!!!!
+
+    file_put_contents('/usr/local/www/netlogbook/cache/qrzcom/'.$destname, file_get_contents($url,false,$context));
+    if(filesize('/usr/local/www/netlogbook/cache/qrzcom/'.$destname) != $size)
     {
       return false;
     }
@@ -510,6 +512,7 @@
     if($mysql=mysql_connect($mysql_host,$mysql_user,$mysql_pass))
     {
       mysql_select_db($mysql_db);
+      mysql_query("SET NAMES 'utf8'");
       return $mysql;
     }
     else
