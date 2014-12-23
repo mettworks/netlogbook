@@ -191,10 +191,8 @@
 
     $context  = stream_context_create($opts);
 
-    // TODO TODO!!!!
-
-    file_put_contents('/usr/local/www/netlogbook/cache/qrzcom/'.$destname, file_get_contents($url,false,$context));
-    if(filesize('/usr/local/www/netlogbook/cache/qrzcom/'.$destname) != $size)
+    file_put_contents($_SERVER['DOCUMENT_ROOT'].'/cache/qrzcom/'.$destname, file_get_contents($url,false,$context));
+    if(filesize($_SERVER['DOCUMENT_ROOT'].'/cache/qrzcom/'.$destname) != $size)
     {
       return false;
     }
@@ -587,17 +585,20 @@
   }
 
 
-  function firebug_debug ($data) {
-    echo "<script>\r\n//<![CDATA[\r\nif(!console){var console={log:function(){}}}";
-    $output    =    explode("\n", print_r($data, true));
-    foreach ($output as $line) {
-        if (trim($line)) {
-            $line    =    addslashes($line);
-            echo "console.log(\"{$line}\");";
-        }
+function firebug_debug ($data) 
+{
+  echo "<script>\r\n//<![CDATA[\r\nif(!console){var console={log:function(){}}}";
+  $output    =    explode("\n", print_r($data, true));
+  foreach ($output as $line) 
+  {
+    if (trim($line)) 
+    {
+      $line    =    addslashes($line);
+      echo "console.log(\"{$line}\");";
     }
-    echo "\r\n//]]>\r\n</script>";
   }
+  echo "\r\n//]]>\r\n</script>";
+}
 
   function hole_daten($typ,$id='',$iDisplayStart='',$iDisplayLength='',$sEcho='')
   {

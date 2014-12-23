@@ -153,7 +153,7 @@ function display_callinfo(call,formchange)
   callinfo=get_callinfo(call);
   $('.class_log_change_callinfo').remove();
   $('.error_text').remove();
-  if(typeof(callinfo['qrzcom']['error']) == 'string')
+  if((typeof(callinfo['qrzcom']['error']) == 'string') && (callinfo['qrzcom']['error'] != ""))
   {
     $('#div_log_change_error').append("<a class='class_log_change_callinfo'>Error QRZ.COM:"+callinfo['qrzcom']['error']+"</a>");
     callinfo['qrzcom']['fname']="";
