@@ -293,18 +293,24 @@
  		  {
 		    "bVisible": false
 		  },
+		  {
+		    "bVisible": false
+		  },
+		  {
+		    "bVisible": false
+		  },
                   {
                     // bearbeiten
                     "fnRender": function(oObj)
                     {
-                      return '<input onclick="change_project(\''+oObj.aData[1]+'\');" type="button" value="bearbeiten" name="bearbeiten" >';
+                      return '<input onclick="change_project(\''+oObj.aData[3]+'\');" type="button" value="bearbeiten" name="bearbeiten" >';
                     }
                   },
                   {
                     // loeschen
                     "fnRender": function(oObj)
                     {
-                      return '<input onclick="delete_project(\''+oObj.aData[1]+'\');" type="button" value="loeschen" name="loeschen" >';
+                      return '<input onclick="delete_project(\''+oObj.aData[3]+'\');" type="button" value="loeschen" name="loeschen" >';
                     }
                   }
 
@@ -711,6 +717,25 @@
 	    </tr>
 	    <tr class='class_project_change'>
 	      <td>
+		<span class='help'>Modus<div>Modus</div></span>
+	      </td>
+	      <td>
+		<select class='class_projekt_change' name='project_mode' id='project_mode' onchange='project_change_modus()'>
+		  <option value="0">jeder sein Call</option>
+		  <option value="1">Clubstation</option>
+		</select>
+	      </td>
+	    </tr>
+	    <tr class='class_project_change'>
+	      <td>
+		<span class='help'>Clubstationsrufzeichen<div>Clubstationsrufzeichen</div></span>
+	      </td>
+	      <td>
+		<input class='class_project_change' type='text' name='project_call' id='project_call' value=''>
+	      </td>
+	    </tr>
+	    <tr class='class_project_change'>
+	      <td>
 		<span class='help'>qrz.com Username<div>Username qrz.com</div></span>
 	      </td>
 	      <td>
@@ -825,6 +850,8 @@
       <thead>
         <tr>
           <th>Name</th>
+	  <th></th>
+	  <th></th>
 	  <th></th>
           <th></th>
 	  <th></th>

@@ -155,6 +155,8 @@ function write_data(typ,id)
   if(typ == 'project')
   {
     var project_short_name=$('#project_short_name').val();
+    var project_mode=$('#project_mode').val();
+    var project_call=$('#project_call').val();
     var project_id=$('#project_id').val();
     var project_members=$('#project_members').val();
     var project_modes=$('#project_modes').val();
@@ -164,7 +166,7 @@ function write_data(typ,id)
     var project_qrz_pass2=$('#project_qrz_pass2').val();
     var project_locator=$('#project_locator').val();
 
-    var datastring="action=mod&typ=project&project_id="+project_id+"&project_short_name="+project_short_name+"&project_members="+project_members+"&project_qrz_user="+project_qrz_user+"&project_qrz_pass1="+project_qrz_pass1+"&project_qrz_pass2="+project_qrz_pass2+"&project_modes="+project_modes+"&project_bands="+project_bands+"&project_locator="+project_locator;
+    var datastring="action=mod&typ=project&project_id="+project_id+"&project_short_name="+project_short_name+"&project_mode="+project_mode+"&project_call="+project_call+"&project_members="+project_members+"&project_qrz_user="+project_qrz_user+"&project_qrz_pass1="+project_qrz_pass1+"&project_qrz_pass2="+project_qrz_pass2+"&project_modes="+project_modes+"&project_bands="+project_bands+"&project_locator="+project_locator;
   }
   if(typ == 'project_kill_qrz_sess')
   {

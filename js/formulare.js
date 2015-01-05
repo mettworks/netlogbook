@@ -236,7 +236,10 @@ function change_project(project_id)
   if(project_id)
   {
     project_mod=get_data('projects',project_id);
+    console.log(project_mod);
     project_short_name=project_mod[project_id]['project_short_name'];
+    project_mode=project_mod[project_id]['project_mode'];
+    project_call=project_mod[project_id]['project_call'];
     project_long_name=project_mod[project_id]['project_long_name'];
     project_qrz_user=project_mod[project_id]['project_qrz_user'];
     project_qrz_pass=project_mod[project_id]['project_qrz_pass'];
@@ -244,11 +247,13 @@ function change_project(project_id)
     project_members=get_data('rel_project_operator',project_id);
     project_modes=get_data('rel_project_mode',project_id);
     project_bands=get_data('rel_project_band',project_id);
-    console.log(project_members);
+    //console.log(project_members);
   }
   else
   {
     project_short_name="";
+    project_mode="0";
+    project_call="";
     project_long_name="";
     project_qrz_user="";
     project_qrz_pass="";
@@ -267,6 +272,10 @@ function change_project(project_id)
 
   $('#project_id').val(project_id);
   $('#project_short_name').val(project_short_name);
+  //$('#project_mode option[value='+project_mode+]).prop('selected', 'true');
+  console.log(project_mode);
+  $('#project_mode').val(project_mode);
+  $('#project_call').val(project_call);
   $('#project_qrz_user').val(project_qrz_user);
   $('#project_qrz_pass1').val(project_qrz_pass1);
   $('#project_qrz_pass2').val(project_qrz_pass2);
@@ -322,6 +331,7 @@ function change_project(project_id)
   }
   );
   $('#project_bands').append(temp);
+  project_change_modus();
 }
 
 function delete_data_ask(typ,id)

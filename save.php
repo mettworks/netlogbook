@@ -428,6 +428,8 @@
     //$data['project_qrz_pass1']=mysql_real_escape_string($data_temp['project_qrz_pass1']);
     //$data['project_qrz_pass2']=mysql_real_escape_string($data_temp['project_qrz_pass2']);
     $data['project_locator']=mysql_real_escape_string($data_temp['project_locator']);
+    $data['project_call']=mysql_real_escape_string($data_temp['project_call']);
+    $data['project_mode']=mysql_real_escape_string($data_temp['project_mode']);
 
     if($action=="mod")
     {

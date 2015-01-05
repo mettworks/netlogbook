@@ -70,6 +70,20 @@ function reload_tables_log()
 {
   table_logs.fnDraw();
 }
+
+function project_change_modus()
+{
+  project_modus=$('#project_mode').val();
+  if(project_modus == 0)
+  {
+    $('#project_call').prop('disabled',true);
+  }
+  else
+  {
+    $('#project_call').prop('disabled',false);
+  }
+}
+
 //
 // aendert beim aendern der checkbox fuer die Zeiteingabe die input Box fuer die Zeit
 function log_change_time()

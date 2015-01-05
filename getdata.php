@@ -321,9 +321,11 @@
       foreach($data_plain as $data_temp)
       {
 	$data_c[$i][0]=$data_temp['project_short_name'];
-	$data_c[$i][1]=$data_temp['project_id'];
-	$data_c[$i][2]="";
-	$data_c[$i][3]="";
+	$data_c[$i][1]=$data_temp['project_mode'];
+	$data_c[$i][2]=$data_temp['project_call'];
+	$data_c[$i][3]=$data_temp['project_id'];
+	$data_c[$i][4]="";
+	$data_c[$i][5]="";
 	$i++;
       }
     }
