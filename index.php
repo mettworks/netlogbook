@@ -2,6 +2,7 @@
   include('functions.php');
   checklogin();
   include('settings.php');
+  $mysql=mysql_c();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
   <html>
@@ -324,6 +325,50 @@
 	<?php
 	}
 	?>
+	<select name="projects" id="projects" onchange="set_project()">
+	  <?php
+	  $sql="SELECT project_id,project_short_name FROM projects";
+	  $projects=mysql_fragen($sql,'project_id');
+
+	  if($_SESSION['operator_role'] == 0)
+	  {
+	    foreach($projects as $project_id => $project)
+	    {
+	      if($_SESSION['project_id'] == $project_id)
+	      {
+		?>
+		<option selected value=<?=$project_id?>><?=$project['project_short_name']?></option>
+		<?php
+	      }
+	      else
+	      {
+		?>
+		<option value=<?=$project_id?>><?=$project['project_short_name']?></option>
+		<?php
+	      }
+	    }
+	  }
+	  else
+	  {
+	    foreach($_SESSION['operator_projects'] as $operator_projects)
+	    {
+	      if($_SESSION['project_id'] == $projects[$operator_projects]['project_id'])
+	      {
+		?>
+		<option selected value=<?=$projects[$operator_projects]['project_id']?>><?=$projects[$operator_projects]['project_short_name']?></option>
+		<?php
+	      }
+	      else
+	      {
+		?>
+		<option value=<?=$projects[$operator_projects]['project_id']?>><?=$projects[$operator_projects]['project_short_name']?></option>
+		<?php
+	      }
+
+	    }
+	  }
+	  ?>  
+	</select>
       </div>
       <div id="div_complete">
       </div>

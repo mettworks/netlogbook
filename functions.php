@@ -538,8 +538,10 @@
       }
     }
     $sql=$sql.";";
+    //firebug_debug($sql);
     if(!$result = mysql_query($sql))
     {
+      firebug_debug(mysql_error());
       print $sql."\n";
       print mysql_error()."\n";
       die();

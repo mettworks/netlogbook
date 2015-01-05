@@ -12,6 +12,11 @@
   //firebug_debug($_GET);
   //die();
 
+  if($action == "save_project_session")
+  {
+    $_SESSION['project_id']=$_GET['project_id'];
+    mysql_schreib("UPDATE operators SET last_project='".$_SESSION['project_id']."' WHERE operator_id='".$_SESSION['operator_id']."';");
+  }
   if($action == "savesettings")
   {
     $_SESSION['onlyoperator']=$_GET['onlyoperator'];

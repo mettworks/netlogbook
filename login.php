@@ -24,30 +24,42 @@
 
     if(mysql_num_rows($result) == 1)
     {
-      $sql="SELECT operator_role,operator_id from operators WHERE operator_call='".$uname."' AND operator_pass='".$pass."';";
+      $sql="SELECT last_project,operator_role,operator_id from operators WHERE operator_call='".$uname."' AND operator_pass='".$pass."';";
       $result = mysql_query($sql) or die("Error " . mysql_error($mysql));
       if(mysql_num_rows($result) == 1)
       {
         $data=mysql_fetch_assoc($result);
 
-	// Wenn operator_role == 0 ist ueberall Zugriff erlaubt
-	if($data['operator_role'] != 0)
-	{
-	  $sql="SELECT id FROM rel_operators_projects WHERE project_id='".$_POST['project']."' AND operator_id='".$data['operator_id']."';";
-	  $result = mysql_query($sql);
-	  if(mysql_num_rows($result) != 1)
-	  {
-	    session_destroy();
-	    header('Location: /index.php');
-	    die();
-	  }
-	}
+	$sql="SELECT project_id FROM rel_operators_projects WHERE operator_id='".$data['operator_id']."';";
+	$result = mysql_query($sql);
 
-	$_SESSION['operator_role']=$data['operator_role'];
-	$_SESSION['operator_id']=$data['operator_id'];
-	$_SESSION['project_id']=$_POST['project'];
-	$_SESSION['loggedin']=true;
-	header('Location: /index.php');
+	if(mysql_num_rows($result) != 0)
+	{
+	  $operator_projects=mysql_fetch_assoc($result);
+	  $_SESSION['operator_projects']=$operator_projects;
+	  $_SESSION['operator_role']=$data['operator_role'];
+	  $_SESSION['operator_id']=$data['operator_id'];
+	  $_SESSION['loggedin']=true;
+
+	  if(is_numeric($data['last_project']))
+	  {
+	    $_SESSION['project_id']=$data['last_project'];
+	  }
+	  else
+	  {
+	    $_SESSION['project_id']=end($operator_projects);
+	  }
+
+	  header('Location: /index.php');
+	}
+	else
+	{
+	  ?>
+	  <script language="javascript">
+	  alert("Benutzername und Passwort ok, du bist aber keinem Projekt zugeordnet und kein Admin.");
+	  </script>
+	  <?php
+	}
       }
       else
       {
@@ -56,10 +68,6 @@
         die();
       }
     }
-  }
-  else
-  {
-    $projects=mysql_fragen("SELECT project_id,project_short_name FROM projects;","project_id");
   }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
@@ -72,16 +80,6 @@
 <form name="login" method="POST">
   <input name="uname" value="<?php echo $uname?>"><br>
   <input type="password" name="pass" value=""><br>
-  <select name='project' id='project'>
-    <?
-    foreach($projects as $project)
-    {
-    ?>
-      <option value=<?=$project['project_id']?>><?=$project['project_short_name']?></option>
-    <?
-    }
-    ?>
-  </select>
   <input type="submit" value="LOS">
 </form>
 </body>

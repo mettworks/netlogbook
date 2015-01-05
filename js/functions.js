@@ -1,3 +1,9 @@
+function set_project()
+{
+  project_id=$('#projects').val();
+  save_project_session(project_id);
+}
+
 function set_reload_monitor(stat)
 {
   if(stat == "0") 
