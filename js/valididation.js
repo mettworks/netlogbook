@@ -35,6 +35,7 @@ function save_map_settings()
     {
       type: "GET",
       url: "save.php",
+      async: false,
       data: datastring,
       success: function(html)
       {
@@ -42,7 +43,7 @@ function save_map_settings()
       }
     }
   );
-  load();
+  loadXML();
 }
 
 

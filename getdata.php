@@ -41,6 +41,10 @@
 
   $mysql=mysql_c();
 
+  if($table == "session")
+  {
+    $data_plain=$_SESSION;
+  }
   if($table == "locinfo")
   {
     $data_plain=locinfo($_GET['loc']);

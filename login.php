@@ -36,6 +36,7 @@
 	if(mysql_num_rows($result) != 0)
 	{
 	  $operator_projects=mysql_fetch_assoc($result);
+	  $_SESSION['map_settings']=array();
 	  $_SESSION['operator_projects']=$operator_projects;
 	  $_SESSION['operator_role']=$data['operator_role'];
 	  $_SESSION['operator_id']=$data['operator_id'];
@@ -49,6 +50,14 @@
 	  {
 	    $_SESSION['project_id']=end($operator_projects);
 	  }
+
+	  $sql="SELECT project_locator FROM projects WHERE project_id='".$_SESSION['project_id']."';";
+	  $result = mysql_query($sql);
+	  $data=mysql_fetch_assoc($result);
+	  $_SESSION['project_locator']=$data['project_locator'];
+	  $temp=locator2degree($_SESSION['project_locator']);
+	  $_SESSION['project_lon']=$temp['lon'];
+	  $_SESSION['project_lat']=$temp['lat'];
 
 	  header('Location: /index.php');
 	}

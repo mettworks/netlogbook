@@ -10,6 +10,7 @@ function set_project()
 // fill the option values for the map
 function set_map_settings()
 {
+  session=get_data('session','');
   modes=get_data('rel_project_mode','');
   bands=get_data('rel_project_band','');
   operators=get_data('rel_project_operator','');
@@ -40,7 +41,29 @@ function set_map_settings()
         $('<option></option>').val(val['operator_id']).html(val['operator_call'])
     );
   });
-
+  $.isNumeric(session['map_settings']['band_id'])
+  {
+    $("#map_settings_bands").val(session['map_settings']['band_id']); 
+  }
+  $.isNumeric(session['map_settings']['mode_id'])
+  {
+    $("#map_settings_modes").val(session['map_settings']['mode_id']); 
+  }
+  $.isNumeric(session['map_settings']['operator_id'])
+  {
+    $("#map_settings_operators").val(session['map_settings']['operator_id']); 
+  }
+  $.isNumeric(session['map_settings']['filter'])
+  {
+    if(session['map_settings']['filter'] == "0")
+    {
+      $('#map_settings_filter').prop('checked',true);
+    }
+    else
+    {
+      $('#map_settings_filter').prop('checked',false);
+    }
+  }
 }
 
 function set_reload_monitor(stat)
