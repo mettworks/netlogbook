@@ -17,6 +17,13 @@
     $_SESSION['project_id']=$_GET['project_id'];
     mysql_schreib("UPDATE operators SET last_project='".$_SESSION['project_id']."' WHERE operator_id='".$_SESSION['operator_id']."';");
   }
+  if($action == "save_map_settings")
+  {
+    $_SESSION['map_settings']['mode_id']=$_GET['mode_id'];
+    $_SESSION['map_settings']['operator_id']=$_GET['operator_id'];
+    $_SESSION['map_settings']['band_id']=$_GET['band_id'];
+    $_SESSION['map_settings']['filter']=$_GET['filter'];
+  }
   if($action == "savesettings")
   {
     $_SESSION['onlyoperator']=$_GET['onlyoperator'];

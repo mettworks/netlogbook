@@ -333,11 +333,19 @@
 
   else if($table == "rel_project_band")
   {
+    if(!is_numeric($id))
+    {
+      $id=$_SESSION['project_id'];
+    }
     $data_plain=mysql_fragen('SELECT bands.* FROM bands INNER JOIN rel_bands_projects ON rel_bands_projects.band_id=bands.band_id WHERE rel_bands_projects.project_id='.$id);
   }
   else if($table == "rel_project_operator")
   {
-    $data_plain=mysql_fragen('SELECT operator_id FROM rel_operators_projects WHERE project_id='.$id);
+    if(!is_numeric($id))
+    {
+      $id=$_SESSION['project_id'];
+    }
+    $data_plain=mysql_fragen('select operators.operator_call, operators.operator_id FROM operators INNER JOIN rel_operators_projects ON rel_operators_projects.operator_id=operators.operator_id WHERE rel_operators_projects.project_id='.$_SESSION['project_id']);
   }
   else if($table == "rel_project_mode")
   {

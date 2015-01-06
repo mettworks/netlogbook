@@ -2,6 +2,45 @@ function set_project()
 {
   project_id=$('#projects').val();
   save_project_session(project_id);
+  set_map_settings();
+  load();
+}
+
+//
+// fill the option values for the map
+function set_map_settings()
+{
+  modes=get_data('rel_project_mode','');
+  bands=get_data('rel_project_band','');
+  operators=get_data('rel_project_operator','');
+
+  $('#map_settings_modes').find('option').remove().end();
+  $('#map_settings_bands').find('option').remove().end();
+  $('#map_settings_operators').find('option').remove().end();
+
+  $('#map_settings_modes').append($('<option></option>').val('').html('ALLE'));
+  $('#map_settings_bands').append($('<option></option>').val('').html('ALLE'));
+  $('#map_settings_operators').append($('<option></option>').val('').html('ALLE'));
+
+  $.each(modes, function(key, val) 
+  {
+    $('#map_settings_modes').append(
+        $('<option></option>').val(val['mode_id']).html(val['mode_name'])
+    );
+  });
+  $.each(bands, function(key, val) 
+  {
+    $('#map_settings_bands').append(
+        $('<option></option>').val(val['band_id']).html(val['band_name'])
+    );
+  });
+  $.each(operators, function(key, val) 
+  {
+    $('#map_settings_operators').append(
+        $('<option></option>').val(val['operator_id']).html(val['operator_call'])
+    );
+  });
+
 }
 
 function set_reload_monitor(stat)

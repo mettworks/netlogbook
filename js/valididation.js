@@ -16,6 +16,36 @@ function save_project_session(project_id)
   reload_tables_log();
 }
 
+function save_map_settings()
+{
+  mode_id=$('#map_settings_modes').val();
+  band_id=$('#map_settings_bands').val();
+  operator_id=$('#map_settings_operators').val();
+  if($('#map_settings_filter').is(':checked'))
+  {
+    filter='0';
+  }
+  else
+  {
+    filter='1';
+  }
+  var datastring="action=save_map_settings&mode_id="+mode_id+"&band_id="+band_id+"&operator_id="+operator_id+"&filter="+filter;
+  $.ajax
+  (
+    {
+      type: "GET",
+      url: "save.php",
+      data: datastring,
+      success: function(html)
+      {
+	$("div#div_error").html(html);
+      }
+    }
+  );
+  load();
+}
+
+
 function save_settings(onlyoperator)
 {
   var datastring="action=savesettings&onlyoperator="+onlyoperator;
