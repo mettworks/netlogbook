@@ -19,11 +19,18 @@ var customIcons =
 function load() 
 {
   session=get_data('session','')
-  map = new google.maps.Map(document.getElementById("div_map"), 
+  map = new google.maps.Map(document.getElementById("div_map_map"), 
   {
     center: new google.maps.LatLng(session['project_lat'], session['project_lon']),
     zoom: 4,
-    mapTypeId: 'roadmap'
+    mapTypeId: 'roadmap',
+    //disableDefaultUI: true,
+    zoomControl: false,
+    panControl: false,
+    scaleControl: false,
+    streetViewControl: false,
+    overviewMapControl: false,
+
   });
   infoWindow = new google.maps.InfoWindow;
 }

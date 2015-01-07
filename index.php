@@ -323,16 +323,16 @@
       //interval_log=setInterval("reload_tables_log()",5000);
       </script></p>
       <div id="div_navi_top">
-	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Log">
-	<input type="button" onclick="set_reload_monitor('1');document.getElementById('div_map_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Monitor">
-	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map_settings').style.visibility='visible';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Karte">
+	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Log">
+	<input type="button" onclick="set_reload_monitor('1');document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Monitor">
+	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Karte">
 
 	<?php
 	if($_SESSION['operator_role']==0)
 	{
 	  ?>
-	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';" value="Projekte">
-	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';" value="OP's">
+	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';" value="Projekte">
+	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';" value="OP's">
 	<?php
 	}
 	?>
@@ -501,77 +501,6 @@
 	</div>
 	<div id="div_log_change_callinfo4">
 	</div>
-	<div id="div_map">
-	</div>
-	<div id="div_map_settings">
-          <select name='map_settings_modes' id='map_settings_modes' onchange='save_map_settings();'>
-	  </select>
-          <select name='map_settings_bands' id='map_settings_bands' onchange='save_map_settings();'>
-	  </select>
-          <select name='map_settings_operators' id='map_settings_operators' onchange='save_map_settings();'>
-	  </select>
-	  <input onchange='save_map_settings();' type="checkbox" name="map_settings_filter" id="map_settings_filter" value="Filter">Filter aus (auch */CALL/*)</input>
-	</div>
-	<div id="div_monitor">
-	  <div id="div_monitor_table_logs">
-	    <a>Logs</a>
-	    <table id="table_monitor_logs">
-	      <thead>
-		<tr>
-		  <th>Call</th>
-		  <th>QRG</th>
-	  	  <th>Mode</th>
-		  <th>QTH</th>
-	  	  <th>QSO</th>
-		</tr>
-	      </thead>
-	    </table>
-	  </div>
-	  <div id="div_monitor_table_total">
-	    <a>Summe</a>
-	    <table id="table_monitor_total">
-	      <thead>
-		<tr>
-		  <th></th>
-		</tr>
-	      </thead>
-	    </table>
-	  </div>
-	  <div id="div_monitor_table_modes">
-	    <a>Modes</a>
-	    <table id="table_monitor_modes">
-	      <thead>
-		<tr>
-		  <th>Betriebsart</th>
-		  <th>%</th>
-		</tr>
-	      </thead>
-	    </table>
-	  </div>
-	  <div id="div_monitor_table_bands">
-	    <a>Band</a>
-	    <table id="table_monitor_bands">
-	      <thead>
-		<tr>
-		  <th>B&auml;nder</th>
-		  <th>%</th>
-		</tr>
-	      </thead>
-	    </table>
-	  </div>
-	  <div id="div_monitor_table_qsos">
-	    <a>QSO's</a>
-	    <table id="table_monitor_qsos">
-	      <thead>
-		<tr>
-		  <th>QSO</th>
-		  <th>%</th>
-		  <th>Anzahl</th>
-		</tr>
-	      </thead>
-	    </table>
-	  </div>
-	</div>
 	<div id="div_log_change_form">
 	  <form method="POST" action="" class="form" id="form_log_change" accept-charset="UTF-8">
 	  <table>
@@ -674,8 +603,81 @@
 	    </tr>
 	  </table>
 	</div>
-	  <input class='class_log_change' type='hidden' name='log_id' id='log_id' value=''>
+	<input class='class_log_change' type='hidden' name='log_id' id='log_id' value=''>
       </div>
+	<div id="div_map">
+	  <div id="div_map_map">
+	  </div>
+	  <div id="div_map_settings">
+	    <select name='map_settings_modes' id='map_settings_modes' onchange='save_map_settings();'>
+	    </select>
+	    <select name='map_settings_bands' id='map_settings_bands' onchange='save_map_settings();'>
+	    </select>
+	    <select name='map_settings_operators' id='map_settings_operators' onchange='save_map_settings();'>
+	    </select>
+	    <input onchange='save_map_settings();' type="checkbox" name="map_settings_filter" id="map_settings_filter" value="Filter">Filter aus (auch */CALL/*)</input>
+	  </div>
+	</div>
+	<div id="div_monitor">
+	  <div id="div_monitor_table_logs">
+	    <a>Logs</a>
+	    <table id="table_monitor_logs">
+	      <thead>
+		<tr>
+		  <th>Call</th>
+		  <th>QRG</th>
+	  	  <th>Mode</th>
+		  <th>QTH</th>
+	  	  <th>QSO</th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
+	  <div id="div_monitor_table_total">
+	    <a>Summe</a>
+	    <table id="table_monitor_total">
+	      <thead>
+		<tr>
+		  <th></th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
+	  <div id="div_monitor_table_modes">
+	    <a>Modes</a>
+	    <table id="table_monitor_modes">
+	      <thead>
+		<tr>
+		  <th>Betriebsart</th>
+		  <th>%</th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
+	  <div id="div_monitor_table_bands">
+	    <a>Band</a>
+	    <table id="table_monitor_bands">
+	      <thead>
+		<tr>
+		  <th>B&auml;nder</th>
+		  <th>%</th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
+	  <div id="div_monitor_table_qsos">
+	    <a>QSO's</a>
+	    <table id="table_monitor_qsos">
+	      <thead>
+		<tr>
+		  <th>QSO</th>
+		  <th>%</th>
+		  <th>Anzahl</th>
+		</tr>
+	      </thead>
+	    </table>
+	  </div>
+	</div>
       <div id="div_operator_change">
 	<form method="POST" action="" class="form" id="form_operator_change">
 	  <table class='class_operator_change'>
@@ -720,68 +722,68 @@
 	<input class="" type='button' onclick=document.getElementById('div_delete_data_ask').style.visibility='hidden'; value='Nein' name='Nein'>
       </form>
     </div>
-     <div id="div_project_change">
-        <form method="POST" action="" class="form" id="form_project_change">
-	  <table class='class_project_change'>
-	    <tr class='class_project_change'>
-	      <td>
-		<span class='help'>Bezeichnung<div>Bezeichnung</div></span>
-	      </td>
-	      <td>
-		<input type='text' name='project_short_name' id='project_short_name' value=''>
-	      </td>
-	    </tr>
-	    <tr class='class_project_change'>
-	      <td>
-		<span class='help'>Modus<div>Modus</div></span>
-	      </td>
-	      <td>
-		<select class='class_projekt_change' name='project_mode' id='project_mode' onchange='project_change_modus()'>
-		  <option value="0">jeder sein Call</option>
-		  <option value="1">Clubstation</option>
-		</select>
-	      </td>
-	    </tr>
-	    <tr class='class_project_change'>
-	      <td>
-		<span class='help'>Clubstationsrufzeichen<div>Clubstationsrufzeichen</div></span>
-	      </td>
-	      <td>
-		<input class='class_project_change' type='text' name='project_call' id='project_call' value=''>
-	      </td>
-	    </tr>
-	    <tr class='class_project_change'>
-	      <td>
-		<span class='help'>qrz.com Username<div>Username qrz.com</div></span>
-	      </td>
-	      <td>
-		<input class='class_project_change' type='text' name='project_qrz_user' id='project_qrz_user' value=''>
-	      </td>
-	    </tr>
-	    <tr class='class_project_change'>
-	      <td>
-		<span class='help'>qrz.com Passwort<div>Passwort qrz.com</div></span>
-	      </td>
-	      <td>
-		<input class='class_project_change' type='password' name='project_qrz_pass1' id='project_qrz_pass1' value=''>
-	      </td>
-	    </tr>
-	    <tr class='class_project_change'>
-	      <td>
-		<span class='help'>qrz.com Passwort wiederholen<div>Passwort qrz.com Wiederholung</div></span>
-	      </td>
-	      <td>
-		<input class='class_project_change' type='password' name='project_qrz_pass2' id='project_qrz_pass2' value=''>
-	      </td>
-	    </tr>
-	    <tr class='class_project_change'>
-	      <td>
-		<span class='help'>Locator<div>Locator</div></span>
-	      </td>
-	      <td>
-		<input class='class_project_change' type='text' name='project_locator' id='project_locator' value=''>
-	      </td>
-	    </tr>
+    <div id="div_project_change">
+      <form method="POST" action="" class="form" id="form_project_change">
+        <table class='class_project_change'>
+          <tr class='class_project_change'>
+            <td>
+	      <span class='help'>Bezeichnung<div>Bezeichnung</div></span>
+	    </td>
+	    <td>
+	      <input type='text' name='project_short_name' id='project_short_name' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>Modus<div>Modus</div></span>
+	    </td>
+	    <td>
+	      <select class='class_projekt_change' name='project_mode' id='project_mode' onchange='project_change_modus()'>
+	        <option value="0">jeder sein Call</option>
+	        <option value="1">Clubstation</option>
+	      </select>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>Clubstationsrufzeichen<div>Clubstationsrufzeichen</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='text' name='project_call' id='project_call' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>qrz.com Username<div>Username qrz.com</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='text' name='project_qrz_user' id='project_qrz_user' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>qrz.com Passwort<div>Passwort qrz.com</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='password' name='project_qrz_pass1' id='project_qrz_pass1' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>qrz.com Passwort wiederholen<div>Passwort qrz.com Wiederholung</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='password' name='project_qrz_pass2' id='project_qrz_pass2' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>Locator<div>Locator</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='text' name='project_locator' id='project_locator' value=''>
+	    </td>
+	  </tr>
 	  <tr class='class_project_change'>
 	    <td>
 	      <span class='help'>Mitglieder<div>Mitglieder des Projektes</div></span>
@@ -809,15 +811,15 @@
 	      </select">
 	    </td>
 	  </tr>
-	  </table>
-	  <input class='class_project_change' type='hidden' name='project_id' id='project_id' value=''>
-	  <input class="class_project_change" type="button" onclick="write_data('project')"; value="Speichern" name="Speichern">
-	  <input class="class_project_change" type="button" onclick="write_data('project_kill_qrz_sess')"; value="QRZ Session loeschen" name="QRZ Session loeschen">
-	  <input class='class_project_change' type='button' onclick=document.getElementById('div_project_change').style.visibility='hidden';document.getElementById('div_error').style.visibility='hidden' value='abbruch' name='abbruch'>
-	</form>
-      </div>
-      <div id="div_error">
-      </div>
+	</table>
+	<input class='class_project_change' type='hidden' name='project_id' id='project_id' value=''>
+	<input class="class_project_change" type="button" onclick="write_data('project')"; value="Speichern" name="Speichern">
+	<input class="class_project_change" type="button" onclick="write_data('project_kill_qrz_sess')"; value="QRZ Session loeschen" name="QRZ Session loeschen">
+	<input class='class_project_change' type='button' onclick=document.getElementById('div_project_change').style.visibility='hidden';document.getElementById('div_error').style.visibility='hidden' value='abbruch' name='abbruch'>
+      </form>
+    </div>
+    <div id="div_error">
+    </div>
     <div id="div_logs">
     <input onclick="change_log();" type="button" value="neues Log erfassen" name="">
     <input onclick="import_log();" type="button" value="Log importieren" name="">

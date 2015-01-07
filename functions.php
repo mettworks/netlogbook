@@ -7,6 +7,22 @@
     $data="<".$name.":".strlen($string).">".$string." ";
     return $data;
   }
+
+  function save_session_locator()
+  {
+    $sql="SELECT project_locator FROM projects WHERE project_id='".$_SESSION['project_id']."';";
+    $result = mysql_query($sql);
+    $data=mysql_fetch_assoc($result);
+    if(strlen($data['project_locator']) < 6)
+    {
+      $data['project_locator']="JO53DM";
+    }
+    $_SESSION['project_locator']=$data['project_locator'];
+    $temp=locator2degree($_SESSION['project_locator']);
+    $_SESSION['project_lon']=$temp['lon'];
+    $_SESSION['project_lat']=$temp['lat'];
+  }
+
   //  
   // erwaret: 
   // gibt den Timestamp

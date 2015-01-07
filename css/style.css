@@ -98,21 +98,12 @@ img.class_complete
 }
 #div_navi_top
 {
-  position: fixed;
+  position: absolute;
   top: 0%;
   left: 0%;
   width: 95%;
-  height: 50px;
-  z-index: 1;
-}
-#div_map_settings
-{
-  position: fixed;
-  top: 25px;
-  left: 0%;
-  width: 95%;
   height: 25px;
-  z-index: 1;
+  z-index: 5;
 }
 #div_navi_logout
 {
@@ -121,7 +112,7 @@ img.class_complete
   right: 0%;
   width: 5%;
   height: 50px;
-  z-index: 0;
+  z-index: 3;
 }
 span.help
 {
@@ -160,12 +151,30 @@ table th
 #div_map
 {
   position: fixed;
-  top:92px;
+  //top:92px;
   width: 100%;
-  height: 90%;
+  height: 100%;
   visibility: hidden;
+  z-index:4;
 }
-
+#div_map_settings
+{
+  position: fixed;
+  top: 25px;
+  left: 0%;
+  width: 95%;
+  height: 25px;
+  z-index: 4;
+}
+#div_map_map
+{
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+}
 #div_monitor
 {
   position: fixed;
@@ -307,7 +316,7 @@ table th
   height:100%;
   visibility: hidden;
   background-color: #999999;
-  z-index: 3;
+  z-index: 5;
 }
 #div_log_change_form
 {
@@ -315,7 +324,7 @@ table th
   left: 0%;
   width:100%;
   height:20%;
-  z-index: 2;
+  z-index: 4;
 }
 #div_log_change_callinfo1
 {
@@ -324,7 +333,7 @@ table th
   width:40%;
   height:20%;
   top: 20%;
-  z-index: 2;
+  z-index: 4;
 }
 #div_log_change_callinfo1_picture
 {
@@ -333,7 +342,7 @@ table th
   width:10%;
   height:20%;
   top: 20%;
-  z-index: 2;
+  z-index: 4;
   //text-align:right;
 }
 #div_log_change_callinfo2

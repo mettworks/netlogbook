@@ -16,6 +16,7 @@
   {
     $_SESSION['project_id']=$_GET['project_id'];
     mysql_schreib("UPDATE operators SET last_project='".$_SESSION['project_id']."' WHERE operator_id='".$_SESSION['operator_id']."';");
+    save_session_locator();
   }
   if($action == "save_map_settings")
   {

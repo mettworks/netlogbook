@@ -4,6 +4,7 @@ function set_project()
   save_project_session(project_id);
   set_map_settings();
   load();
+  loadXML();
 }
 
 //

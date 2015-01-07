@@ -1,7 +1,9 @@
 <?php
   include('functions.php');
-  $mysql = mysql_connect("localhost","netlogbook","blafaselpeng","netlogbook") or die("Error " . mysql_error($mysql));   
-  mysql_select_db('netlogbook',$mysql); 
+  //$mysql = mysql_connect("localhost","netlogbook","blafaselpeng","netlogbook") or die("Error " . mysql_error($mysql));   
+  //mysql_select_db('netlogbook',$mysql); 
+  $mysql=mysql_c();
+
   if($_GET['aktion'] == "kaputtmachen")
   {
     session_start();
@@ -50,15 +52,7 @@
 	  {
 	    $_SESSION['project_id']=end($operator_projects);
 	  }
-
-	  $sql="SELECT project_locator FROM projects WHERE project_id='".$_SESSION['project_id']."';";
-	  $result = mysql_query($sql);
-	  $data=mysql_fetch_assoc($result);
-	  $_SESSION['project_locator']=$data['project_locator'];
-	  $temp=locator2degree($_SESSION['project_locator']);
-	  $_SESSION['project_lon']=$temp['lon'];
-	  $_SESSION['project_lat']=$temp['lat'];
-
+	  save_session_locator();
 	  header('Location: /index.php');
 	}
 	else
