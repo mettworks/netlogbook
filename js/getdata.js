@@ -45,6 +45,30 @@ function get_locinfo(loc)
   return(data);
 }
 
+function get_deginfo(lon,lat)
+{
+  url="/getdata.php?table=deginfo&lon="+lon+"&lat="+lat;
+  var data=new Array();
+  $.ajax
+  (
+    {
+      url: url,
+      dataType: "json",
+      type: "get",
+      contentType : "application/json; charset=utf-8",
+      async: false,
+      success: function(temp)
+      {
+	$.each(temp,function(index,value)
+	{
+	  data[index]=value;
+	});	
+      }
+    }
+  );
+  return(data);
+}
+
 
 function get_data(table,id)
 {

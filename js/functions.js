@@ -1,3 +1,10 @@
+function save_map2_pos()
+{
+  loc=get_deginfo(newPos['lon'],newPos['lat']);
+  $('#log_loc').val(loc['loc']);
+  document.getElementById('div_map2').style.visibility='hidden';
+}
+
 function set_project()
 {
   project_id=$('#projects').val();

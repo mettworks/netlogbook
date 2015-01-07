@@ -49,6 +49,10 @@
   {
     $data_plain=locinfo($_GET['loc']);
   }
+  if($table == "deginfo")
+  {
+    $data_plain=deginfo($_GET['lon'],$_GET['lat']);
+  }
   else if($table == "cronjob")
   {
     $data_plain=mysql_fragen("SELECT * FROM cronjob");

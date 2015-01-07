@@ -536,6 +536,9 @@
 		<span class='help'>QTH<div>QTH</div></span>
 	      </td>
 	      <td>
+		<span class='help'>Karte<div></div></span>
+	      </td>
+	      <td>
 		<span class='help'>Zeit<div>Zeit wird automatisch beim abspeichern &uuml;bernommen</div></span>
 	      </td>
 	    </tr>
@@ -576,6 +579,9 @@
 		<input tabindex="9" class='class_log_change' type='text' name='log_qth' id='log_qth' value=''>
 	      </td>
 	      <td>
+		<input onclick='load_map2();' class='class_log_change' type="button" name="Karte" value="Karte">
+	      </td>
+	      <td>
                 <input onchange='log_change_time();' class='class_log_change' type='checkbox' id='log_time_auto' name='log_time_auto'>
 	      </td>
 	    </tr>
@@ -605,6 +611,14 @@
 	</div>
 	<input class='class_log_change' type='hidden' name='log_id' id='log_id' value=''>
       </div>
+	<div id="div_map2">
+	  <div id="div_map2_map">
+	  </div>
+	  <div id="div_map2_settings">
+	    <input class='class_log_change' type='button' onclick='save_map2_pos();' value='neue Position &uuml;bernehmen' name='neue Position &uuml;bernehmen'>
+	    <input class='class_log_change' type='button' onclick=document.getElementById('div_map2').style.visibility='hidden'; value='Abbruch' name='Abbruch'>
+	  </div>
+	</div>
 	<div id="div_map">
 	  <div id="div_map_map">
 	  </div>

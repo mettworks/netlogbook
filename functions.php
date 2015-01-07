@@ -113,6 +113,32 @@
     return $data;
   }
 
+  function degree2locator($lon,$lat)
+  {
+    $alphabet = range('A', 'Z');
+
+    $lon_field=floor(($lon+180)/20);
+    $lat_field=floor(($lat+90)/10);
+
+    $loc=$alphabet[$lon_field];
+    $loc.=$alphabet[$lat_field];
+
+    $lon_square=floor((($lon+180)-($lon_field*20))/2);
+    $lat_square=floor((($lat+90)-($lat_field*10))/1);
+
+    $loc.=$lon_square;
+    $loc.=$lat_square;
+
+    $lon_subsquare=floor((($lon+180)-($lon_field*20)-($lon_square*2))/0.0833333333333333333333333333333333333333333);
+    $lat_subsquare=floor((($lat+90)-($lat_field*10)-($lat_square*1))/0.0416666666666666666666666666666666666666667); 
+
+    $loc.=$alphabet[$lon_subsquare];
+    $loc.=$alphabet[$lat_subsquare];
+
+    $data['loc']=$loc;	
+    return $data;
+  }
+
   function distance($locator)
   {
     $project=mysql_fragen('SELECT * from projects','project_id',$_SESSION['project_id']);
@@ -177,10 +203,18 @@
     return round($km,0);
   }
 
+  function deginfo($lon,$lat)
+  {
+    return degree2locator($lon,$lat);
+  }
+
   function locinfo($loc)
   {
     if(strlen($loc) != 0)
     {
+      $temp=locator2degree($loc);
+      $data['lon']=$temp['lon'];
+      $data['lat']=$temp['lat'];
       $data['distance']=distance($loc);
       $data['bearing']=bearing($loc);
     }
