@@ -7,47 +7,49 @@ function settings_op_save()
   setting_op['qrz_ena']=$('#setting_interface_qrz_ena').prop('checked');
   setting_op['gm_ena']=$('#setting_interface_gm_ena').prop('checked');  
   save_settings_op(setting_op);
-
-  setting_table_logs={};
-  setting_table_logs['action']="save_settings_table_log";
-  setting_table_logs['date']=$('#setting_table_logs_date_ena').prop('checked');
-  setting_table_logs['time']=$('#setting_table_logs_time_ena').prop('checked');
-  setting_table_logs['call']=$('#setting_table_logs_call_ena').prop('checked');
-  setting_table_logs['freq']=$('#setting_table_logs_freq_ena').prop('checked');
-  setting_table_logs['mode']=$('#setting_table_logs_mode_ena').prop('checked');
-  setting_table_logs['rst_tx']=$('#setting_table_logs_rst_tx_ena').prop('checked');
-  setting_table_logs['rst_rx']=$('#setting_table_logs_rst_rx_ena').prop('checked');
-  setting_table_logs['name']=$('#setting_table_logs_name_ena').prop('checked');
-  setting_table_logs['qth']=$('#setting_table_logs_qth_ena').prop('checked');
-  setting_table_logs['loc']=$('#setting_table_logs_loc_ena').prop('checked');
-  setting_table_logs['dok']=$('#setting_table_logs_dok_ena').prop('checked');
-  setting_table_logs['manager']=$('#setting_table_logs_manager_ena').prop('checked');
-  setting_table_logs['qso']=$('#setting_table_logs_qso_ena').prop('checked');
-  setting_table_logs['notes']=$('#setting_table_logs_notes_ena').prop('checked');
-  save_settings_table_logs(setting_table_logs);
   set_table_logs();
+}
+
+function fill_form_settings_op_table_logs()
+{
+  settings_op_table_logs=get_data('settings_table_logs','');
+  if(settings_op_table_logs['columns'][0]['visible'] == "true") { $('#setting_table_logs_date_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][1]['visible'] == "true") { $('#setting_table_logs_time_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][2]['visible'] == "true") { $('#setting_table_logs_call_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][3]['visible'] == "true") { $('#setting_table_logs_freq_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][4]['visible'] == "true") { $('#setting_table_logs_mode_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][5]['visible'] == "true") { $('#setting_table_logs_rst_tx_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][6]['visible'] == "true") { $('#setting_table_logs_rst_rx_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][7]['visible'] == "true") { $('#setting_table_logs_name_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][8]['visible'] == "true") { $('#setting_table_logs_qth_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][9]['visible'] == "true") { $('#setting_table_logs_loc_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][10]['visible'] == "true") { $('#setting_table_logs_dok_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][11]['visible'] == "true") { $('#setting_table_logs_manager_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][12]['visible'] == "true") { $('#setting_table_logs_qso_ena').prop( "checked", true ); } 
+  if(settings_op_table_logs['columns'][13]['visible'] == "true") { $('#setting_table_logs_notes_ena').prop( "checked", true ); } 
+
 }
 
 function set_table_logs()
 {
-  session=get_data('session','');
-  if(session['settings']['table_logs']['date'] == "0") { table_logs.fnSetColumnVis( 0, false ); } else { table_logs.fnSetColumnVis( 0, true ); }
-  if(session['settings']['table_logs']['time'] == "0") { table_logs.fnSetColumnVis( 1, false ); } else { table_logs.fnSetColumnVis( 1, true ); }
-  if(session['settings']['table_logs']['call'] == "0") { table_logs.fnSetColumnVis( 2, false ); } else { table_logs.fnSetColumnVis( 2, true ); }
-  if(session['settings']['table_logs']['freq'] == "0") { table_logs.fnSetColumnVis( 3, false ); } else { table_logs.fnSetColumnVis( 3, true ); }
-  if(session['settings']['table_logs']['mode'] == "0") { table_logs.fnSetColumnVis( 4, false ); } else { table_logs.fnSetColumnVis( 4, true ); }
-  if(session['settings']['table_logs']['rst_tx'] == "0") { table_logs.fnSetColumnVis( 5, false ); } else { table_logs.fnSetColumnVis( 5, true ); }
-  if(session['settings']['table_logs']['rst_rx'] == "0") { table_logs.fnSetColumnVis( 6, false ); } else { table_logs.fnSetColumnVis( 6, true ); }
-  if(session['settings']['table_logs']['name'] == "0") { table_logs.fnSetColumnVis( 7, false ); } else { table_logs.fnSetColumnVis( 7, true ); }
-  if(session['settings']['table_logs']['qth'] == "0") { table_logs.fnSetColumnVis( 8, false ); } else { table_logs.fnSetColumnVis( 8, true ); }
-  if(session['settings']['table_logs']['loc'] == "0") { table_logs.fnSetColumnVis( 9, false ); } else { table_logs.fnSetColumnVis( 9, true ); }
-  if(session['settings']['table_logs']['dok'] == "0") { table_logs.fnSetColumnVis( 10, false ); } else { table_logs.fnSetColumnVis( 10, true ); }
-  if(session['settings']['table_logs']['manager'] == "0") { table_logs.fnSetColumnVis( 11, false ); } else { table_logs.fnSetColumnVis( 11, true ); }
-  if(session['settings']['table_logs']['qso'] == "0") { table_logs.fnSetColumnVis( 12, false ); } else { table_logs.fnSetColumnVis( 12, true ); }
-  if(session['settings']['table_logs']['notes'] == "0") { table_logs.fnSetColumnVis( 13, false ); } else { table_logs.fnSetColumnVis( 13, true ); }
-  //$('#table_logs').css( 'display', 'block' );
-  //$("#table_logs").width("100%");
-  //table_logs.columns.adjust().draw();
+  if($('#setting_table_logs_date_ena').prop('checked') == "0" ) {table_logs.column(0).visible(false); } else { table_logs.column(0).visible(true); };
+  if($('#setting_table_logs_time_ena').prop('checked') == "0" ) {table_logs.column(1).visible(false); } else { table_logs.column(1).visible(true); }
+  if($('#setting_table_logs_call_ena').prop('checked') == "0" ) {table_logs.column(2).visible(false); } else { table_logs.column(2).visible(true);}
+  if($('#setting_table_logs_freq_ena').prop('checked') == "0" ) {table_logs.column(3).visible(false); } else { table_logs.column(3).visible(true);} 
+  if($('#setting_table_logs_mode_ena').prop('checked') == "0" ) {table_logs.column(4).visible(false); } else { table_logs.column(4).visible(true);} 
+  if($('#setting_table_logs_rst_tx_ena').prop('checked') == "0" ) {table_logs.column(5).visible(false); } else { table_logs.column(5).visible(true);} 
+  if($('#setting_table_logs_rst_rx_ena').prop('checked') == "0" ) {table_logs.column(6).visible(false); } else { table_logs.column(6).visible(true);} 
+  if($('#setting_table_logs_name_ena').prop('checked') == "0" ) {table_logs.column(7).visible(false); } else { table_logs.column(7).visible(true);} 
+  if($('#setting_table_logs_qth_ena').prop('checked') == "0" ) {table_logs.column(8).visible(false); } else { table_logs.column(8).visible(true);} 
+  if($('#setting_table_logs_loc_ena').prop('checked') == "0" ) {table_logs.column(9).visible(false); } else { table_logs.column(9).visible(true);} 
+  if($('#setting_table_logs_dok_ena').prop('checked') == "0" ) {table_logs.column(10).visible(false); } else { table_logs.column(10).visible(true);} 
+  if($('#setting_table_logs_manager_ena').prop('checked') == "0" ) {table_logs.column(11).visible(false); } else { table_logs.column(11).visible(true);} 
+  if($('#setting_table_logs_qso_ena').prop('checked') == "0" ) {table_logs.column(12).visible(false); } else { table_logs.column(12).visible(true);} 
+  if($('#setting_table_logs_notes_ena').prop('checked') == "0" ) {table_logs.column(13).visible(false); } else { table_logs.column(13).visible(true);} 
+  // Bug?
+  table_logs.column(14).visible(false);
+  $('#table_logs').css( 'display', 'block' );
+  table_logs.columns.adjust().draw();
 }
 
 function save_map2_pos()

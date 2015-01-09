@@ -9,7 +9,7 @@
   $action=$data_temp['action'];
   $completed=$data_temp['completed'];
   //firebug_debug($_FILE);
-  //firebug_debug($_GET);
+  //print_r($_POST);
   //die();
 
   if($_SERVER['REQUEST_METHOD'] == "POST")
@@ -27,9 +27,11 @@
     save_session_locator();
   }
 
-  if($action == "save_settings_table_log")
+  if($action == "save_settings_table_logs")
   {
-    $sql="UPDATE rel_operators_projects SET ";
+    $temp=json_encode($data_temp);    
+    $sql="UPDATE rel_operators_projects SET settings_table_logs='".$temp."'  WHERE operator_id='".$_SESSION['operator_id']."' AND project_id='".$_SESSION['project_id']."';";
+    /*
     foreach($data_temp as $setting => $value)
     {
       if($value == "false")
@@ -43,7 +45,8 @@
       $sql.="settings_table_logs_".$setting."=".$value.","; 
     }
     $sql=preg_replace('/,$/','',$sql);
-    $sql.=" WHERE operator_id='".$_SESSION['operator_id']."' AND project_id='".$_SESSION['project_id']."';";
+    */
+    //$sql.=" WHERE operator_id='".$_SESSION['operator_id']."' AND project_id='".$_SESSION['project_id']."';";
     mysql_schreib($sql);
   }
   if($action == "save_settings_op")

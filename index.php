@@ -11,12 +11,16 @@
       <title>Netlogbook v0.1</title>
       <link rel="stylesheet" type="text/css" href="css/style.css">
       <link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css">
+      <link rel="stylesheet" type="text/css" href="/js/DataTables-1.10.4/media/css/jquery.dataTables.css">
+      <link rel="stylesheet" type="text/css" href="/css/dataTables.colVis.css">
+      <script type="text/javascript" charset="utf8" src="/js/DataTables-1.10.4/media/js/jquery.js"></script>
+      <script type="text/javascript" charset="utf8" src="/js/DataTables-1.10.4/media/js/jquery.dataTables.js"></script>
+      <script type="text/javascript" charset="utf8" src="/js/dataTables.colVis.js"></script>
     </head>
     <body>
     <body onload="load();loadXML();set_map_settings();">
       <p>
-        <script src="js/jquery-2.1.0.js"></script>
-        <script src="js/DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
+	<!-- TODO move to head... -->
         <script src="js/formulare.js"></script>
         <script src="js/getdata.js"></script> 
         <script src="js/valididation.js"></script>
@@ -152,16 +156,29 @@
 		    null,
 		]
 	    });
-	    table_logs=$('#table_logs').dataTable
+	    table_logs=$('#table_logs').DataTable
 	    (
 	      {
-		//"autoWidth": false,
+		"autoWidth": true,
 		"bProcessing": true,
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=logs",
-		// TODO!?
-		//"bStateSave": true,
+		"bStateSave": true,
+		"stateLoadCallback": function (settings) {
+		  var o;
+		  $.ajax( {
+		    "url": "/getdata.php?table=settings_table_logs",
+		    "async": false,
+		    "dataType": "json",
+		    "contentType" : "application/json; charset=utf-8",
+		    "type": "GET",
+		    "success": function (json) {
+		        o = json;
+		    }
+		  });
+		  return o;
+		},
 		"oLanguage": 
 		{
 		  "sLengthMenu": 'Display <select>'+
@@ -189,21 +206,40 @@
 		  null,
 		  null,
 		  null,
-		  { "bVisible": false },
-		  {
-		    "fnRender": function(oObj)
-		    {
-		      return '<input onclick="change_log(\''+oObj.aData[14]+'\');" type="button" value="bearbeiten" name="bearbeiten" >';
-		    }
+		  { 
+		    "bVisible": false, 
+		    "bSortable":false
 		  },
 		  {
-		    "fnRender": function(oObj)
+		    "mRender": function ( data, type, full ) 
 		    {
-		      return '<input onclick="delete_data_ask(\'log\',\''+oObj.aData[14]+'\');" type="button" value="loeschen" name="loeschen" >';
-		    }
+		      return '<img src="images/edit.png" alt="bearbeiten" onclick="change_log(\''+full[14]+'\');">';
+
+		    },
+		    'bSortable': false,
+		  },
+		  {
+		    "mRender": function ( data, type, full )
+		    {
+		      return '<img src="images/delete.png" alt="loeschen" onclick="delete_data_ask(\'log\',\''+full[14]+'\');">';
+		    },
+		    'bSortable': false,
 		  }
-		]
+		],
+		"stateSaveCallback": function(setting,data) 
+		{
+		  data['action']="save_settings_table_logs";
+		  $.ajax( {
+		    "url": "/save.php",
+		    "data": data,
+		    "dataType": "json",
+		    "type": "POST",
+		    "success": function () {}
+		  } );
+		},
+
 	    });
+
 	    table_logsfromme=$('#table_logsfromme').dataTable
 	    (
 	      {
@@ -322,6 +358,7 @@
 
                 ]
             });
+	    fill_form_settings_op_table_logs();
 	    set_table_logs();
 	  });
       //interval_log=setInterval("reload_tables_log()",5000);
@@ -844,7 +881,7 @@
     <input onclick="export_log();" type="button" value="Log exportieren" name=""><br>
     <input onchange='logs_autoreload();' type="checkbox" name="logs_autoreload" id="logs_autoreload" value="logs_autoreload">Auto Reload/30s</>
     <input onchange='logs_onlyoperator();' type="checkbox" name="logs_onlyoperator" id="logs_onlyoperator" value="logs_onlyoperator">nur meine zeigen</>
-    <table id="table_logs">
+    <table id="table_logs" class="display compact" width="100%">
       <thead>
 	<tr>
 	  <th>Datum</th>

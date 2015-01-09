@@ -57,6 +57,11 @@
   {
     $data_plain=mysql_fragen("SELECT * FROM cronjob");
   }
+  else if($table == "settings_table_logs")
+  {
+    $data_plain=mysql_fragen("SELECT settings_table_logs FROM rel_operators_projects WHERE project_id=".$_SESSION['project_id']." AND operator_id=".$_SESSION['operator_id'].";");
+    $data_output=$data_plain[0]['settings_table_logs'];
+  }
 
   else if($table == "callinfo")
   {
@@ -504,7 +509,11 @@
     $output=$data_plain;
   }
   //firebug_debug($output);
-  if(json_encode($output))
+  if($data_output)
+  {
+    echo $data_output;
+  }
+  else if(json_encode($output))
   {
     echo json_encode($output);
   }
