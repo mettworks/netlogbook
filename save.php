@@ -12,14 +12,59 @@
   //firebug_debug($_GET);
   //die();
 
+  if($_SERVER['REQUEST_METHOD'] == "POST")
+  {
+    $action=$_POST['action'];
+    unset($_POST['action']);
+    $data_temp=$_POST;
+  }
+  
+
   if($action == "save_project_session")
   {
     $_SESSION['project_id']=$_GET['project_id'];
     mysql_schreib("UPDATE operators SET last_project='".$_SESSION['project_id']."' WHERE operator_id='".$_SESSION['operator_id']."';");
     save_session_locator();
   }
+
+  if($action == "save_settings_table_log")
+  {
+    $sql="UPDATE rel_operators_projects SET ";
+    foreach($data_temp as $setting => $value)
+    {
+      if($value == "false")
+      {
+	$_SESSION['settings']['table_logs'][$setting]=0;
+      }
+      else
+      {
+      	$_SESSION['settings']['table_logs'][$setting]=1;
+      }
+      $sql.="settings_table_logs_".$setting."=".$value.","; 
+    }
+    $sql=preg_replace('/,$/','',$sql);
+    $sql.=" WHERE operator_id='".$_SESSION['operator_id']."' AND project_id='".$_SESSION['project_id']."';";
+    mysql_schreib($sql);
+  }
+  if($action == "save_settings_op")
+  {
+    foreach($data_temp as $setting => $value)
+    {
+      if($value == "false")
+      {
+	$_SESSION['settings']['op'][$setting]=0;
+      }
+      else
+      {
+      	$_SESSION['settings']['op'][$setting]=1;
+      }
+    }
+  }
+
+
   if($action == "save_map_settings")
   {
+    // TODO setting_map_map1
     $_SESSION['map_settings']['mode_id']=$_GET['mode_id'];
     $_SESSION['map_settings']['operator_id']=$_GET['operator_id'];
     $_SESSION['map_settings']['band_id']=$_GET['band_id'];

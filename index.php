@@ -31,6 +31,9 @@
         <script>
 	modes=get_data('mode','');
 	operators=get_data('operator','');
+
+	var table_logs;
+
 	$(function() {
 	    $('#fileupload').fileupload(
 	      {
@@ -152,11 +155,13 @@
 	    table_logs=$('#table_logs').dataTable
 	    (
 	      {
+		//"autoWidth": false,
 		"bProcessing": true,
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=logs",
-		"bStateSave": true,
+		// TODO!?
+		//"bStateSave": true,
 		"oLanguage": 
 		{
 		  "sLengthMenu": 'Display <select>'+
@@ -170,23 +175,21 @@
 		},
                 "aoColumns":
 		[
-		    null,
-		    null,
-		    null,
-		    null,
-		    null,
-		    null,
-		    null,
-		    null,
-		    null,
-		    null,
-		    null,
-		    null,
-		    null,
-		    null,
-		  {
-		    "bVisible": false
-		  },
+		  null,
+		  null,
+		  null,
+		  null,
+		  null,
+		  null,
+		  null,
+		  null,
+		  null,
+		  null,
+		  null,
+		  null,
+		  null,
+		  null,
+		  { "bVisible": false },
 		  {
 		    "fnRender": function(oObj)
 		    {
@@ -319,20 +322,21 @@
 
                 ]
             });
+	    set_table_logs();
 	  });
       //interval_log=setInterval("reload_tables_log()",5000);
       </script></p>
       <div id="div_navi_top">
-	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Log">
-	<input type="button" onclick="set_reload_monitor('1');document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Monitor">
-	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Karte">
-
+	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Log">
+	<input type="button" onclick="set_reload_monitor('1');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Monitor">
+	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Karte">
+	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='visible';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Einstellungen">
 	<?php
 	if($_SESSION['operator_role']==0)
 	{
 	  ?>
-	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';" value="Projekte">
-	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';" value="OP's">
+	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';" value="Projekte">
+	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';" value="OP's">
 	<?php
 	}
 	?>
@@ -876,6 +880,71 @@
       </thead>
     </table>
     <input onclick="change_operator();" type="button" value="neuen Operator anlegen" name="">
+    </div>
+    <div id="div_settings">
+      <form id="form_settings" class="form" action="" method="POST">
+	<table>
+	  <tr>
+	    <td><span class="help">Frequenzanzeige in<div>Frequenzanzeige in kHz oder MHz</div></span></td>
+	    <td>
+	      <select id="setting_frequency_prefix" name="setting_frequency_prefix" >
+		<option value="0">kHz</option>
+		<option value="1">MHz</option>
+	      </select>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td><span class="help">Schnittstelle aprs.fi<div>Schnittstelle zu aprs.fi aktiv oder inaktiv</div></span></td>
+	    <td><input id="setting_interface_aprs_ena" type="checkbox" value=""></td>
+	  </tr>
+	  <tr>
+	    <td><span class="help">Schnittstelle qrz.com<div>Schnittstelle zu qrz.com aktiv oder inaktiv</div></span></td>
+	    <td><input id="setting_interface_qrz_ena" type="checkbox" value=""></td>
+	  </tr>
+	  <tr>
+	    <td><span class="help">Schnittstelle Google-Maps<div>Schnittstelle zu Google-Maps aktiv oder inaktiv</div></span></td>
+	    <td><input id="setting_interface_gm_ena" type="checkbox" value=""></td>
+	  </tr>
+	</table>
+	<br>
+	<p>sichtbare Felder f&uuml;r Logeintr&auml;ge</p>
+	<br>
+	<table border="1">
+	  <tr>
+	    <td>Datum</td>
+	    <td>Zeit</td>
+	    <td>Call</td>
+	    <td>QRG</td>
+	    <td>Mode</td>
+	    <td>TX</td>
+	    <td>RX</td>
+	    <td>Name</td>
+	    <td>QTH</td>
+	    <td>Locator</td>
+	    <td>DOK</td>
+	    <td>Manager</td>
+	    <td>QSO</td>
+	    <td>Bemerkungen</td>
+	  </tr>
+	  <tr align="center">
+	    <td><input id="setting_table_logs_date_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_time_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_call_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_freq_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_mode_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_rst_tx_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_rst_rx_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_name_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_qth_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_loc_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_dok_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_manager_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_qso_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_notes_ena" type="checkbox" value=""></td>
+	  </tr>
+	</table>
+	<input type="button" value="Speichern" onclick="settings_op_save();"> 
+      </form>
     </div>
    <div id="div_projects">
     <table id="table_projects">
