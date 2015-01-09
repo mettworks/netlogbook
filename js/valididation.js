@@ -1,3 +1,36 @@
+function save_settings_op(setting_op)
+{
+  $.ajax
+  (
+    {
+      type: "POST",
+      url: "save.php",
+      data: setting_op,
+      success: function(html)
+      {
+	$("div#div_error").html(html);
+      }
+    }
+  );
+} 
+
+function save_settings_table_logs(setting_table_logs)
+{
+  $.ajax
+  (
+    {
+      type: "POST",
+      url: "save.php",
+      data: setting_table_logs,
+      success: function(html)
+      {
+	$("div#div_error").html(html);
+      }
+    }
+  );
+
+}
+
 function save_project_session(project_id)
 {
   var datastring="action=save_project_session&project_id="+project_id;

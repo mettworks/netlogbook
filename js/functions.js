@@ -1,3 +1,55 @@
+function settings_op_save()
+{
+  setting_op={};
+  setting_op['action']="save_settings_op";
+  setting_op['frequency_prefix']=$('#setting_frequency_prefix').val();
+  setting_op['aprs_ena']=$('#setting_interface_aprs_ena').prop('checked');
+  setting_op['qrz_ena']=$('#setting_interface_qrz_ena').prop('checked');
+  setting_op['gm_ena']=$('#setting_interface_gm_ena').prop('checked');  
+  save_settings_op(setting_op);
+
+  setting_table_logs={};
+  setting_table_logs['action']="save_settings_table_log";
+  setting_table_logs['date']=$('#setting_table_logs_date_ena').prop('checked');
+  setting_table_logs['time']=$('#setting_table_logs_time_ena').prop('checked');
+  setting_table_logs['call']=$('#setting_table_logs_call_ena').prop('checked');
+  setting_table_logs['freq']=$('#setting_table_logs_freq_ena').prop('checked');
+  setting_table_logs['mode']=$('#setting_table_logs_mode_ena').prop('checked');
+  setting_table_logs['rst_tx']=$('#setting_table_logs_rst_tx_ena').prop('checked');
+  setting_table_logs['rst_rx']=$('#setting_table_logs_rst_rx_ena').prop('checked');
+  setting_table_logs['name']=$('#setting_table_logs_name_ena').prop('checked');
+  setting_table_logs['qth']=$('#setting_table_logs_qth_ena').prop('checked');
+  setting_table_logs['loc']=$('#setting_table_logs_loc_ena').prop('checked');
+  setting_table_logs['dok']=$('#setting_table_logs_dok_ena').prop('checked');
+  setting_table_logs['manager']=$('#setting_table_logs_manager_ena').prop('checked');
+  setting_table_logs['qso']=$('#setting_table_logs_qso_ena').prop('checked');
+  setting_table_logs['notes']=$('#setting_table_logs_notes_ena').prop('checked');
+  save_settings_table_logs(setting_table_logs);
+  set_table_logs();
+}
+
+function set_table_logs()
+{
+  session=get_data('session','');
+  if(session['settings']['table_logs']['date'] == "0") { table_logs.fnSetColumnVis( 0, false ); } else { table_logs.fnSetColumnVis( 0, true ); }
+  if(session['settings']['table_logs']['time'] == "0") { table_logs.fnSetColumnVis( 1, false ); } else { table_logs.fnSetColumnVis( 1, true ); }
+  if(session['settings']['table_logs']['call'] == "0") { table_logs.fnSetColumnVis( 2, false ); } else { table_logs.fnSetColumnVis( 2, true ); }
+  if(session['settings']['table_logs']['freq'] == "0") { table_logs.fnSetColumnVis( 3, false ); } else { table_logs.fnSetColumnVis( 3, true ); }
+  if(session['settings']['table_logs']['mode'] == "0") { table_logs.fnSetColumnVis( 4, false ); } else { table_logs.fnSetColumnVis( 4, true ); }
+  if(session['settings']['table_logs']['rst_tx'] == "0") { table_logs.fnSetColumnVis( 5, false ); } else { table_logs.fnSetColumnVis( 5, true ); }
+  if(session['settings']['table_logs']['rst_rx'] == "0") { table_logs.fnSetColumnVis( 6, false ); } else { table_logs.fnSetColumnVis( 6, true ); }
+  if(session['settings']['table_logs']['name'] == "0") { table_logs.fnSetColumnVis( 7, false ); } else { table_logs.fnSetColumnVis( 7, true ); }
+  if(session['settings']['table_logs']['qth'] == "0") { table_logs.fnSetColumnVis( 8, false ); } else { table_logs.fnSetColumnVis( 8, true ); }
+  if(session['settings']['table_logs']['loc'] == "0") { table_logs.fnSetColumnVis( 9, false ); } else { table_logs.fnSetColumnVis( 9, true ); }
+  if(session['settings']['table_logs']['dok'] == "0") { table_logs.fnSetColumnVis( 10, false ); } else { table_logs.fnSetColumnVis( 10, true ); }
+  if(session['settings']['table_logs']['manager'] == "0") { table_logs.fnSetColumnVis( 11, false ); } else { table_logs.fnSetColumnVis( 11, true ); }
+  if(session['settings']['table_logs']['qso'] == "0") { table_logs.fnSetColumnVis( 12, false ); } else { table_logs.fnSetColumnVis( 12, true ); }
+  if(session['settings']['table_logs']['notes'] == "0") { table_logs.fnSetColumnVis( 13, false ); } else { table_logs.fnSetColumnVis( 13, true ); }
+  //$('#table_logs').css( 'display', 'block' );
+  //$("#table_logs").width("100%");
+  //table_logs.columns.adjust().draw();
+}
+
 function save_map2_pos()
 {
   loc=get_deginfo(newPos['lon'],newPos['lat']);
@@ -243,9 +295,13 @@ function display_callinfo(call,formchange)
   callinfo=get_callinfo(call);
   $('.class_log_change_callinfo').remove();
   $('.error_text').remove();
+  console.log(callinfo);
+  $('#div_log_change_error').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['info']+"</a>");
+
   if((typeof(callinfo['qrzcom']['error']) == 'string') && (callinfo['qrzcom']['error'] != ""))
   {
     $('#div_log_change_error').append("<a class='class_log_change_callinfo'>Error QRZ.COM:"+callinfo['qrzcom']['error']+"</a>");
+
     callinfo['qrzcom']['fname']="";
     callinfo['qrzcom']['name']="";
     callinfo['qrzcom']['addr1']="";
