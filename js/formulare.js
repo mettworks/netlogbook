@@ -190,8 +190,8 @@ function change_log(log_id)
   }
   //interval_log_change=setInterval("reload_tables_log_change()",5000); 
   interval_log_change='NULL';
-  table_logsfromme.fnDraw();
-  table_logsfromall.fnDraw();
+  table_logsfromme.draw();
+  table_logsfromall.draw();
   // $(document).ready(function() { document.title = 'Netlogbook v0.1 - neues Log erfassen'; });
 }
 

@@ -145,11 +145,11 @@ function set_reload_monitor(stat)
 
 function reload_monitor()
 {
-  table_monitor_logs.fnDraw();
-  table_monitor_modes.fnDraw();
-  table_monitor_bands.fnDraw();
-  table_monitor_qsos.fnDraw();
-  table_monitor_total.fnDraw();
+  table_monitor_logs.draw();
+  table_monitor_modes.draw();
+  table_monitor_bands.draw();
+  table_monitor_qsos.draw();
+  table_monitor_total.draw();
 }
 
 function show_picture(image)
@@ -177,22 +177,22 @@ function logs_onlyoperator()
   if(logs_onlyoperator == true)
   {
     save_settings('1');
-    table_logs.fnDraw();
+    table_logs.draw();
   }
   else
   {
     save_settings('0');
-    table_logs.fnDraw();
+    table_logs.draw();
   }
 }
 
 function reload_tables_log_change()
 {
-  table_logsfromall.fnDraw();
+  table_logsfromall.draw();
 }
 function reload_tables_log()
 {
-  table_logs.fnDraw();
+  table_logs.draw();
 }
 
 function project_change_modus()

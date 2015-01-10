@@ -12,10 +12,10 @@
       <link rel="stylesheet" type="text/css" href="css/style.css">
       <link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css">
       <link rel="stylesheet" type="text/css" href="/js/DataTables-1.10.4/media/css/jquery.dataTables.css">
-      <link rel="stylesheet" type="text/css" href="/css/dataTables.colVis.css">
+      <!--<link rel="stylesheet" type="text/css" href="/css/dataTables.colVis.css">-->
       <script type="text/javascript" charset="utf8" src="/js/DataTables-1.10.4/media/js/jquery.js"></script>
       <script type="text/javascript" charset="utf8" src="/js/DataTables-1.10.4/media/js/jquery.dataTables.js"></script>
-      <script type="text/javascript" charset="utf8" src="/js/dataTables.colVis.js"></script>
+      <!--<script type="text/javascript" charset="utf8" src="/js/dataTables.colVis.js"></script>-->
     </head>
     <body>
     <body onload="load();loadXML();set_map_settings();">
@@ -37,6 +37,13 @@
 	operators=get_data('operator','');
 
 	var table_logs;
+	var table_projects;
+	var table_operators;
+	var table_monitor_logs;
+	var table_monitor_total;
+	var table_monitor_modes;
+	var table_monitor_bands;
+	var table_monitor_qsos;
 
 	$(function() {
 	    $('#fileupload').fileupload(
@@ -65,7 +72,7 @@
 	$(document).ready(
 	  function() 
 	  {
-	    table_monitor_logs=$('#table_monitor_logs').dataTable
+	    table_monitor_logs=$('#table_monitor_logs').DataTable
 	    (
 	      {
 		"bProcessing": true,
@@ -85,7 +92,7 @@
 		    null,
 		]
 	    });
-	    table_monitor_modes=$('#table_monitor_modes').dataTable
+	    table_monitor_modes=$('#table_monitor_modes').DataTable
 	    (
 	      {
 		"bProcessing": true,
@@ -102,7 +109,7 @@
 		    null,
 		]
 	    });
-	    table_monitor_bands=$('#table_monitor_bands').dataTable
+	    table_monitor_bands=$('#table_monitor_bands').DataTable
 	    (
 	      {
 		"bProcessing": true,
@@ -119,7 +126,7 @@
 		    null,
 		]
 	    });
-	    table_monitor_qsos=$('#table_monitor_qsos').dataTable
+	    table_monitor_qsos=$('#table_monitor_qsos').DataTable
 	    (
 	      {
 		"bProcessing": true,
@@ -140,7 +147,7 @@
 		    } 
 		]
 	    });
-	    table_monitor_total=$('#table_monitor_total').dataTable
+	    table_monitor_total=$('#table_monitor_total').DataTable
 	    (
 	      {
 		"bProcessing": true,
@@ -240,7 +247,7 @@
 
 	    });
 
-	    table_logsfromme=$('#table_logsfromme').dataTable
+	    table_logsfromme=$('#table_logsfromme').DataTable
 	    (
 	      {
 		"bProcessing": true,
@@ -267,7 +274,7 @@
 		    null,
 		]
 	    });
-	    table_logsfromall=$('#table_logsfromall').dataTable
+	    table_logsfromall=$('#table_logsfromall').DataTable
 	    (
 	      {
 		"bProcessing": true,
@@ -296,7 +303,7 @@
 
 		]
 	    });
-	    table_operators=$('#table_operators').dataTable
+	    table_operators=$('#table_operators').DataTable
 	    (
 	      {
 		"bProcessing": true,
@@ -309,21 +316,24 @@
 		    "bVisible": false
 		  },
 		  {
-		    "fnRender": function(oObj)
-		    {
-		      return '<input onclick="change_operator(\''+oObj.aData[1]+'\');" type="button" value="bearbeiten" name="bearbeiten" >';
-		    }
+                    "mRender": function ( data, type, full ) 
+                    {
+                      return '<img src="images/edit.png" alt="bearbeiten" onclick="change_operator(\''+full[1]+'\');">';
+
+                    },
+                    'bSortable': false,
 		  },
 		  {
-		    "fnRender": function(oObj)
-		    {
-		      return '<input onclick="delete_data_ask(\'operator\',\''+oObj.aData[1]+'\');" type="button" value="loeschen" name="loeschen" >';
-		    }
-		  }
+                    "mRender": function ( data, type, full ) 
+                    {
+                      return '<img src="images/delete.png" alt="loeschen" onclick="delete_data_ask(\'operator\',\''+full[1]+'\');">';
 
+                    },
+                    'bSortable': false,
+		  }
 		]
 	    });
-	    table_projects=$('#table_projects').dataTable
+	    table_projects=$('#table_projects').DataTable
             (
               {
                 "bProcessing": true,
@@ -342,24 +352,43 @@
 		    "bVisible": false
 		  },
                   {
-                    // bearbeiten
-                    "fnRender": function(oObj)
+                    "mRender": function ( data, type, full ) 
                     {
-                      return '<input onclick="change_project(\''+oObj.aData[3]+'\');" type="button" value="bearbeiten" name="bearbeiten" >';
-                    }
+                      return '<img src="images/edit.png" alt="bearbeiten" onclick="change_project(\''+full[3]+'\');">';
+
+                    },
+                    'bSortable': false,
                   },
                   {
-                    // loeschen
-                    "fnRender": function(oObj)
+ 
+                    "mRender": function ( data, type, full ) 
                     {
-                      return '<input onclick="delete_project(\''+oObj.aData[3]+'\');" type="button" value="loeschen" name="loeschen" >';
-                    }
+                      return '<img src="images/delete.png" alt="loeschen" onclick="delete_project(\''+full[3]+'\');">';
+
+                    },
+                    'bSortable': false,
                   }
 
                 ]
             });
 	    fill_form_settings_op_table_logs();
 	    set_table_logs();
+
+	    $('#table_monitor_logs').css( 'display', 'block' );
+	    table_monitor_logs.columns.adjust().draw();
+	    $('#table_operators').css( 'display', 'block' );
+	    table_operators.columns.adjust().draw();
+	    $('#table_projects').css( 'display', 'block' );
+	    table_projects.columns.adjust().draw();
+	    $('#table_monitor_total').css( 'display', 'block' );
+	    table_monitor_total.columns.adjust().draw();
+  	    $('#table_monitor_modes').css( 'display', 'block' );
+	    table_monitor_modes.columns.adjust().draw();
+	    $('#table_monitor_bands').css( 'display', 'block' );
+	    table_monitor_bands.columns.adjust().draw();
+	    $('#table_monitor_qsos').css( 'display', 'block' );
+	    table_monitor_qsos.columns.adjust().draw();
+
 	  });
       //interval_log=setInterval("reload_tables_log()",5000);
       </script></p>
@@ -468,7 +497,7 @@
       <div id="div_log_change">
 	<div id="div_log_change_logsfromme">
 	  <a>Meine Logs</a>
-	  <table id="table_logsfromme">
+	  <table id="table_logsfromme" class="display compact" width="100%">
 	    <thead>
 	      <tr>
                 <th>Datum</th>
@@ -489,7 +518,7 @@
 	</div>
 	<div id="div_log_change_logsfromall">
 	  <a>alle Logs des aktuellen Projektes (<b>KEIN</b> automatischer Reload)</a>
-	  <table id="table_logsfromall">
+	  <table id="table_logsfromall" class="display compact" width="100%">
 	    <thead>
 	      <tr>
                 <th>Datum</th>
@@ -676,7 +705,7 @@
 	<div id="div_monitor">
 	  <div id="div_monitor_table_logs">
 	    <a>Logs</a>
-	    <table id="table_monitor_logs">
+	    <table id="table_monitor_logs" class="compact">
 	      <thead>
 		<tr>
 		  <th>Call</th>
@@ -690,7 +719,7 @@
 	  </div>
 	  <div id="div_monitor_table_total">
 	    <a>Summe</a>
-	    <table id="table_monitor_total">
+	    <table id="table_monitor_total" class="compact">
 	      <thead>
 		<tr>
 		  <th></th>
@@ -700,7 +729,7 @@
 	  </div>
 	  <div id="div_monitor_table_modes">
 	    <a>Modes</a>
-	    <table id="table_monitor_modes">
+	    <table id="table_monitor_modes" class="compact">
 	      <thead>
 		<tr>
 		  <th>Betriebsart</th>
@@ -711,7 +740,7 @@
 	  </div>
 	  <div id="div_monitor_table_bands">
 	    <a>Band</a>
-	    <table id="table_monitor_bands">
+	    <table id="table_monitor_bands" class="compact">
 	      <thead>
 		<tr>
 		  <th>B&auml;nder</th>
@@ -722,7 +751,7 @@
 	  </div>
 	  <div id="div_monitor_table_qsos">
 	    <a>QSO's</a>
-	    <table id="table_monitor_qsos">
+	    <table id="table_monitor_qsos" class="compact">
 	      <thead>
 		<tr>
 		  <th>QSO</th>
@@ -881,7 +910,7 @@
     <input onclick="export_log();" type="button" value="Log exportieren" name=""><br>
     <input onchange='logs_autoreload();' type="checkbox" name="logs_autoreload" id="logs_autoreload" value="logs_autoreload">Auto Reload/30s</>
     <input onchange='logs_onlyoperator();' type="checkbox" name="logs_onlyoperator" id="logs_onlyoperator" value="logs_onlyoperator">nur meine zeigen</>
-    <table id="table_logs" class="display compact" width="100%">
+    <table id="table_logs" class="compact">
       <thead>
 	<tr>
 	  <th>Datum</th>
@@ -906,7 +935,7 @@
     </table>
     </div>
     <div id="div_operators">
-    <table id="table_operators">
+    <table id="table_operators" class="compact">
       <thead>
 	<tr>
 	  <th>Call</th>
@@ -984,7 +1013,7 @@
       </form>
     </div>
    <div id="div_projects">
-    <table id="table_projects">
+    <table id="table_projects" class="compact">
       <thead>
         <tr>
           <th>Name</th>
