@@ -67,11 +67,17 @@
     $data_plain=mysql_fragen("SELECT settings FROM rel_operators_projects WHERE project_id=".$_SESSION['project_id']." AND operator_id=".$_SESSION['operator_id'].";");
     $data_output=$data_plain[0]['settings'];
   }
-
-  else if($table == "callinfo")
+  else if($table == "callinfo_aprs")
+  {
+    $data_plain=aprs_lookup_call($_GET['call']);
+  }
+  else if($table == "callinfo_qrz")
+  {
+    $data_plain=qrz_lookup_call($_GET['call']);
+  }
+  else if($table == "callinfo_logs")
   {
     $modes=mysql_fragen('SELECT * FROM modes;','mode_id');
-    $data_plain['qrzcom']=qrz_lookup_call($_GET['call']);
     $i=0;
     if($temp=mysql_fragen("SELECT * FROM logs log_time WHERE log_call='".$_GET['call']."' AND project_id=".$_SESSION['project_id']." ORDER BY log_time DESC"))
     foreach($temp as $data_temp)
@@ -82,7 +88,7 @@
       $callinfo_project[$i]['mode_name']=$modes[$data_temp['mode_id']]['mode_name'];
       $i++;
     }
-    $data_plain['callinfo_project']=$callinfo_project;
+    $data_plain['project']=$callinfo_project;
     $i=0;
     if($temp=mysql_fragen("SELECT * FROM logs WHERE log_call='".$_GET['call']."' AND operator_id=".$_SESSION['operator_id']." AND project_id=".$_SESSION['project_id']." ORDER BY log_time DESC"))
     foreach($temp as $data_temp)
@@ -93,9 +99,9 @@
       $callinfo_operator[$i]['mode_name']=$modes[$data_temp['mode_id']]['mode_name'];
       $i++;
     }
-    $data_plain['callinfo_operator']=$callinfo_operator;
-    $data_plain['callinfo_total_project']=mysql_fragen("SELECT COUNT(*) FROM logs log_time WHERE project_id=".$_SESSION['project_id']);
-    $data_plain['callinfo_total_operator']=mysql_fragen("SELECT COUNT(*) FROM logs log_time WHERE operator_id=".$_SESSION['operator_id']." AND project_id=".$_SESSION['project_id']);
+    $data_plain['operator']=$callinfo_operator;
+    $data_plain['total_project']=mysql_fragen("SELECT COUNT(*) FROM logs log_time WHERE project_id=".$_SESSION['project_id']);
+    $data_plain['total_operator']=mysql_fragen("SELECT COUNT(*) FROM logs log_time WHERE operator_id=".$_SESSION['operator_id']." AND project_id=".$_SESSION['project_id']);
   }
 
   if($table == "logs")

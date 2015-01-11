@@ -1,11 +1,11 @@
-function save_settings_op(setting_op)
+function save_settings_op()
 {
   $.ajax
   (
     {
       type: "POST",
       url: "save.php",
-      data: setting_op,
+      data: settings_op,
       success: function(html)
       {
 	$("div#div_error").html(html);

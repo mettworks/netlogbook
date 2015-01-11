@@ -8,7 +8,7 @@
   $typ=$data_temp['typ'];
   $action=$data_temp['action'];
   $completed=$data_temp['completed'];
-  //firebug_debug($_FILE);
+  //firebug_debug($_SERVER);
   //print_r($_POST);
   //die();
 
@@ -18,7 +18,6 @@
     unset($_POST['action']);
     $data_temp=$_POST;
   }
-  
 
   if($action == "save_project_session")
   {

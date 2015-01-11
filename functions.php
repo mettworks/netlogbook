@@ -252,16 +252,12 @@
     } 
   }
 
-  //
-  // TODO: new function name, now with APRS included... ;-)
-  function qrz_lookup_call($call)
+  function aprs_lookup_call($call)
   {
     if(strlen($call) != 0)
     {
       $aprs=0;
       unlink($aprspos);
-      global $qrzcom_cachetime;
-      // CALL/p OR CALL/m OR CALL/mm
       if(preg_match('/^([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
       {
 	$call=preg_replace('/^(([a-z0-9])+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$1',$call);
@@ -291,14 +287,48 @@
 	$xml=file_get_contents($url);
 	$data=json_decode($xml,TRUE);
 	// TODO: time global?
-    
 	// TODO TIME!!	
-	if(time() - $data['entries'][0]['lasttime'] < 2160000)
+	if((time() - $data['entries'][0]['lasttime'] < 2160000000) && (preg_match("/".$call."-[0-9]+/i",$data['entries']['0']['name'])))
 	{
 	  $aprspos=degree2locator($data['entries'][0]['lng'],$data['entries'][0]['lat']);
+	  return $aprspos;
+	}
+	else
+	{
+	  return false;
 	}
       }
+      else
+      {
+	return false;
+      }
+    }
+    else
+    {
+      return false;
+    }
+  }
 
+  function qrz_lookup_call($call)
+  {
+    if(strlen($call) != 0)
+    {
+      global $qrzcom_cachetime;
+      // CALL/p OR CALL/m OR CALL/mm
+      if(preg_match('/^([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
+      {
+	$call=preg_replace('/^(([a-z0-9])+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$1',$call);
+      }
+      // */CALL
+      else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i',$call))
+      {
+	$call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i','$3',$call);
+      }
+      // */CALL/p OR */CALL/m OR */CALL/mm
+      else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
+      {
+	$call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$3',$call);
+      }
       $timestamp=time()-$qrzcom_cachetime;
       if($data_temp=mysql_fragen("SELECT * FROM qrz_cache WHERE qrz_call='".$call."' AND timestamp >= '".$timestamp."'"))
       {
@@ -400,15 +430,6 @@
       $return['imageheight']="";
       $return['imagewidth']="";
       $return['error']="kein Call";
-    }
-    if(is_array($aprspos))
-    {
-      $return['grid']=$aprspos['loc'];
-      $return['info']='Position per APRS';
-    }
-    else
-    {
-      $return['info']="";
     }
     return($return);
   }

@@ -1,11 +1,11 @@
 function settings_op_save()
 {
-  settings_op['action']="save_settings_op";
+  settings_op['action']='save_settings_op';
   settings_op['frequency_prefix']=$('#setting_frequency_prefix').val();
-  settings_op['aprs_ena']=$('#setting_interface_aprs_ena').prop('checked');
-  settings_op['qrz_ena']=$('#setting_interface_qrz_ena').prop('checked');
-  settings_op['gm_ena']=$('#setting_interface_gm_ena').prop('checked');  
-  save_settings_op(settings_op);
+  if($('#setting_interface_aprs_ena').prop("checked") == true) { settings_op['aprs_ena']="true"; } else { settings_op['aprs_ena']="false"; }
+  if($('#setting_interface_qrz_ena').prop("checked") == true) { settings_op['qrz_ena']="true"; } else { settings_op['qrz_ena']="false"; }
+  if($('#setting_interface_gm_ena').prop("checked") == true) { settings_op['gm_ena']="true"; } else { settings_op['gm_ena']="false"; }
+  save_settings_op();
   set_table_logs();
 }
 
@@ -301,104 +301,124 @@ function operator_change_pwm()
 function display_callinfo(call,formchange)
 {
   call=$('#log_call').val();
-  callinfo=get_callinfo(call);
+  if(settings_op['qrz_ena'] == "true")
+  {
+    callinfo_qrz=get_callinfo_qrz(call);
+  }
+  if(settings_op['aprs_ena'] == "true")
+  {
+    callinfo_aprs=get_callinfo_aprs(call);
+  }
+  callinfo_logs=get_callinfo_logs(call);
+
   $('.class_log_change_callinfo').remove();
   $('.error_text').remove();
-  $('#div_log_change_error').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['info']+"</a>");
+  //$('#div_log_change_error').append("<a class='class_log_change_callinfo'>"+callinfo_qrz['info']+"</a>");
 
-  if((typeof(callinfo['qrzcom']['error']) == 'string') && (callinfo['qrzcom']['error'] != ""))
+  if(settings_op['qrz_ena'] == "true")
   {
-    $('#div_log_change_error').append("<a class='class_log_change_callinfo'>Error QRZ.COM:"+callinfo['qrzcom']['error']+"</a>");
-
-    callinfo['qrzcom']['fname']="";
-    callinfo['qrzcom']['name']="";
-    callinfo['qrzcom']['addr1']="";
-    callinfo['qrzcom']['addr2']="";
-    callinfo['qrzcom']['url']="";
-    callinfo['qrzcom']['grid']="";
-    callinfo['qrzcom']['qslmgr']="";
-  }
-  else
-  {
-    var div_width=$('#div_log_change_callinfo1_picture').width();
-    var div_height=$('#div_log_change_callinfo1_picture').height();
-
-    if(callinfo['qrzcom']['imagestatus'] == "0")
+    if((typeof(callinfo_qrz['error']) == 'string') && (callinfo_qrz['error'] != ""))
     {
-      var op_picture="/cache/qrzcom/"+callinfo['qrzcom']['image'];
+      $('#div_log_change_error').append("<a class='class_log_change_callinfo'>Error QRZ.COM:"+callinfo_qrz['error']+"</a>");
 
-      if(div_width/callinfo['qrzcom']['imagewidth'] > div_height/callinfo['qrzcom']['imageheight'])
-      {
-	size='height';
-      }
-      else
-      {
-	size='width';
-      }
-      $('#div_log_change_callinfo1_picture').append('<a class="class_log_change_callinfo" href="#" onclick="show_picture(\''+op_picture+'\');"><img class="class_log_change_callinfo" '+size+'="100%" src="'+op_picture+'"</img></a>');
-    }
-    else if(callinfo['qrzcom']['imagestatus'] == "1")
-    {
-      if(div_width/180 > div_height/180)
-      {
-	size='height';
-      }
-      else
-      {
-	size='width';
-      }
-      $('#div_log_change_callinfo1_picture').append('<a class="class_log_change_callinfo"><img class="class_log_change_callinfo" '+size+'="100%" src="images/qrzcom_error.png"</img></a>');
+      callinfo_qrz['fname']="";
+      callinfo_qrz['name']="";
+      callinfo_qrz['addr1']="";
+      callinfo_qrz['addr2']="";
+      callinfo_qrz['url']="";
+      callinfo_qrz['grid']="";
+      callinfo_qrz['qslmgr']="";
     }
     else
     {
-      if(div_width/180 > div_height/180)
+      var div_width=$('#div_log_change_callinfo1_picture').width();
+      var div_height=$('#div_log_change_callinfo1_picture').height();
+
+      if(callinfo_qrz['imagestatus'] == "0")
       {
-	size='height';
+	var op_picture="/cache/qrzcom/"+callinfo_qrz['image'];
+
+	if(div_width/callinfo_qrz['imagewidth'] > div_height/callinfo_qrz['imageheight'])
+	{
+	  size='height';
+	}
+	else
+	{
+	  size='width';
+	}
+	$('#div_log_change_callinfo1_picture').append('<a class="class_log_change_callinfo" href="#" onclick="show_picture(\''+op_picture+'\');"><img class="class_log_change_callinfo" '+size+'="100%" src="'+op_picture+'"</img></a>');
+      }
+      else if(callinfo_qrz['imagestatus'] == "1")
+      {
+	if(div_width/180 > div_height/180)
+	{
+	  size='height';
+	}
+	else
+	{
+	  size='width';
+	}
+	$('#div_log_change_callinfo1_picture').append('<a class="class_log_change_callinfo"><img class="class_log_change_callinfo" '+size+'="100%" src="images/qrzcom_error.png"</img></a>');
       }
       else
       {
-	size='width';
+	if(div_width/180 > div_height/180)
+	{
+	  size='height';
+	}
+	else
+	{
+	  size='width';
+	}
+	$('#div_log_change_callinfo1_picture').append('<a class="class_log_change_callinfo"><img class="class_log_change_callinfo" '+size+'="100%" src="images/qrzcom_dummy.png"</img></a>');
       }
-      $('#div_log_change_callinfo1_picture').append('<a class="class_log_change_callinfo"><img class="class_log_change_callinfo" '+size+'="100%" src="images/qrzcom_dummy.png"</img></a>');
+    }
+    if(formchange == '1')
+    {
+      $('#log_loc').val(callinfo_qrz['grid']);
+      $('#log_qth').val(callinfo_qrz['addr2']);
+      $('#log_name').val(callinfo_qrz['fname']);
+      $('#log_manager').val(callinfo_qrz['qslmgr']);
+    }
+    log_change_loc();
+    $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo_qrz['fname']+" "+callinfo_qrz['name']+"</a><br class='class_log_change_callinfo'>");
+    $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo_qrz['addr1']+"</a><br class='class_log_change_callinfo'>");
+    $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo_qrz['addr2']+"</a><br class='class_log_change_callinfo'><br class='class_log_change_callinfo'>");
+    if(typeof(callinfo_qrz['url']) == "string")
+    {
+      $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo' href="+callinfo_qrz['url']+" target=_blank>"+callinfo_qrz['url']+"</a>");
     }
   }
-  if(formchange == '1')
+  if(settings_op['aprs_ena'] == "true")
   {
-    $('#log_loc').val(callinfo['qrzcom']['grid']);
-    $('#log_qth').val(callinfo['qrzcom']['addr2']);
-    $('#log_name').val(callinfo['qrzcom']['fname']);
-    $('#log_manager').val(callinfo['qrzcom']['qslmgr']);
+    if(callinfo_aprs['loc'] != null)
+    {
+      $('#log_loc').val(callinfo_aprs['loc']);
+      log_change_loc();
+    }
   }
-  log_change_loc();
-  if(callinfo.callinfo_total_project == null)
+  if(callinfo_logs['total_project'] == null)
   {
     $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>Anzahl Total/ich:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>NA / NA</a><br class='class_log_change_callinfo'></b>"); 
   }
   else
   {
-    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>Anzahl Total/ich:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>"+callinfo.callinfo_total_project['0']['COUNT(*)']+" / "+callinfo.callinfo_total_operator['0']['COUNT(*)']+"</a><br class='class_log_change_callinfo'></b>"); 
+    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>Anzahl Total/ich:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>"+callinfo_logs['total_project']['0']['COUNT(*)']+" / "+callinfo_logs['total_operator']['0']['COUNT(*)']+"</a><br class='class_log_change_callinfo'></b>"); 
   }
-  if(callinfo.callinfo_project == null)
+  if(callinfo_logs['project'] == null)
   {
     $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>N/A</a></b><br class='class_log_change_callinfo'>"); 
   } 
   else
   {
-    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>"+callinfo.callinfo_project['0']['log_freq']+"kHz / "+callinfo.callinfo_project['0']['log_time']+" / "+callinfo.callinfo_project['0'].mode_name+" (gesamt: "+callinfo.callinfo_project.length+")</a><br class='class_log_change_callinfo'></b>");
+    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO Projekt:<b class='class_log_change_callinfo'><br class='class_log_change_callinfo'>"+callinfo_logs['project']['0']['log_freq']+"kHz / "+callinfo_logs['project']['0']['log_time']+" / "+callinfo_logs['project']['0'].mode_name+" (gesamt: "+callinfo_logs['project'].length+")</a><br class='class_log_change_callinfo'></b>");
   }
-  if(callinfo.callinfo_operator == null)
+  if(callinfo_logs['operator'] == null)
   {
     $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>N/A</a></b><br class='class_log_change_callinfo'>");
   }
   else
   { 
     $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>"+callinfo.callinfo_operator['0']['log_freq']+"kHz / "+callinfo.callinfo_operator['0']['log_time']+" / "+callinfo.callinfo_operator['0'].mode_name+" (gesamt: "+callinfo.callinfo_operator.length+")</a><br class='class_log_change_callinfo'></b>");
-  }
-  $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['fname']+" "+callinfo['qrzcom']['name']+"</a><br class='class_log_change_callinfo'>");
-  $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['addr1']+"</a><br class='class_log_change_callinfo'>");
-  $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['addr2']+"</a><br class='class_log_change_callinfo'><br class='class_log_change_callinfo'>");
-  if(typeof(callinfo['qrzcom']['url']) == "string")
-  {
-    $('#div_log_change_callinfo1').append("<a class='class_log_change_callinfo' href="+callinfo['qrzcom']['url']+" target=_blank>"+callinfo['qrzcom']['url']+"</a>");
   }
 }

@@ -33,7 +33,7 @@
         <script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script>
-	var settings_op;
+	var settings_op={};
 	
 	settings_op=get_data('settings_op','');
 	modes=get_data('mode','');
@@ -209,7 +209,7 @@
 			return "<style=text-align:right;>"+(Math.round((full[3]/1000) * 1000 )/1000).toFixed(3)+"Mhz";
 		      }
 		      else
-		      {
+		      {	
 			return "<style=text-align:right;>"+full[3]+"khz";
 		      }
 		    },
