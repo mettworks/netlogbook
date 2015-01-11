@@ -36,7 +36,6 @@
 	var settings_op;
 	
 	settings_op=get_data('settings_op','');
-	console.log(settings_op);
 	modes=get_data('mode','');
 	operators=get_data('operator','');
 
@@ -79,7 +78,6 @@
 	    table_monitor_logs=$('#table_monitor_logs').DataTable
 	    (
 	      {
-		"bProcessing": true,
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=monitor_logs",
@@ -99,7 +97,6 @@
 	    table_monitor_modes=$('#table_monitor_modes').DataTable
 	    (
 	      {
-		"bProcessing": true,
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=monitor_modes",
@@ -116,7 +113,6 @@
 	    table_monitor_bands=$('#table_monitor_bands').DataTable
 	    (
 	      {
-		"bProcessing": true,
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=monitor_bands",
@@ -133,7 +129,6 @@
 	    table_monitor_qsos=$('#table_monitor_qsos').DataTable
 	    (
 	      {
-		"bProcessing": true,
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=monitor_qsos",
@@ -154,7 +149,6 @@
 	    table_monitor_total=$('#table_monitor_total').DataTable
 	    (
 	      {
-		"bProcessing": true,
 		"bServerSide": true,
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=monitor_total",
