@@ -9,13 +9,13 @@
     <head>
       <meta charset="utf-8">
       <title>Netlogbook v0.1</title>
-      <link rel="stylesheet" type="text/css" href="css/style.css">
       <link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css">
       <link rel="stylesheet" type="text/css" href="/js/DataTables-1.10.4/media/css/jquery.dataTables.css">
       <!--<link rel="stylesheet" type="text/css" href="/css/dataTables.colVis.css">-->
       <script type="text/javascript" charset="utf8" src="/js/DataTables-1.10.4/media/js/jquery.js"></script>
       <script type="text/javascript" charset="utf8" src="/js/DataTables-1.10.4/media/js/jquery.dataTables.js"></script>
       <!--<script type="text/javascript" charset="utf8" src="/js/dataTables.colVis.js"></script>-->
+      <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
     <body onload="load();loadXML();set_map_settings();">
@@ -33,6 +33,10 @@
         <script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script>
+	var settings_op;
+	
+	settings_op=get_data('settings_op','');
+	console.log(settings_op);
 	modes=get_data('mode','');
 	operators=get_data('operator','');
 
@@ -172,6 +176,7 @@
 		"bUseRendered": false,
 		"sAjaxSource": "/getdata.php?typ=datatable&table=logs",
 		"bStateSave": true,
+		"pagingType": "simple",
 		"stateLoadCallback": function (settings) {
 		  var o;
 		  $.ajax( {
@@ -202,7 +207,23 @@
 		  null,
 		  null,
 		  null,
-		  null,
+		  {
+		    "mRender": function ( data, type, full ) 
+		    {
+		      if(settings_op['frequency_prefix'] == 0)
+		      {
+			return "<style=text-align:right;>"+(Math.round((full[3]/1000) * 1000 )/1000).toFixed(3)+"Mhz";
+		      }
+		      else
+		      {
+			return "<style=text-align:right;>"+full[3]+"khz";
+		      }
+		    },
+		    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) 
+		    {
+		      $(nTd).css('text-align', 'right');
+		    },
+		  },
 		  null,
 		  null,
 		  null,
@@ -372,6 +393,7 @@
                 ]
             });
 	    fill_form_settings_op_table_logs();
+	    fill_form_settings_op();
 	    set_table_logs();
 
 	    $('#table_monitor_logs').css( 'display', 'block' );
@@ -552,7 +574,7 @@
 	  <table>
 	    <tr>
 	      <td>
-		<input tabindex="13" class="class_log_change" type="button" onclick="completed='0';write_data('log')"; value="Speichern & Weiter" name="Speichern & Weiter">
+		<input tabindex="13" class="class_log_change" type="button" onclick="completed='0';write_data('log')"; value="Speichern&Neu" name="Speichern&Neu">
 	      </td>
 	    </tr>
 	    <tr>
@@ -572,9 +594,9 @@
 	<div id="div_log_change_callinfo4">
 	</div>
 	<div id="div_log_change_form">
-	  <form method="POST" action="" class="form" id="form_log_change" accept-charset="UTF-8">
+	  <form method="POST" action="" class="class_form_log_change" id="form_log_change" accept-charset="UTF-8">
 	  <table>
-	    <tr>
+	    <tr class='class_log_change_desc_text'>
 	      <td>
 		<span class='help'>Datum<div>DD-MM-YYYY</div></span>
 	      </td>
@@ -612,7 +634,7 @@
 		<span class='help'>Zeit<div>Zeit wird automatisch beim abspeichern &uuml;bernommen</div></span>
 	      </td>
 	    </tr>
-	    <tr>
+	    <tr class='class_log_change_inputs'>
 	      <td>
 		<input class='class_log_change' type='text' name='log_time_hr_date' id='log_time_hr_date' value=''>
 	      </td>
@@ -655,7 +677,7 @@
                 <input onchange='log_change_time();' class='class_log_change' type='checkbox' id='log_time_auto' name='log_time_auto'>
 	      </td>
 	    </tr>
-	    <tr>
+	    <tr class='class_log_change_desc_text'>
 	      <td colspan="8">
 		<span class='help'>Bemerkungen<div>Bemerkungen</div></span>
 	      </td>
@@ -666,7 +688,7 @@
 		<span class='help'>Manager<div>Manager</div></span>
 	      </td>
 	    </tr>
-	    <tr>
+	    <tr class='class_log_change_inputs'>
 	      <td colspan="8">
 		<input tabindex="12" class='class_log_change' type='text' name='log_notes' id='log_notes' value=''>
 	    </td>
@@ -905,12 +927,12 @@
     <div id="div_error">
     </div>
     <div id="div_logs">
-    <input onclick="change_log();" type="button" value="neues Log erfassen" name="">
+    <input onclick="change_log();" type="button" value="Log neu" name="">
     <input onclick="import_log();" type="button" value="Log importieren" name="">
-    <input onclick="export_log();" type="button" value="Log exportieren" name=""><br>
+    <input onclick="export_log();" type="button" value="Log exportieren" name="">
     <input onchange='logs_autoreload();' type="checkbox" name="logs_autoreload" id="logs_autoreload" value="logs_autoreload">Auto Reload/30s</>
     <input onchange='logs_onlyoperator();' type="checkbox" name="logs_onlyoperator" id="logs_onlyoperator" value="logs_onlyoperator">nur meine zeigen</>
-    <table id="table_logs" class="compact">
+    <table id="table_logs" class="compact" width="100%">
       <thead>
 	<tr>
 	  <th>Datum</th>
@@ -954,8 +976,8 @@
 	    <td><span class="help">Frequenzanzeige in<div>Frequenzanzeige in kHz oder MHz</div></span></td>
 	    <td>
 	      <select id="setting_frequency_prefix" name="setting_frequency_prefix" >
-		<option value="0">kHz</option>
-		<option value="1">MHz</option>
+		<option value="0">MHz</option>
+		<option value="1">kHz</option>
 	      </select>
 	    </td>
 	  </tr>

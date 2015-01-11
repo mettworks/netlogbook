@@ -31,37 +31,13 @@
   {
     $temp=json_encode($data_temp);    
     $sql="UPDATE rel_operators_projects SET settings_table_logs='".$temp."'  WHERE operator_id='".$_SESSION['operator_id']."' AND project_id='".$_SESSION['project_id']."';";
-    /*
-    foreach($data_temp as $setting => $value)
-    {
-      if($value == "false")
-      {
-	$_SESSION['settings']['table_logs'][$setting]=0;
-      }
-      else
-      {
-      	$_SESSION['settings']['table_logs'][$setting]=1;
-      }
-      $sql.="settings_table_logs_".$setting."=".$value.","; 
-    }
-    $sql=preg_replace('/,$/','',$sql);
-    */
-    //$sql.=" WHERE operator_id='".$_SESSION['operator_id']."' AND project_id='".$_SESSION['project_id']."';";
     mysql_schreib($sql);
   }
   if($action == "save_settings_op")
   {
-    foreach($data_temp as $setting => $value)
-    {
-      if($value == "false")
-      {
-	$_SESSION['settings']['op'][$setting]=0;
-      }
-      else
-      {
-      	$_SESSION['settings']['op'][$setting]=1;
-      }
-    }
+    $temp=json_encode($data_temp);    
+    $sql="UPDATE rel_operators_projects SET settings='".$temp."'  WHERE operator_id='".$_SESSION['operator_id']."' AND project_id='".$_SESSION['project_id']."';";
+    mysql_schreib($sql);
   }
 
 

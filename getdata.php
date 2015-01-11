@@ -62,6 +62,11 @@
     $data_plain=mysql_fragen("SELECT settings_table_logs FROM rel_operators_projects WHERE project_id=".$_SESSION['project_id']." AND operator_id=".$_SESSION['operator_id'].";");
     $data_output=$data_plain[0]['settings_table_logs'];
   }
+  else if($table == "settings_op")
+  {
+    $data_plain=mysql_fragen("SELECT settings FROM rel_operators_projects WHERE project_id=".$_SESSION['project_id']." AND operator_id=".$_SESSION['operator_id'].";");
+    $data_output=$data_plain[0]['settings'];
+  }
 
   else if($table == "callinfo")
   {
@@ -419,6 +424,7 @@
 	$timestamp=$data_c[$data_c_id][0];
 	$data_c[$data_c_id][0]=time_from_timestamp($timestamp,"date");
 	$data_c[$data_c_id][1]=time_from_timestamp($timestamp,"time");
+	/*
 	$freq=$data_c[$data_c_id][3];
 	if($freq > 1000)
 	{
@@ -433,6 +439,7 @@
 	  $freq=$freq."khz";
 	}
 	$data_c[$data_c_id][3]=preg_replace('/\./',',',$freq);
+	*/
       }
     }
 

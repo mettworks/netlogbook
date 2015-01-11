@@ -1,13 +1,20 @@
 function settings_op_save()
 {
-  setting_op={};
-  setting_op['action']="save_settings_op";
-  setting_op['frequency_prefix']=$('#setting_frequency_prefix').val();
-  setting_op['aprs_ena']=$('#setting_interface_aprs_ena').prop('checked');
-  setting_op['qrz_ena']=$('#setting_interface_qrz_ena').prop('checked');
-  setting_op['gm_ena']=$('#setting_interface_gm_ena').prop('checked');  
-  save_settings_op(setting_op);
+  settings_op['action']="save_settings_op";
+  settings_op['frequency_prefix']=$('#setting_frequency_prefix').val();
+  settings_op['aprs_ena']=$('#setting_interface_aprs_ena').prop('checked');
+  settings_op['qrz_ena']=$('#setting_interface_qrz_ena').prop('checked');
+  settings_op['gm_ena']=$('#setting_interface_gm_ena').prop('checked');  
+  save_settings_op(settings_op);
   set_table_logs();
+}
+
+function fill_form_settings_op()
+{
+  if(settings_op['aprs_ena'] == "true") { $('#setting_interface_aprs_ena').prop( "checked", true ); }
+  if(settings_op['qrz_ena'] == "true") { $('#setting_interface_qrz_ena').prop( "checked", true ); }
+  if(settings_op['gm_ena'] == "true") { $('#setting_interface_gm_ena').prop( "checked", true ); }
+  $('#setting_frequency_prefix').val(settings_op['frequency_prefix']);
 }
 
 function fill_form_settings_op_table_logs()
@@ -72,7 +79,7 @@ function set_project()
 // fill the option values for the map
 function set_map_settings()
 {
-  session=get_data('session','');
+  //session=get_data('session','');
   modes=get_data('rel_project_mode','');
   bands=get_data('rel_project_band','');
   operators=get_data('rel_project_operator','');
@@ -297,7 +304,6 @@ function display_callinfo(call,formchange)
   callinfo=get_callinfo(call);
   $('.class_log_change_callinfo').remove();
   $('.error_text').remove();
-  console.log(callinfo);
   $('#div_log_change_error').append("<a class='class_log_change_callinfo'>"+callinfo['qrzcom']['info']+"</a>");
 
   if((typeof(callinfo['qrzcom']['error']) == 'string') && (callinfo['qrzcom']['error'] != ""))
