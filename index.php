@@ -513,7 +513,7 @@
       <div id="div_log_change">
 	<div id="div_log_change_logsfromme">
 	  <a>Meine Logs</a>
-	  <table id="table_logsfromme" class="display compact" width="100%">
+	  <table id="table_logsfromme" class="compact" width="100%">
 	    <thead>
 	      <tr>
                 <th>Datum</th>
@@ -534,7 +534,7 @@
 	</div>
 	<div id="div_log_change_logsfromall">
 	  <a>alle Logs des aktuellen Projektes (<b>KEIN</b> automatischer Reload)</a>
-	  <table id="table_logsfromall" class="display compact" width="100%">
+	  <table id="table_logsfromall" class="compact" width="100%">
 	    <thead>
 	      <tr>
                 <th>Datum</th>
