@@ -29,19 +29,20 @@
   global $qrzcom_cachetime;
   global $cachepath;
 
-
-  $export_clublogs=mysql_fragen("SELECT project_clublog_auto,project_id,project_clublog_lastrun FROM projects WHERE project_clublog_ena = '1' AND project_clublog_auto != '0'");
-  foreach($export_clublogs as $export_clublog)
+  if($export_clublogs=mysql_fragen("SELECT project_clublog_auto,project_id,project_clublog_lastrun FROM projects WHERE project_clublog_ena = '1' AND project_clublog_auto != '0'"))
   {
-    if($export_clublog['project_clublog_auto'] == 1)
+    foreach($export_clublogs as $export_clublog)
     {
-      $min='10';
-    }
-    if(time()-$export_clublog['project_clublog_lastrun'] > $min*60)
-    {
-      if(export_clublog($export_clublog['project_id']))
+      if($export_clublog['project_clublog_auto'] == 1)
       {
-	mysql_schreib("UPDATE projects SET project_clublog_lastrun='".time()."' WHERE project_id='".$export_clublog['project_id']."';");
+	$min='10';
+      }
+      if(time()-$export_clublog['project_clublog_lastrun'] > $min*60)
+      {
+	if(export_clublog($export_clublog['project_id']))
+	{
+	  mysql_schreib("UPDATE projects SET project_clublog_lastrun='".time()."' WHERE project_id='".$export_clublog['project_id']."';");
+	}
       }
     }
   }
