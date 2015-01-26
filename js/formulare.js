@@ -236,7 +236,6 @@ function change_project(project_id)
   if(project_id)
   {
     project_mod=get_data('projects',project_id);
-    console.log(project_mod);
     project_short_name=project_mod[project_id]['project_short_name'];
     project_mode=project_mod[project_id]['project_mode'];
     project_call=project_mod[project_id]['project_call'];
@@ -247,7 +246,12 @@ function change_project(project_id)
     project_members=get_data('rel_project_operator',project_id);
     project_modes=get_data('rel_project_mode',project_id);
     project_bands=get_data('rel_project_band',project_id);
-    //console.log(project_members);
+    project_smtp_emailfrom=project_mod[project_id]['project_smtp_emailfrom'];
+    project_smtp_server=project_mod[project_id]['project_smtp_server'];
+    project_smtp_port=project_mod[project_id]['project_smtp_port'];
+    project_smtp_username=project_mod[project_id]['project_smtp_username'];
+    if(project_mod[project_id]['project_clublog_ena'] == "1") { $('#project_clublog_ena').prop( "checked", true ); } else { $('#project_clublog_ena').prop( "checked", false ); }
+    $('#project_clublog_auto').val(project_mod[project_id]['project_clublog_auto']);
   }
   else
   {
@@ -258,10 +262,16 @@ function change_project(project_id)
     project_qrz_user="";
     project_qrz_pass="";
     project_locator="";
+    project_smtp_emailfrom="";
+    project_smtp_server="";
+    project_smtp_username="";
+    project_smtp_port="";
   }
 
   project_qrz_pass1="";
   project_qrz_pass2="";
+  project_smtp_pass1="";
+  project_smtp_pass2="";
 
   $('.class_project_members').remove();
   $('.class_project_modes').remove();
@@ -272,14 +282,16 @@ function change_project(project_id)
 
   $('#project_id').val(project_id);
   $('#project_short_name').val(project_short_name);
-  //$('#project_mode option[value='+project_mode+]).prop('selected', 'true');
-  console.log(project_mode);
   $('#project_mode').val(project_mode);
   $('#project_call').val(project_call);
   $('#project_qrz_user').val(project_qrz_user);
   $('#project_qrz_pass1').val(project_qrz_pass1);
   $('#project_qrz_pass2').val(project_qrz_pass2);
   $('#project_locator').val(project_locator);
+  $('#project_smtp_emailfrom').val(project_smtp_emailfrom);
+  $('#project_smtp_server').val(project_smtp_server);
+  $('#project_smtp_username').val(project_smtp_username);
+  $('#project_smtp_port').val(project_smtp_port);
 
   // operators
   temp="";
@@ -332,6 +344,7 @@ function change_project(project_id)
   );
   $('#project_bands').append(temp);
   project_change_modus();
+  project_change_clublog();
 }
 
 function delete_data_ask(typ,id)
@@ -350,7 +363,6 @@ function delete_data_ask(typ,id)
     $('#form_delete_data_ask').append("<p class='class_delete_data_ask'>Willste das wirklich?</p>");
     $('#form_delete_data_ask').append("<input class='class_delete_data_ask' type='hidden' name='delete_data_ask_id' id='delete_data_ask_id' value='"+id+"'>");
   }
-
 }
 /*
 function delete_operator(operator_id)

@@ -876,6 +876,74 @@
 	      <input class='class_project_change' type='password' name='project_qrz_pass2' id='project_qrz_pass2' value=''>
 	    </td>
 	  </tr>
+
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>Schnittstelle Clublog<div>Schnittstelle Clubblog</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='checkbox' name='project_clublog_ena' id='project_clublog_ena' value='' onchange='project_change_clublog()'>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>E-Mail Absenderadresse<div>E-Mail Absenderadresse</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='text' name='project_smtp_emailfrom' id='project_smtp_emailfrom' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>SMTP Server<div>SMTP Server</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='text' name='project_smtp_server' id='project_smtp_server' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>SMTP Server Port<div>SMTP Server Port</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='text' name='project_smtp_port' id='project_smtp_port' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>SMTP Server Username<div>SMTP Server Username</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='text' name='project_smtp_username' id='project_smtp_username' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>SMTP Passwort<div>Passwort SMTP</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='password' name='project_smtp_pass1' id='project_smtp_pass1' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>SMTP Passwort Wiederholung<div>Passwort SMTP Wiederholung</div></span>
+	    </td>
+	    <td>
+	      <input class='class_project_change' type='password' name='project_smtp_pass2' id='project_smtp_pass2' value=''>
+	    </td>
+	  </tr>
+	  <tr class='class_project_change'>
+	    <td>
+	      <span class='help'>automatischer Upload<div>automatischer Upload</div></span>
+	    </td>
+	    <td>
+	      <select class='class_projekt_change' name='project_clublog_auto' id='project_clublog_auto'>
+	        <option value="0">nur manuell</option>
+	        <option value="1">aller 10 Minuten</option>
+	      </select>
+	    </td>
+	  </tr>
 	  <tr class='class_project_change'>
 	    <td>
 	      <span class='help'>Locator<div>Locator</div></span>
@@ -914,7 +982,8 @@
 	</table>
 	<input class='class_project_change' type='hidden' name='project_id' id='project_id' value=''>
 	<input class="class_project_change" type="button" onclick="write_data('project')"; value="Speichern" name="Speichern">
-	<input class="class_project_change" type="button" onclick="write_data('project_kill_qrz_sess')"; value="QRZ Session loeschen" name="QRZ Session loeschen">
+	<!--	<input class="class_project_change" type="button" onclick="write_data('project_kill_qrz_sess')"; value="QRZ Session loeschen" name="QRZ Session loeschen"> -->
+	<input id="project_button_export_clublog"  class="class_project_change" type="button" onclick="export_clublog();" value="Export Clublog" name="Export Clublog">
 	<input class='class_project_change' type='button' onclick=document.getElementById('div_project_change').style.visibility='hidden';document.getElementById('div_error').style.visibility='hidden' value='abbruch' name='abbruch'>
       </form>
     </div>

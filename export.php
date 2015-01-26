@@ -42,34 +42,7 @@
   }
   else
   {
-    $modes=mysql_fragen('SELECT * FROM modes;','mode_id');
-    $bands=mysql_fragen('SELECT * FROM bands;','band_id');
-    $operators=mysql_fragen('SELECT operators.* FROM operators INNER JOIN rel_operators_projects WHERE project_id='.$_SESSION['project_id'],"operator_id");
-
-    $data="";
-    $data.="ADIF Export by Netlogbook v0.1, conforming to ADIF standard specification V 2.00\n";
-    $data.=stringtoadif("Netlogbook","PROGRAMID");
-    $data.=stringtoadif("0.1","PROGRAMVERSION");
-    $data.="\n<eoh>\n";
-
-    foreach($logs as $log)
-    {
-      $data.=stringtoadif($log['log_call'],"CALL");
-      $data.=stringtoadif(time_from_timestamp_adif($log['log_time'],"date"),"QSO_DATE");
-      $data.=stringtoadif(time_from_timestamp_adif($log['log_time'],"time"),"TIME_ON");
-      $data.=stringtoadif($modes[$log['mode_id']]['mode_name'],"MODE");
-      $data.=stringtoadif($bands[$log['band_id']]['band_name'],"BAND");
-      $data.=stringtoadif($log['log_rst_rx_0'].$log['log_rst_rx_1'].$log['log_rst_rx_2'],"RST_RCVD");
-      $data.=stringtoadif($log['log_rst_tx_0'].$log['log_rst_tx_1'].$log['log_rst_tx_2'],"RST_SENT");
-      $data.=stringtoadif($log['log_loc'],"GRIDSQUARE");
-      $data.=stringtoadif($log['log_qth'],"QTH");
-      $data.=stringtoadif($log['log_name'],"NAME");
-      $data.=stringtoadif($log['log_notes'],"NOTES");
-      $data.=stringtoadif($log['log_manager'],"QSL_VIA");
-      //$data.=stringtoadif($operators[$log['operator_id']]['operator_call'],"station_callsign");
-      $data.=stringtoadif($log['log_freq']/1000,"FREQ");
-      $data.="<eor>\n";
-    }
+    $data=make_adif($logs);
 
     if($_GET['log_export_incrementell'] == "on")
     {

@@ -39,6 +39,10 @@
     mysql_schreib($sql);
   }
 
+  if($action == "export_clublog")
+  {
+    export_clublog($_GET['project_id']);
+  }
 
   if($action == "save_map_settings")
   {
@@ -456,8 +460,6 @@
   {
     $data['project_id']=mysql_real_escape_string($data_temp['project_id']);
     $data['project_qrz_user']=mysql_real_escape_string($data_temp['project_qrz_user']);
-    //$data['project_qrz_pass1']=mysql_real_escape_string($data_temp['project_qrz_pass1']);
-    //$data['project_qrz_pass2']=mysql_real_escape_string($data_temp['project_qrz_pass2']);
     $data['project_locator']=mysql_real_escape_string($data_temp['project_locator']);
     $data['project_call']=mysql_real_escape_string($data_temp['project_call']);
     $data['project_mode']=mysql_real_escape_string($data_temp['project_mode']);
@@ -484,6 +486,32 @@
       { 
 	$data['project_qrz_pass']=$data_temp['project_qrz_pass1'];
       }
+
+      if($data_temp['project_clublog_ena'] == "true")
+      {
+	$data['project_clublog_ena']="1";
+	$data['project_clublog_auto']=mysql_real_escape_string($data_temp['project_clublog_auto']);
+	$data['project_smtp_emailfrom']=mysql_real_escape_string($data_temp['project_smtp_emailfrom']);
+
+	if($data_temp['project_smtp_pass1'] != $data_temp['project_smtp_pass2'])
+	{	
+	  div_err("SMTP Passwoerter stimmen nicht ueberein");
+	  die();
+	}
+	if(strlen($data_temp['project_smtp_pass1']) != 0)
+	{ 
+	  $data['project_smtp_pass']=$data_temp['project_smtp_pass1'];
+	}
+
+      	$data['project_smtp_server']=mysql_real_escape_string($data_temp['project_smtp_server']);
+      	$data['project_smtp_username']=mysql_real_escape_string($data_temp['project_smtp_username']);
+      	$data['project_smtp_port']=mysql_real_escape_string($data_temp['project_smtp_port']);
+      }
+      else
+      {
+	$data['project_clublog_ena']="0";
+      }
+
       $project_id_new=mysql_write_array('projects',$data,'project_id',$data_temp['project_id']);
       if(is_numeric($project_id_new))
       {

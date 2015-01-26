@@ -8,6 +8,93 @@
     return $data;
   }
 
+  function export_clublog($project_id)
+  {
+    require('phpmailer/PHPMailerAutoload.php');
+    $sql="SELECT * FROM logs WHERE project_id=".$project_id.";";
+    if($logs=mysql_fragen($sql))
+    {
+      $project=mysql_fragen("SELECT project_smtp_emailfrom,project_smtp_server,project_smtp_pass,project_smtp_username,project_smtp_port FROM projects WHERE project_id=".$project_id.";");
+      file_put_contents('/tmp/export.adif',make_adif($logs,$project_id));
+      $mail = new PHPMailer;
+      $mail->isSMTP();
+      $mail->Host = $project[0]['project_smtp_server'];
+      $mail->SMTPAuth = true;
+      $mail->Username = $project[0]['project_smtp_username'];
+      $mail->Password = $project[0]['project_smtp_pass'];
+      $mail->SMTPSecure = 'tls';
+      $mail->Port = $project[0]['project_smtp_port'];
+      $mail->From = $project[0]['project_smtp_emailfrom'];
+      $mail->FromName = 'Netlogbook';
+      if($_SERVER['APPLICATION'] == "dev")
+      {
+        $mail->addAddress('abcdefg@blacktux.de','');
+      }
+      else
+      {
+        $mail->addAddress('upload@clublog.org', '');
+      }
+      $mail->addAttachment('/tmp/export.adif');
+      $mail->Body='empty';
+      $mail->Timeout='5';
+      $mail->SMTPDebug = 0;
+      if(!$mail->send())
+      {
+	if(isset($_SERVER['HTTP_HOST']))
+	{
+	  div_err($mail->ErrorInfo);
+	}
+	else
+	{
+	  return false;
+	}
+      }
+      else
+      {
+	if(isset($_SERVER['HTTP_HOST']))
+	{
+	  div_err('Export erfolgreich!');
+	}
+	else
+	{
+	  return true;
+	}
+      }
+    }
+  }
+
+  function make_adif($logs,$project_id)
+  {
+    $modes=mysql_fragen('SELECT * FROM modes;','mode_id');
+    $bands=mysql_fragen('SELECT * FROM bands;','band_id');
+    $operators=mysql_fragen('SELECT operators.* FROM operators INNER JOIN rel_operators_projects WHERE project_id='.$project_id,"operator_id");
+
+    $data="";
+    $data.="ADIF Export by Netlogbook v0.1, conforming to ADIF standard specification V 2.00\n";
+    $data.=stringtoadif("Netlogbook","PROGRAMID");
+    $data.=stringtoadif("0.1","PROGRAMVERSION");
+    $data.="\n<eoh>\n";
+
+    foreach($logs as $log)
+    {
+      $data.=stringtoadif($log['log_call'],"CALL");
+      $data.=stringtoadif(time_from_timestamp_adif($log['log_time'],"date"),"QSO_DATE");
+      $data.=stringtoadif(time_from_timestamp_adif($log['log_time'],"time"),"TIME_ON");
+      $data.=stringtoadif($modes[$log['mode_id']]['mode_name'],"MODE");
+      $data.=stringtoadif($bands[$log['band_id']]['band_name'],"BAND");
+      $data.=stringtoadif($log['log_rst_rx_0'].$log['log_rst_rx_1'].$log['log_rst_rx_2'],"RST_RCVD");
+      $data.=stringtoadif($log['log_rst_tx_0'].$log['log_rst_tx_1'].$log['log_rst_tx_2'],"RST_SENT");
+      $data.=stringtoadif($log['log_loc'],"GRIDSQUARE");
+      $data.=stringtoadif($log['log_qth'],"QTH");
+      $data.=stringtoadif($log['log_name'],"NAME");
+      $data.=stringtoadif($log['log_notes'],"NOTES");
+      $data.=stringtoadif($log['log_manager'],"QSL_VIA");
+      $data.=stringtoadif($log['log_freq']/1000,"FREQ");
+      $data.="<eor>\n";
+    }
+    return $data;
+  }
+
   function save_session_locator()
   {
     $sql="SELECT project_locator FROM projects WHERE project_id='".$_SESSION['project_id']."';";
@@ -541,7 +628,7 @@
       }
     }
     ?>
-    table_<?=$typ?>s.fnDraw();
+    table_<?=$typ?>s.draw();
     </script>
     <?php
   }

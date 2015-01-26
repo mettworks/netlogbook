@@ -34,7 +34,6 @@ function fill_form_settings_op_table_logs()
   if(settings_op_table_logs['columns'][11]['visible'] == "true") { $('#setting_table_logs_manager_ena').prop( "checked", true ); } 
   if(settings_op_table_logs['columns'][12]['visible'] == "true") { $('#setting_table_logs_qso_ena').prop( "checked", true ); } 
   if(settings_op_table_logs['columns'][13]['visible'] == "true") { $('#setting_table_logs_notes_ena').prop( "checked", true ); } 
-
 }
 
 function set_table_logs()
@@ -200,6 +199,33 @@ function reload_tables_log_change()
 function reload_tables_log()
 {
   table_logs.draw();
+}
+
+function project_change_clublog()
+{
+  clublog_ena=$('#project_clublog_ena').prop('checked');
+  if(clublog_ena == false)
+  {
+    $('#project_smtp_emailfrom').prop('disabled',true);
+    $('#project_smtp_port').prop('disabled',true);
+    $('#project_smtp_username').prop('disabled',true);
+    $('#project_smtp_server').prop('disabled',true);
+    $('#project_smtp_pass1').prop('disabled',true);
+    $('#project_smtp_pass2').prop('disabled',true);
+    $('#project_clublog_auto').prop('disabled',true);
+    $('#project_button_export_clublog').prop('disabled',true);
+  }
+  else
+  {
+    $('#project_smtp_emailfrom').prop('disabled',false);
+    $('#project_smtp_port').prop('disabled',false);
+    $('#project_smtp_username').prop('disabled',false);
+    $('#project_smtp_server').prop('disabled',false);
+    $('#project_smtp_pass1').prop('disabled',false);
+    $('#project_smtp_pass2').prop('disabled',false);
+    $('#project_clublog_auto').prop('disabled',false);
+    $('#project_button_export_clublog').prop('disabled',false);
+  }
 }
 
 function project_change_modus()
