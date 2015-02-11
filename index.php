@@ -18,7 +18,7 @@
       <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
-    <body onload="load();loadXML();set_map_settings();">
+    <!-- <body onload="load();loadXML();set_map_settings();"> -->
       <p>
 	<!-- TODO move to head... -->
         <script src="js/formulare.js"></script>
@@ -409,9 +409,10 @@
       //interval_log=setInterval("reload_tables_log()",5000);
       </script></p>
       <div id="div_navi_top">
-	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Log">
+	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='none';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Log">
 	<input type="button" onclick="set_reload_monitor('1');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Monitor">
-	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Karte">
+	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='block';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';load();" value="Karte">
+	<!-- google.maps.event.trigger(div_map_map,'resize') -->
 	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='visible';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Einstellungen">
 	<?php
 	if($_SESSION['operator_role']==0)

@@ -78,7 +78,7 @@ function set_project()
 // fill the option values for the map
 function set_map_settings()
 {
-  //session=get_data('session','');
+  session=get_data('session','');
   modes=get_data('rel_project_mode','');
   bands=get_data('rel_project_band','');
   operators=get_data('rel_project_operator','');

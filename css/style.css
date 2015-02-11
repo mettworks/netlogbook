@@ -231,8 +231,8 @@ span.help:hover div
   left:0%;
   width: 100%;
   height: 100%;
-  visibility: hidden;
   z-index:6;
+  display:none;
 }
 #div_map2_settings
 {
@@ -258,8 +258,8 @@ span.help:hover div
   position: fixed;
   width: 100%;
   height: 100%;
-  visibility: hidden;
   z-index:4;
+  display: none;
 }
 #div_map_settings
 {
