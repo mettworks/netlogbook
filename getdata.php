@@ -104,6 +104,49 @@
     $data_plain['total_operator']=mysql_fragen("SELECT COUNT(*) FROM logs log_time WHERE operator_id=".$_SESSION['operator_id']." AND project_id=".$_SESSION['project_id']);
   }
 
+  if($table == "dxcluster")
+  {
+    $data_plain=array();
+    /*
+
+    0 Spotter
+    1 QRG
+    2 DX Call
+    3 comment
+    4 spot date
+    5 lotw (L = true)
+    6 eQSL (E = true)
+    7 ?
+    8 band
+    9 QTH
+    */
+    if(is_numeric($_SESSION['dxcluster_settings']['band_id']))
+    {
+      $band=mysql_fragen("SELECT band_name FROM bands WHERE band_id='".$_SESSION['dxcluster_settings']['band_id']."';");
+      $url="http://www.hamqth.com/dxc_csv.php?limit=20&band=".$band['0']['band_name'];
+    }
+    else
+    {
+      $url="http://www.hamqth.com/dxc_csv.php?limit=20";
+    } 
+    $entrys=file_get_contents($url);
+    $entrys=preg_replace('/\n$/','',$entrys); 
+    $entrys=preg_split("/\n/",$entrys);
+    $i=0;
+    foreach($entrys as $entry)
+    {
+      $entry_a=preg_split("/\^/",$entry);
+      $data_c[$i][0]=$entry_a[0];
+      $data_c[$i][1]=$entry_a[1];
+      $data_c[$i][2]=$entry_a[2];
+      $data_c[$i][3]=$entry_a[3];
+      $data_c[$i][4]=$entry_a[4];
+      $data_c[$i][5]=$entry_a[8];
+      $data_c[$i][6]=$entry_a[9];
+      $i++;
+    }
+  }
+
   if($table == "logs")
   {
     $operators=mysql_fragen('SELECT operators.* FROM operators INNER JOIN rel_operators_projects WHERE project_id='.$_SESSION['project_id'],"operator_id");
@@ -398,12 +441,11 @@
 
   if(!is_array($data_plain))
   {
-    $data_c=array(); 
+    $data_c=array();
   }
-
   if($typ == "datatable") 
   {
-    if(!preg_match('/^monitor_.*$/',$table))
+    if((!preg_match('/^monitor_.*$/',$table)) && ($table != "dxcluster"))
     {
       // TODO: ahh... bloed...
       if(($_GET['iSortCol_0'] == '0') || ($_GET['iSortCol_0'] == '3'))
@@ -449,12 +491,14 @@
       }
     }
 
-
-    if(($_GET['iSortCol_0'] != '0') && ($_GET['iSortCol_0'] != '3'))
+    if($table != "dxcluster")
     {
-      $key=$_GET['iSortCol_0'];
-      $direction=$_GET['sSortDir_0'];
-      $data_c=ar_sortieren($data_c);
+      if(($_GET['iSortCol_0'] != '0') && ($_GET['iSortCol_0'] != '3'))
+      {
+	$key=$_GET['iSortCol_0'];
+	$direction=$_GET['sSortDir_0'];
+	$data_c=ar_sortieren($data_c);
+      }
     }
     $count_total=count($data_c);
 

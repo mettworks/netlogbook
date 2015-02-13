@@ -1,3 +1,16 @@
+function change_settings_dxcluster_setting()
+{
+  bands=get_data('rel_project_band','');
+  $('#setting_table_dxcluster_bands').find('option').remove().end();
+  $('#setting_table_dxcluster_bands').append($('<option></option>').val('').html('ALLE'));
+  $.each(bands, function(val,text) 
+  {
+    $('#setting_table_dxcluster_bands').append(
+      $('<option></option>').val(text['band_id']).html(text['band_name'])
+    );
+  }); 
+}
+
 function import_log()
 {
   document.getElementById('div_error').style.visibility='visible';

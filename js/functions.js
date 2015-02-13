@@ -72,6 +72,7 @@ function set_project()
   set_map_settings();
   load();
   loadXML();
+  change_settings_dxcluster_setting();
 }
 
 //
@@ -145,7 +146,21 @@ function set_reload_monitor(stat)
   }
   else
   {
-    interval_monitor=setInterval("reload_monitor()",5000);
+    interval_monitor=setInterval("reload_monitor()",30000);
+  }
+}
+function set_reload_dxcluster(stat)
+{
+  if(stat == "0") 
+  {
+    if(typeof(interval_dxcluster) != 'undefined')
+    {
+      clearInterval(interval_dxcluster);
+    }
+  }
+  else
+  {
+    interval_dxcluster=setInterval("reload_dxcluster()",30000);
   }
 }
 
@@ -164,13 +179,25 @@ function show_picture(image)
   document.getElementById('div_complete').style.visibility='visible';
   $('#div_complete').append('<a class="class_complete" href="#" onclick="document.getElementById(\'div_complete\').style.visibility=\'hidden\';"><img class="class_complete" src="'+image+'"</img></a>')
 }
+function dxcluster_autoreload()
+{
+  var dxcluster_autoreload=$('#dxcluster_autoreload').prop('checked');
+  if(dxcluster_autoreload == true)
+  {
+    interval_dxcluster=setInterval("reload_dxcluster()",30000);
+  }
+  else
+  {
+    clearInterval(interval_dxcluster);
+  }
+}
 
 function logs_autoreload()
 {
   var logs_autoreload=$('#logs_autoreload').prop('checked');
   if(logs_autoreload == true)
   {
-    interval_log=setInterval("reload_tables_log()",5000);
+    interval_log=setInterval("reload_tables_log()",30000);
   }
   else
   {
@@ -200,7 +227,10 @@ function reload_tables_log()
 {
   table_logs.draw();
 }
-
+function reload_dxcluster()
+{
+  table_dxcluster.draw();
+}
 function project_change_clublog()
 {
   clublog_ena=$('#project_clublog_ena').prop('checked');

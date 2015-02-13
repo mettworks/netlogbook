@@ -39,9 +39,40 @@
     mysql_schreib($sql);
   }
 
+  if($action == "send_dxcluster_spot")
+  {
+    // http://www.dxcluster.org/main/usermanual_en-4.html#ss4.2
+    $address="db0hgw.dyndns.org";
+    $port="4111";
+    if(($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) === false) 
+    {
+       echo "socket_create() failed: reason: " . socket_strerror(socket_last_error());
+    }
+    if(socket_connect($sock, $address, $port) === false) 
+    {
+      echo "socket_bind() failed: reason: " . socket_strerror(socket_last_error($sock));
+    }
+
+    if(socket_write($sock,$data_temp['dxcluster_send_spotter']."\r\n") === false)
+    {
+      echo "putt";
+    }
+    sleep(1);
+    if(socket_write($sock,"dx ".$data_temp['dxcluster_send_qrg']." ".$data_temp['dxcluster_send_call']." ".$data_temp['dxcluster_send_comment']."\r\n") === false)
+    {
+      echo "putt";
+    }
+    socket_close($sock);
+  }
+
   if($action == "export_clublog")
   {
     export_clublog($_GET['project_id']);
+  }
+
+  if($action == "save_dxcluster_settings")
+  {
+    $_SESSION['dxcluster_settings']['band_id']=$_GET['band_id'];
   }
 
   if($action == "save_map_settings")

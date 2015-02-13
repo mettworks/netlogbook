@@ -1,3 +1,29 @@
+function send_dxcluster_spot()
+{
+  dxcluster_send_qrg=$('#dxcluster_send_qrg').val();
+  dxcluster_send_comment=$('#dxcluster_send_comment').val();
+  dxcluster_send_spotter=$('#dxcluster_send_spotter').val();
+  dxcluster_send_call=$('#dxcluster_send_call').val();
+  var datastring="action=send_dxcluster_spot&dxcluster_send_qrg="+dxcluster_send_qrg+"&dxcluster_send_comment="+dxcluster_send_comment+"&dxcluster_send_spotter="+dxcluster_send_spotter+"&dxcluster_send_call="+dxcluster_send_call;
+  check=confirm("Wirklich Spot absenden:\nAbsender:"+dxcluster_send_spotter+"\nRufzeichen:"+dxcluster_send_call+"\nFrequenz:"+dxcluster_send_qrg+"\nKommentar:"+dxcluster_send_comment);
+  if(check == true)
+  {
+    $.ajax
+    (
+      {
+	type: "GET",
+	url: "save.php",
+	data: datastring,
+	success: function(html)
+	{
+	  $("div#div_error").html(html);
+	}
+      }
+    );
+    reload_dxcluster();
+  }
+}
+
 function export_clublog()
 {
   project_id=$('#project_id').val();
@@ -65,6 +91,26 @@ function save_project_session(project_id)
     }
   );
   reload_tables_log();
+}
+
+function save_dxcluster_settings()
+{
+  band_id=$('#setting_table_dxcluster_bands').val();
+  var datastring="action=save_dxcluster_settings&band_id="+band_id;
+  $.ajax
+  (
+    {
+      type: "GET",
+      url: "save.php",
+      async: false,
+      data: datastring,
+      success: function(html)
+      {
+	$("div#div_error").html(html);
+      }
+    }
+  );
+  reload_dxcluster();
 }
 
 function save_map_settings()

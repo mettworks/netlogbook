@@ -288,6 +288,13 @@ span.help:hover div
   font-family: 'Lucida Grande', Helvetica, Arial, sans-serif; 
   font-size: 20pt;
 }
+#div_dxcluster
+{
+  position: fixed;
+  top:1.7em;
+  width: 100%;
+  visibility: hidden;
+}
 #div_monitor_table_logs
 {
   position: fixed;

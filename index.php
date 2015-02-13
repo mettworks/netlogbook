@@ -18,7 +18,7 @@
       <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
-    <!-- <body onload="load();loadXML();set_map_settings();"> -->
+      <body onload="change_settings_dxcluster_setting();">
       <p>
 	<!-- TODO move to head... -->
         <script src="js/formulare.js"></script>
@@ -34,7 +34,7 @@
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script>
 	var settings_op={};
-	
+
 	settings_op=get_data('settings_op','');
 	modes=get_data('mode','');
 	operators=get_data('operator','');
@@ -75,6 +75,28 @@
 	$(document).ready(
 	  function() 
 	  {
+	    table_dxcluster=$('#table_dxcluster').DataTable
+	    (
+	      {
+		"bServerSide": true,
+		"bUseRendered": false,
+		"sAjaxSource": "/getdata.php?typ=datatable&table=dxcluster",
+		"bInfo": false,
+		"bPaginate": false,
+		"bFilter": false,
+		"bSort": false,
+                "aoColumns":
+		[
+		    null,
+		    null,
+		    null,
+		    null,
+		    null,
+		    null,
+		    null,
+		]
+	    });
+
 	    table_monitor_logs=$('#table_monitor_logs').DataTable
 	    (
 	      {
@@ -404,22 +426,24 @@
 	    table_monitor_bands.columns.adjust().draw();
 	    $('#table_monitor_qsos').css( 'display', 'block' );
 	    table_monitor_qsos.columns.adjust().draw();
-
+	    $('#table_dxcluster').css( 'display', 'block' );
+	    table_dxcluster.columns.adjust().draw();
 	  });
       //interval_log=setInterval("reload_tables_log()",5000);
       </script></p>
       <div id="div_navi_top">
-	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='none';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Log">
-	<input type="button" onclick="set_reload_monitor('1');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Monitor">
-	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='block';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';load();" value="Karte">
-	<!-- google.maps.event.trigger(div_map_map,'resize') -->
-	<input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='visible';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';" value="Einstellungen">
+	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='none';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Log">
+	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('1');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='none'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Monitor">
+	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='block';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';load();" value="Karte">
+	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='visible';document.getElementById('div_map').style.display='none';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Einstellungen">
+	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='none';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='visible';" value="DXCluster">
+
 	<?php
 	if($_SESSION['operator_role']==0)
 	{
 	  ?>
-	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';" value="Projekte">
-	  <input type="button" onclick="set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';" value="OP's">
+	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='none';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Projekte">
+	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='none';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';document.getElementById('div_dxcluster').style.visibility='hidden';" value="OP's">
 	<?php
 	}
 	?>
@@ -467,6 +491,35 @@
 	  }
 	  ?>  
 	</select>
+      </div>
+      <div id="div_dxcluster">
+	<a>Auto Reload (30sec)</a>
+	<input onchange='dxcluster_autoreload();' id="dxcluster_autoreload" type="checkbox" value="">
+	<a>B&auml;nder</a>
+        <select onchange='save_dxcluster_settings();' name='setting_table_dxcluster_bands' id='setting_table_dxcluster_bands'>
+        </select>
+	<a>QRG(kHz)</a>
+	<input name='dxcluster_send_qrg' id='dxcluster_send_qrg'>
+	<a>Bemerkung</a>
+	<input name='dxcluster_send_comment' id='dxcluster_send_comment'>
+	<a>Spotter</a>
+	<input name='dxcluster_send_spotter' id='dxcluster_send_spotter'>
+	<a>Rufzeichen</a>
+	<input name='dxcluster_send_call' id='dxcluster_send_call'>
+	<input type='button' onclick='send_dxcluster_spot();' value='Send'>
+	<table id="table_dxcluster" class="compact" width="100%">
+	  <thead>
+	    <tr>
+	      <th>Spotter</th>
+              <th>QRG</th>
+              <th>DX Call</th>
+              <th>Comment</th>
+              <th>Zeit</th>
+              <th>Band</th>
+              <th>QTH</th>
+	    </tr>
+	  </thead>
+	</table>
       </div>
       <div id="div_complete">
       </div>

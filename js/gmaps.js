@@ -101,19 +101,7 @@ function load_map2()
   }
   document.getElementById('div_map2').style.visibility='visible';
 }
-/*
-function resize_map()
-{
-  var map = document.getElementById("div_map_map");
 
-  if (map) 
-  {
-    //session=get_data('session','');
-    //map.checkResize();
-    //map.setCenter(new google.maps.LatLng(session['project_lat'], session['project_lon']));
-  }
-}
-*/
 function load() 
 {
   session=get_data('session','');
