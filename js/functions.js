@@ -1,5 +1,10 @@
+function set_title()
+{
+  document.title='NetLogBook Projekt:'+($('#projects option:selected').text());
+}
 function settings_op_save()
 {
+  settings_op={};
   settings_op['action']='save_settings_op';
   settings_op['frequency_prefix']=$('#setting_frequency_prefix').val();
   if($('#setting_interface_aprs_ena').prop("checked") == true) { settings_op['aprs_ena']="true"; } else { settings_op['aprs_ena']="false"; }
@@ -19,21 +24,25 @@ function fill_form_settings_op()
 
 function fill_form_settings_op_table_logs()
 {
+  settings_op_table_logs={};
   settings_op_table_logs=get_data('settings_table_logs','');
-  if(settings_op_table_logs['columns'][0]['visible'] == "true") { $('#setting_table_logs_date_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][1]['visible'] == "true") { $('#setting_table_logs_time_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][2]['visible'] == "true") { $('#setting_table_logs_call_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][3]['visible'] == "true") { $('#setting_table_logs_freq_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][4]['visible'] == "true") { $('#setting_table_logs_mode_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][5]['visible'] == "true") { $('#setting_table_logs_rst_tx_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][6]['visible'] == "true") { $('#setting_table_logs_rst_rx_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][7]['visible'] == "true") { $('#setting_table_logs_name_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][8]['visible'] == "true") { $('#setting_table_logs_qth_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][9]['visible'] == "true") { $('#setting_table_logs_loc_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][10]['visible'] == "true") { $('#setting_table_logs_dok_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][11]['visible'] == "true") { $('#setting_table_logs_manager_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][12]['visible'] == "true") { $('#setting_table_logs_qso_ena').prop( "checked", true ); } 
-  if(settings_op_table_logs['columns'][13]['visible'] == "true") { $('#setting_table_logs_notes_ena').prop( "checked", true ); } 
+  if(typeof(settings_op_table_logs['columns']) == "object")
+  {
+    if(settings_op_table_logs['columns'][0]['visible'] == "true") { $('#setting_table_logs_date_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][1]['visible'] == "true") { $('#setting_table_logs_time_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][2]['visible'] == "true") { $('#setting_table_logs_call_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][3]['visible'] == "true") { $('#setting_table_logs_freq_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][4]['visible'] == "true") { $('#setting_table_logs_mode_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][5]['visible'] == "true") { $('#setting_table_logs_rst_tx_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][6]['visible'] == "true") { $('#setting_table_logs_rst_rx_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][7]['visible'] == "true") { $('#setting_table_logs_name_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][8]['visible'] == "true") { $('#setting_table_logs_qth_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][9]['visible'] == "true") { $('#setting_table_logs_loc_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][10]['visible'] == "true") { $('#setting_table_logs_dok_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][11]['visible'] == "true") { $('#setting_table_logs_manager_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][12]['visible'] == "true") { $('#setting_table_logs_qso_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][13]['visible'] == "true") { $('#setting_table_logs_notes_ena').prop( "checked", true ); } 
+  }
 }
 
 function set_table_logs()
@@ -73,6 +82,7 @@ function set_project()
   load();
   loadXML();
   change_settings_dxcluster_setting();
+  set_title();
 }
 
 //

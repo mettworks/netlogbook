@@ -77,13 +77,19 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Zeug</title>
   </head>
   <body>
-<form name="login" method="POST">
-  <input name="uname" value="<?php echo $uname?>"><br>
-  <input type="password" name="pass" value=""><br>
-  <input type="submit" value="LOS">
-</form>
+<div id="div_login_logo">
+  <img src="/images/netlogbook_logo.jpg" style="display: block; margin-left: auto; margin-right: auto" >
+</div>
+<div id="div_login_form">
+  <form name="login" method="POST">
+    <input style="display: block; margin-left: auto; margin-right: auto" name="uname" value="<?php echo $uname?>">
+    <input style="display: block; margin-left: auto; margin-right: auto" type="password" name="pass" value="">
+    <input style="display: block; margin-left: auto; margin-right: auto" type="submit" value="Login">
+  </form>
+</div>
 </body>
 </html>

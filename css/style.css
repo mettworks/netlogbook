@@ -12,7 +12,6 @@ html, body
   background-color: #1D1C22;
   color: white;
 }
-
 #table_logs.dataTable.no-footer 
 {
   border-bottom: none;
@@ -223,6 +222,14 @@ span.help div
 span.help:hover div
 {
   display:block;
+}
+
+#div_login_logo
+{
+  width: 100%;
+}
+#div_login_form
+{
 }
 #div_map2
 {

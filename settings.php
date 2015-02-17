@@ -13,5 +13,6 @@ else
   $mysql_host="localhost";
   $mysql_db="netlogbook";
 }
-$qrzcom_cachetime='864000'; // 1 Week
+//$qrzcom_cachetime='864000'; // 1 Week
+$qrzcom_cachetime='60';
 ?>

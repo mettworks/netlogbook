@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-
   if($_SERVER['argv'][1] == "dev")
   {
     $_SERVER['APPLICATION']="dev";
@@ -27,7 +26,6 @@
   }
 
   global $qrzcom_cachetime;
-  global $cachepath;
 
   if($export_clublogs=mysql_fragen("SELECT project_clublog_auto,project_id,project_clublog_lastrun FROM projects WHERE project_clublog_ena = '1' AND project_clublog_auto != '0'"))
   {
@@ -49,15 +47,19 @@
 
   $timestamp=time()-$qrzcom_cachetime;
 
+  $path=dirname($_SERVER['SCRIPT_FILENAME']);
+
   if($qrz_caches=mysql_fragen("SELECT qrz_call,qrz_cache_id,image FROM qrz_cache WHERE timestamp <= '".$timestamp."'"))
   {
     foreach($qrz_caches as $qrz_cache)
     {
       if(isset($qrz_cache['image']))
       {
-	unlink($_SERVER['pwd'].'/cache/qrzcom/'.$qrz_cache['image']); 
+	if(unlink($path.'/cache/qrzcom/'.$qrz_cache['image']))
+	{
+	  mysql_schreib("DELETE FROM qrz_cache WHERE qrz_cache_id='".$qrz_cache['qrz_cache_id']."'");
+	}
       }
-      mysql_schreib("DELETE FROM qrz_cache WHERE qrz_cache_id='".$qrz_cache['qrz_cache_id']."'");
     } 
   }
   mysql_schreib("UPDATE cronjob SET lastrun='".time()."' WHERE id='0';");

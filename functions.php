@@ -8,6 +8,16 @@
     return $data;
   }
 
+  function checkcronjob()
+  {
+    $sql="SELECT lastrun FROM cronjob WHERE id='0';";
+    $lastrun=mysql_fragen($sql);
+    if($lastrun['0']['lastrun'] < time()-600)
+    {
+      print "<script language='javascript'>alert('Achtung, Cronjob lief nicht oder hat Fehler!');</script>";
+    }
+  }
+
   function export_clublog($project_id)
   {
     require('phpmailer/PHPMailerAutoload.php');
@@ -445,7 +455,7 @@
 	if($response=xmlget('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call))
 	{
 	  //firebug_debug($response);
-	  if(!isset($response['Session']['Error']))
+	  if((!isset($response['Session']['Error'])) && ($response['Session']['SubExp'] != "non-subscriber"))
 	  {
 	    if($data_temp=mysql_fragen("SELECT qrz_cache_id FROM qrz_cache WHERE qrz_call='".$call."'"))
 	    {
@@ -494,7 +504,14 @@
 	  }
 	  else
 	  {
-	    $return['error']=$response['Session']['Error'];
+	    if($response['Session']['Error'])
+	    {
+	      $return['error']=$response['Session']['Error'];
+	    }
+	    else
+	    {
+	      $return['error']=$response['Session']['Message'];
+	    }
 	  }
 	}
 	else

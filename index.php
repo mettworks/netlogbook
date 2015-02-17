@@ -3,42 +3,35 @@
   checklogin();
   include('settings.php');
   $mysql=mysql_c();
+  checkcronjob();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
   <html>
     <head>
       <meta charset="utf-8">
-      <title>Netlogbook v0.1</title>
+      <title></title>
       <link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css">
       <link rel="stylesheet" type="text/css" href="/js/DataTables-1.10.4/media/css/jquery.dataTables.css">
-      <!--<link rel="stylesheet" type="text/css" href="/css/dataTables.colVis.css">-->
-      <script type="text/javascript" charset="utf8" src="/js/DataTables-1.10.4/media/js/jquery.js"></script>
-      <script type="text/javascript" charset="utf8" src="/js/DataTables-1.10.4/media/js/jquery.dataTables.js"></script>
-      <!--<script type="text/javascript" charset="utf8" src="/js/dataTables.colVis.js"></script>-->
       <link rel="stylesheet" type="text/css" href="css/style.css">
+      <script type="text/javascript" src="/js/DataTables-1.10.4/media/js/jquery.js"></script>
+      <script type="text/javascript" src="/js/DataTables-1.10.4/media/js/jquery.dataTables.js"></script>
+      <script type="text/javascript" src="js/formulare.js"></script>
+      <script type="text/javascript" src="js/getdata.js"></script> 
+      <script type="text/javascript" src="js/valididation.js"></script>
+      <script type="text/javascript" src="js/functions.js"></script>
+      <script type="text/javascript" src="js/gmaps.js"></script>
+      <script type="text/javascript" src="js/shortcut.js"></script>
+      <script type="text/javascript" src="js/jquery.ui.widget.js"></script>
+      <script type="text/javascript" src="js/jquery.iframe-transport.js"></script>
+      <script type="text/javascript" src="js/jquery.fileupload.js"></script>
+      <script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     </head>
     <body>
-      <body onload="change_settings_dxcluster_setting();">
+     <body onload="change_settings_dxcluster_setting();fill_form_settings_op_table_logs();fill_form_settings_op();set_table_logs();set_title();"> 
       <p>
-	<!-- TODO move to head... -->
-        <script src="js/formulare.js"></script>
-        <script src="js/getdata.js"></script> 
-        <script src="js/valididation.js"></script>
-        <script src="js/functions.js"></script>
-	<script src="js/gmaps.js"></script>
-        <script type="text/javascript" src="js/shortcut.js"></script>
-        <script type="text/javascript" src="js/jquery.ui.widget.js"></script>
-        <script type="text/javascript" src="js/jquery.iframe-transport.js"></script>
-        <script type="text/javascript" src="js/jquery.fileupload.js"></script>
-        <script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script>
 	var settings_op={};
-
-	settings_op=get_data('settings_op','');
-	modes=get_data('mode','');
-	operators=get_data('operator','');
-
 	var table_logs;
 	var table_projects;
 	var table_operators;
@@ -47,7 +40,9 @@
 	var table_monitor_modes;
 	var table_monitor_bands;
 	var table_monitor_qsos;
-
+	settings_op=get_data('settings_op','');
+	modes=get_data('mode','');
+	operators=get_data('operator','');
 	$(function() {
 	    $('#fileupload').fileupload(
 	      {
@@ -96,7 +91,6 @@
 		    null,
 		]
 	    });
-
 	    table_monitor_logs=$('#table_monitor_logs').DataTable
 	    (
 	      {
@@ -283,7 +277,6 @@
 		},
 
 	    });
-
 	    table_logsfromme=$('#table_logsfromme').DataTable
 	    (
 	      {
@@ -408,10 +401,6 @@
 
                 ]
             });
-	    fill_form_settings_op_table_logs();
-	    fill_form_settings_op();
-	    set_table_logs();
-
 	    $('#table_monitor_logs').css( 'display', 'block' );
 	    table_monitor_logs.columns.adjust().draw();
 	    $('#table_operators').css( 'display', 'block' );
@@ -429,7 +418,6 @@
 	    $('#table_dxcluster').css( 'display', 'block' );
 	    table_dxcluster.columns.adjust().draw();
 	  });
-      //interval_log=setInterval("reload_tables_log()",5000);
       </script></p>
       <div id="div_navi_top">
 	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.display='none';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Log">
@@ -531,16 +519,6 @@
       <div id="div_log_import">
 	  <input id="fileupload" type="file" name="files[]" data-url="/upload.php" multiple>
 	  <input class='class_log_import' type='button' onclick=document.getElementById('div_log_import').style.visibility='hidden';document.getElementById('div_error').style.visibility='hidden'; value='Abbruch' name='Abbruch'>
-	  <!--
-	  <table>
-	    <tr>
-	      <td><span class="help">qrz.com Cache fuellen<div>Wenn aktiv, wird beim Import der Cache fuer qrz.com gefuellt. <b>Dauert bedeutend laenger!</b></div></span></td>
-	    </tr>
-	    <tr>
-	      <td><input class='class_log_import' type='checkbox' id='log_import_qrzcache' onChange="save_settings_import()" name='log_import_qrzcache'></td>
-	    </tr>
-	  </table>
-	  -->
 	</form>
       </div>
       <div id="div_log_export">

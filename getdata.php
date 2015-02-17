@@ -558,7 +558,7 @@
     }
     else
     {
-      $output['aaData']="";
+      $output['aaData']=array();
     }
   }
   else
