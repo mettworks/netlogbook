@@ -83,6 +83,11 @@ function set_project()
   loadXML();
   change_settings_dxcluster_setting();
   set_title();
+  table_monitor_logs.draw();
+  table_monitor_modes.draw();
+  table_monitor_bands.draw();
+  table_monitor_qsos.draw();
+  table_monitor_total.draw();
 }
 
 //
