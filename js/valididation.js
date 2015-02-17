@@ -84,13 +84,13 @@ function save_project_session(project_id)
       type: "GET",
       url: "save.php",
       data: datastring,
+      async: true,
       success: function(html)
       {
 	$("div#div_error").html(html);
       }
     }
   );
-  reload_tables_log();
 }
 
 function save_dxcluster_settings()

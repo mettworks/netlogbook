@@ -16,32 +16,60 @@ function settings_op_save()
 
 function fill_form_settings_op()
 {
-  if(settings_op['aprs_ena'] == "true") { $('#setting_interface_aprs_ena').prop( "checked", true ); }
-  if(settings_op['qrz_ena'] == "true") { $('#setting_interface_qrz_ena').prop( "checked", true ); }
-  if(settings_op['gm_ena'] == "true") { $('#setting_interface_gm_ena').prop( "checked", true ); }
-  $('#setting_frequency_prefix').val(settings_op['frequency_prefix']);
+  settings_op=get_data('settings_op','');
+  if(typeof settings_op === 'object')
+  {
+    if(settings_op['aprs_ena'] == "true") { $('#setting_interface_aprs_ena').prop( "checked", true ); } else { $('#setting_interface_aprs_ena').prop( "checked", false ); }
+    if(settings_op['qrz_ena'] == "true") { $('#setting_interface_qrz_ena').prop( "checked", true ); } else { $('#setting_interface_qrz_ena').prop( "checked", false ); }
+    if(settings_op['gm_ena'] == "true") { $('#setting_interface_gm_ena').prop( "checked", true ); } else { $('#setting_interface_gm_ena').prop( "checked", false ); }
+    $('#setting_frequency_prefix').val(settings_op['frequency_prefix']);
+  }
+  else
+  {
+    $('#setting_interface_aprs_ena').prop( "checked", true );
+    $('#setting_interface_qrz_ena').prop( "checked", true );
+    $('#setting_interface_gm_ena').prop( "checked", true );
+    $('#setting_frequency_prefix').val('0');
+    settings_op_save();
+  }
 }
 
 function fill_form_settings_op_table_logs()
 {
-  settings_op_table_logs={};
   settings_op_table_logs=get_data('settings_table_logs','');
   if(typeof(settings_op_table_logs['columns']) == "object")
   {
-    if(settings_op_table_logs['columns'][0]['visible'] == "true") { $('#setting_table_logs_date_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][1]['visible'] == "true") { $('#setting_table_logs_time_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][2]['visible'] == "true") { $('#setting_table_logs_call_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][3]['visible'] == "true") { $('#setting_table_logs_freq_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][4]['visible'] == "true") { $('#setting_table_logs_mode_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][5]['visible'] == "true") { $('#setting_table_logs_rst_tx_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][6]['visible'] == "true") { $('#setting_table_logs_rst_rx_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][7]['visible'] == "true") { $('#setting_table_logs_name_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][8]['visible'] == "true") { $('#setting_table_logs_qth_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][9]['visible'] == "true") { $('#setting_table_logs_loc_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][10]['visible'] == "true") { $('#setting_table_logs_dok_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][11]['visible'] == "true") { $('#setting_table_logs_manager_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][12]['visible'] == "true") { $('#setting_table_logs_qso_ena').prop( "checked", true ); } 
-    if(settings_op_table_logs['columns'][13]['visible'] == "true") { $('#setting_table_logs_notes_ena').prop( "checked", true ); } 
+    if(settings_op_table_logs['columns'][0]['visible'] == "true") { $('#setting_table_logs_date_ena').prop( "checked", true ); } else { $('#setting_table_logs_date_ena').prop( "checked", false ); } 
+    if(settings_op_table_logs['columns'][1]['visible'] == "true") { $('#setting_table_logs_time_ena').prop( "checked", true ); } else { $('#setting_table_logs_time_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][2]['visible'] == "true") { $('#setting_table_logs_call_ena').prop( "checked", true ); } else { $('#setting_table_logs_call_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][3]['visible'] == "true") { $('#setting_table_logs_freq_ena').prop( "checked", true ); } else { $('#setting_table_logs_freq_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][4]['visible'] == "true") { $('#setting_table_logs_mode_ena').prop( "checked", true ); } else { $('#setting_table_logs_mode_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][5]['visible'] == "true") { $('#setting_table_logs_rst_tx_ena').prop( "checked", true ); } else { $('#setting_table_logs_rst_tx_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][6]['visible'] == "true") { $('#setting_table_logs_rst_rx_ena').prop( "checked", true ); } else { $('#setting_table_logs_rst_rx_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][7]['visible'] == "true") { $('#setting_table_logs_name_ena').prop( "checked", true ); } else { $('#setting_table_logs_name_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][8]['visible'] == "true") { $('#setting_table_logs_qth_ena').prop( "checked", true ); } else { $('#setting_table_logs_qth_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][9]['visible'] == "true") { $('#setting_table_logs_loc_ena').prop( "checked", true ); } else { $('#setting_table_logs_loc_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][10]['visible'] == "true") { $('#setting_table_logs_dok_ena').prop( "checked", true ); } else { $('#setting_table_logs_dok_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][11]['visible'] == "true") { $('#setting_table_logs_manager_ena').prop( "checked", true ); } else { $('#setting_table_logs_manager_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][12]['visible'] == "true") { $('#setting_table_logs_qso_ena').prop( "checked", true ); } else { $('#setting_table_logs_qso_ena').prop( "checked", false ); }
+    if(settings_op_table_logs['columns'][13]['visible'] == "true") { $('#setting_table_logs_notes_ena').prop( "checked", true ); } else { $('#setting_table_logs_notes_ena').prop( "checked", false ); }
+  }
+  else
+  {
+    $('#setting_table_logs_date_ena').prop( "checked", true );
+    $('#setting_table_logs_time_ena').prop( "checked", true );
+    $('#setting_table_logs_call_ena').prop( "checked", true );
+    $('#setting_table_logs_freq_ena').prop( "checked", true );
+    $('#setting_table_logs_mode_ena').prop( "checked", true );
+    $('#setting_table_logs_rst_tx_ena').prop( "checked", true );
+    $('#setting_table_logs_rst_rx_ena').prop( "checked", true );
+    $('#setting_table_logs_name_ena').prop( "checked", true );
+    $('#setting_table_logs_qth_ena').prop( "checked", true );
+    $('#setting_table_logs_loc_ena').prop( "checked", true );
+    $('#setting_table_logs_dok_ena').prop( "checked", true );
+    $('#setting_table_logs_manager_ena').prop( "checked", true );
+    $('#setting_table_logs_qso_ena').prop( "checked", true );
+    $('#setting_table_logs_notes_ena').prop( "checked", true );
   }
 }
 
@@ -88,6 +116,9 @@ function set_project()
   table_monitor_bands.draw();
   table_monitor_qsos.draw();
   table_monitor_total.draw();
+  fill_form_settings_op_table_logs();
+  fill_form_settings_op();
+  set_table_logs();
 }
 
 //

@@ -28,10 +28,9 @@
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     </head>
     <body>
-     <body onload="change_settings_dxcluster_setting();fill_form_settings_op_table_logs();fill_form_settings_op();set_table_logs();set_title();"> 
+<!--     <body onload="change_settings_dxcluster_setting();fill_form_settings_op_table_logs();fill_form_settings_op();set_table_logs();set_title();"> -->
       <p>
         <script>
-	var settings_op={};
 	var table_logs;
 	var table_projects;
 	var table_operators;
@@ -40,7 +39,14 @@
 	var table_monitor_modes;
 	var table_monitor_bands;
 	var table_monitor_qsos;
+
+	settings_op_table_logs={};
+	settings_op_table_logs=get_data('settings_table_logs','');
+	settings_op={};
 	settings_op=get_data('settings_op','');
+
+	change_settings_dxcluster_setting();
+
 	modes=get_data('mode','');
 	operators=get_data('operator','');
 	$(function() {
@@ -417,6 +423,12 @@
 	    table_monitor_qsos.columns.adjust().draw();
 	    $('#table_dxcluster').css( 'display', 'block' );
 	    table_dxcluster.columns.adjust().draw();
+
+	    fill_form_settings_op_table_logs();
+	    fill_form_settings_op();
+	    set_title();
+	    set_table_logs();
+
 	  });
       </script></p>
       <div id="div_navi_top">
