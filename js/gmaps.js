@@ -140,17 +140,17 @@ function loadXML()
       parseFloat(markers[i].getAttribute("lat")),
       parseFloat(markers[i].getAttribute("lng"))
       );
-      var html = "<b>" + name;
-      var icon = customIcons[type] || {};
+      var html = name;
+      //var icon = customIcons[type] || {};
       var marker = new google.maps.Marker(
       {
 	map: map,
 	position: point,
-	icon: icon.icon,
-	shadow: icon.shadow
+	//icon: icon.icon,
+	//shadow: icon.shadow
       });
-      markersArray.push(marker);
       bindInfoWindow(marker, map, infoWindow, html);
+      markersArray.push(marker);
     }
   });
 }

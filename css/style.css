@@ -12,6 +12,12 @@ html, body
   background-color: #1D1C22;
   color: white;
 }
+
+div .gm-style-iw
+{
+  color: black;
+}
+
 #table_logs.dataTable.no-footer 
 {
   border-bottom: none;
