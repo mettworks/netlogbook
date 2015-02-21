@@ -394,8 +394,8 @@
       {
 	foreach($data_all_complete as $data)
 	{
-	  firebug_debug("schreiben:");
-	  firebug_debug($data);
+	  //firebug_debug("schreiben:");
+	  //firebug_debug($data);
 	  /*
 	  if($_SESSION['qrzcache'] == 1)
 	  {
@@ -485,7 +485,6 @@
 	$project_id=mysql_insert_id();
 	mysql_schreib("INSERT INTO rel_operators_projects SET operator_id='".$operator_id."', project_id='".$project_id."';");
       }
-
     }
     /*
     else if($action=="del")
@@ -515,10 +514,10 @@
     $data['project_locator']=mysql_real_escape_string($data_temp['project_locator']);
     $data['project_call']=mysql_real_escape_string($data_temp['project_call']);
     $data['project_mode']=mysql_real_escape_string($data_temp['project_mode']);
-    $data['project_operator']='0';
+    $data['project_operator']=mysql_real_escape_string($data_temp['project_operator']);
     if($action=="mod")
     {
-      if(strlen($data_temp['project_short_name']) < 1) 
+      if((strlen($data_temp['project_short_name']) < 1) && ($data_temp['project_operator'] == 0)) 
       {
 	div_err("Name zu kurz...");
 	die();
@@ -572,14 +571,37 @@
 
       //
       // Schreiben der Relation zwischen Projekt und OP
-      mysql_schreib("DELETE FROM rel_operators_projects WHERE project_id='".$data['project_id']."';");
-      $project_members=split(",",$data_temp['project_members']);
-
-      if($data_temp['project_members'] != 'null')
+      if($data['project_operator'] == '0')
       {
-	foreach($project_members as $project_member)
+	$project_members=split(",",$data_temp['project_members']);
+	if($data_temp['project_members'] != 'null')
 	{
-	  mysql_schreib("INSERT INTO rel_operators_projects (project_id,operator_id) VALUES ('".$data['project_id']."','".$project_member."');");
+	  $project_members_old=mysql_fragen("SELECT operator_id FROM rel_operators_projects WHERE project_id='".$data['project_id']."'",'operator_id');
+	  foreach($project_members as $project_member)
+	  {
+	    //
+	    // the operator is already member
+	    if(!array_key_exists($project_member,$project_members_old))
+	    {
+	      $sql="INSERT INTO rel_operators_projects (project_id,operator_id) VALUES ('".$data['project_id']."','".$project_member."');";
+	      mysql_schreib($sql);
+	    }
+	  }
+	  foreach($project_members_old as $project_member_old)
+	  {
+	    //
+	    // the operator is deleted from project
+	    if(!in_array($project_member_old['operator_id'],$project_members))
+	    {
+	      $sql="DELETE FROM rel_operators_projects WHERE project_id='".$data['project_id']."' AND operator_id='".$project_member_old['operator_id']."'";
+	      mysql_schreib($sql);
+	    }
+	  }
+	}
+	else
+	{
+	  $sql="DELETE FROM rel_operators_projects WHERE project_id='".$data['project_id']."';";
+          mysql_schreib($sql);
 	}
       }
       //

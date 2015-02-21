@@ -523,7 +523,7 @@ function display_callinfo(call,formchange)
     $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>N/A</a></b><br class='class_log_change_callinfo'>");
   }
   else
-  { 
-    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>"+callinfo.callinfo_operator['0']['log_freq']+"kHz / "+callinfo.callinfo_operator['0']['log_time']+" / "+callinfo.callinfo_operator['0'].mode_name+" (gesamt: "+callinfo.callinfo_operator.length+")</a><br class='class_log_change_callinfo'></b>");
+  {
+    $('#div_log_change_callinfo4').append("<a class='class_log_change_callinfo'>letztes QSO mit mir:<br class='class_log_change_callinfo'><b class='class_log_change_callinfo'>"+callinfo_logs['operator']['0']['log_freq']+"kHz / "+callinfo_logs['operator']['0']['log_time']+" / "+callinfo_logs['operator']['0'].mode_name+" (gesamt: "+callinfo_logs['operator'].length+")</a><br class='class_log_change_callinfo'></b>");
   }
 }

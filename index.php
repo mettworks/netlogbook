@@ -449,8 +449,9 @@
 	if($_SESSION['operator_role']==0)
 	{
 	  ?>
-	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Projekte">
 	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';document.getElementById('div_dxcluster').style.visibility='hidden';" value="OP's">
+	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Projekte">
+
 	<?php
 	}
 	if($_SESSION['operator_id'] != 0 )
@@ -475,7 +476,7 @@
 	      <option value=<?=key($private_project)?>>PRIVAT</option>
 	      <?
 	    }
-	    firebug_debug($_SESSION['operator_projects']);
+	    //firebug_debug($_SESSION['operator_projects']);
 	    if(count($_SESSION['operator_projects'] != 0))
 	    {
 	      foreach($_SESSION['operator_projects'] as $operator_projects)
@@ -1033,6 +1034,7 @@
 	  </tr>
 	</table>
 	<input class='class_project_change' type='hidden' name='project_id' id='project_id' value=''>
+	<input class='class_project_change' type='hidden' name='project_operator' id='project_operator' value=''>
 	<input class="class_project_change" type="button" onclick="write_data('project')"; value="Speichern" name="Speichern">
 	<!--	<input class="class_project_change" type="button" onclick="write_data('project_kill_qrz_sess')"; value="QRZ Session loeschen" name="QRZ Session loeschen"> -->
 	<input id="project_button_export_clublog"  class="class_project_change" type="button" onclick="export_clublog();" value="Export Clublog" name="Export Clublog">
@@ -1176,8 +1178,8 @@
       document.getElementById('div_map').style.visibility='hidden';
       document.getElementById('div_monitor').style.visibility='hidden';
       document.getElementById('div_logs').style.visibility='hidden'; 
-      document.getElementById('div_projects').style.visibility='visible'; 
-      document.getElementById('div_operators').style.visibility='hidden';
+      document.getElementById('div_projects').style.visibility='hidden'; 
+      document.getElementById('div_operators').style.visibility='visible';
       document.getElementById('div_dxcluster').style.visibility='hidden';
       </script>
       <?php

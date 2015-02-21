@@ -249,6 +249,10 @@ function change_project(project_id)
   if(project_id)
   {
     project_mod=get_data('projects_all',project_id);
+    project_members=get_data('rel_project_operator',project_id);
+    project_modes=get_data('rel_project_mode',project_id);
+    project_bands=get_data('rel_project_band',project_id);
+
     if(project_mod[project_id]['project_operator'] == '1')
     {
       $('#tr_project_short_name').hide();
@@ -262,6 +266,7 @@ function change_project(project_id)
       $('#tr_project_members').show();
     }
 
+    project_operator=project_mod[project_id]['project_operator'];
     project_short_name=project_mod[project_id]['project_short_name'];
     project_mode=project_mod[project_id]['project_mode'];
     project_call=project_mod[project_id]['project_call'];
@@ -269,10 +274,7 @@ function change_project(project_id)
     project_qrz_user=project_mod[project_id]['project_qrz_user'];
     project_qrz_pass=project_mod[project_id]['project_qrz_pass'];
     project_locator=project_mod[project_id]['project_locator'];
-    project_members=get_data('rel_project_operator',project_id);
-    project_modes=get_data('rel_project_mode',project_id);
-    project_bands=get_data('rel_project_band',project_id);
-    project_smtp_emailfrom=project_mod[project_id]['project_smtp_emailfrom'];
+        project_smtp_emailfrom=project_mod[project_id]['project_smtp_emailfrom'];
     project_smtp_server=project_mod[project_id]['project_smtp_server'];
     project_smtp_port=project_mod[project_id]['project_smtp_port'];
     project_smtp_username=project_mod[project_id]['project_smtp_username'];
@@ -281,6 +283,7 @@ function change_project(project_id)
   }
   else
   {
+    project_operator="0";
     project_short_name="";
     project_mode="0";
     project_call="";
@@ -307,6 +310,7 @@ function change_project(project_id)
   document.getElementById('div_project_change').style.visibility='visible';
 
   $('#project_id').val(project_id);
+  $('#project_operator').val(project_operator);
   $('#project_short_name').val(project_short_name);
   $('#project_mode').val(project_mode);
   $('#project_call').val(project_call);
@@ -322,6 +326,7 @@ function change_project(project_id)
 
   // operators
   temp="";
+  console.log(project_members);
   $.each(operators,function(index,value)
   {
     selected="";

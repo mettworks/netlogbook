@@ -627,6 +627,7 @@
     if($typ == "log")
     { 
       ?>
+      loadXML();
       document.getElementById('div_log_import').style.visibility='hidden';
       <?
       if($completed=="0")

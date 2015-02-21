@@ -369,7 +369,7 @@
     }
     else
     {
-      $sql="SELECT * FROM operators WHERE id != '0'";
+      $sql="SELECT * FROM operators WHERE operator_id != '0'";
     }
     $i=0;
     $data_plain=mysql_fragen($sql,'operator_id',$id);
@@ -426,11 +426,17 @@
     {
       $id=$_SESSION['project_id'];
     }
-    $data_plain=mysql_fragen('select operators.operator_call, operators.operator_id FROM operators INNER JOIN rel_operators_projects ON rel_operators_projects.operator_id=operators.operator_id WHERE rel_operators_projects.project_id='.$_SESSION['project_id']);
+    $sql="select operators.operator_call, operators.operator_id FROM operators INNER JOIN rel_operators_projects ON rel_operators_projects.operator_id=operators.operator_id WHERE rel_operators_projects.project_id='".$id."'";
+    $data_plain=mysql_fragen($sql);
   }
   else if($table == "rel_project_mode")
   {
-    $data_plain=mysql_fragen('SELECT modes.mode_name,modes.mode_id FROM modes INNER JOIN rel_modes_projects ON rel_modes_projects.mode_id=modes.mode_id WHERE rel_modes_projects.project_id='.$_SESSION['project_id']);
+    if(!is_numeric($id))
+    {
+      $id=$_SESSION['project_id'];
+    }
+    $sql="SELECT modes.mode_name,modes.mode_id FROM modes INNER JOIN rel_modes_projects ON rel_modes_projects.mode_id=modes.mode_id WHERE rel_modes_projects.project_id='".$id."'";
+    $data_plain=mysql_fragen($sql);
   }
   else if($table == "rel_log_mode")
   {
