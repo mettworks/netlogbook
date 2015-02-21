@@ -364,8 +364,7 @@ span.help:hover div
   height:100%;
   visibility: hidden;
   z-index: 6;
-  background-color: white;
-  color: black;
+  background-color: #1D1C22;
 }
 #div_operators
 {
@@ -376,6 +375,7 @@ span.help:hover div
   height: 100%;
   z-index: 1;
   visibility: hidden;
+  background-color: #1D1C22;
 }
 #div_project_change
 {
@@ -386,7 +386,7 @@ span.help:hover div
   height:100%;
   visibility: hidden;
   z-index: 6;
-  background-color: black;
+  background-color: #1D1C22;
 }
 #div_projects
 {

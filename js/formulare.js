@@ -11,6 +11,14 @@ function change_settings_dxcluster_setting()
   }); 
 }
 
+function fill_dxcluster_setting()
+{
+  last_log=get_data('callinfo_last_log','');
+  if(typeof(last_log[0]) != 'undefined')
+  {
+    $('#dxcluster_send_qrg').val(last_log[0]['log_freq']);
+  }
+}
 function import_log()
 {
   document.getElementById('div_error').style.visibility='visible';
@@ -212,23 +220,23 @@ function change_operator(operator_id)
 {
   if(operator_id)
   {
-    operator_mod=get_data('operators',operator_id);
+    operator_mod=get_data('operators_all',operator_id);
     operator_call=operator_mod[operator_id]['operator_call'];
     operator_mail=operator_mod[operator_id]['operator_mail'];
     operator_role=operator_mod[operator_id]['operator_role'];
+    //
+    // the roles are hardcoded in index.php 
+    $('#operator_role').val(operator_role);
   }
   else
   {
     operator_call="";
     operator_mail="";
+    $('#operator_role').val('1');
   }
 
   operator_pass1="";
   operator_pass2="";
-
-  //
-  // the roles are hardcoded in index.php 
-  $('#operator_role').val(operator_role);
 
   document.getElementById('div_error').style.visibility='visible';
   document.getElementById('div_operator_change').style.visibility='visible';
@@ -326,7 +334,6 @@ function change_project(project_id)
 
   // operators
   temp="";
-  console.log(project_members);
   $.each(operators,function(index,value)
   {
     selected="";

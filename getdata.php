@@ -75,6 +75,11 @@
   {
     $data_plain=qrz_lookup_call($_GET['call']);
   }
+  else if($table == "callinfo_last_log")
+  {
+    $sql="SELECT log_freq,band_id FROM logs WHERE project_id=".$_SESSION['project_id']." AND operator_id=".$_SESSION['operator_id']." ORDER BY log_time DESC LIMIT 1";
+    $data_plain=mysql_fragen($sql);
+  }
   else if($table == "callinfo_logs")
   {
     $modes=mysql_fragen('SELECT * FROM modes;','mode_id');

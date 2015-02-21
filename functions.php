@@ -635,6 +635,7 @@
     if($typ == "log")
     { 
       ?>
+      fill_dxcluster_setting();
       document.getElementById('div_log_import').style.visibility='hidden';
       <?
       if($completed=="0")

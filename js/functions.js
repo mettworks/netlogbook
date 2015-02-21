@@ -9,7 +9,7 @@ function settings_op_save()
   settings_op['frequency_prefix']=$('#setting_frequency_prefix').val();
   if($('#setting_interface_aprs_ena').prop("checked") == true) { settings_op['aprs_ena']="true"; } else { settings_op['aprs_ena']="false"; }
   if($('#setting_interface_qrz_ena').prop("checked") == true) { settings_op['qrz_ena']="true"; } else { settings_op['qrz_ena']="false"; }
-  if($('#setting_interface_gm_ena').prop("checked") == true) { settings_op['gm_ena']="true"; } else { settings_op['gm_ena']="false"; }
+  //if($('#setting_interface_gm_ena').prop("checked") == true) { settings_op['gm_ena']="true"; } else { settings_op['gm_ena']="false"; }
   save_settings_op();
   set_table_logs();
 }
@@ -17,18 +17,18 @@ function settings_op_save()
 function fill_form_settings_op()
 {
   settings_op=get_data('settings_op','');
-  if(typeof settings_op === 'object')
+  if(typeof(settings_op['aprs_ena']) == "string")
   {
     if(settings_op['aprs_ena'] == "true") { $('#setting_interface_aprs_ena').prop( "checked", true ); } else { $('#setting_interface_aprs_ena').prop( "checked", false ); }
     if(settings_op['qrz_ena'] == "true") { $('#setting_interface_qrz_ena').prop( "checked", true ); } else { $('#setting_interface_qrz_ena').prop( "checked", false ); }
-    if(settings_op['gm_ena'] == "true") { $('#setting_interface_gm_ena').prop( "checked", true ); } else { $('#setting_interface_gm_ena').prop( "checked", false ); }
+    //if(settings_op['gm_ena'] == "true") { $('#setting_interface_gm_ena').prop( "checked", true ); } else { $('#setting_interface_gm_ena').prop( "checked", false ); }
     $('#setting_frequency_prefix').val(settings_op['frequency_prefix']);
   }
   else
   {
     $('#setting_interface_aprs_ena').prop( "checked", true );
     $('#setting_interface_qrz_ena').prop( "checked", true );
-    $('#setting_interface_gm_ena').prop( "checked", true );
+    //$('#setting_interface_gm_ena').prop( "checked", true );
     $('#setting_frequency_prefix').val('0');
     settings_op_save();
   }
@@ -56,23 +56,23 @@ function fill_form_settings_op_table_logs()
       if(settings_op_table_logs['columns'][12]['visible'] == "true") { $('#setting_table_logs_qso_ena').prop( "checked", true ); } else { $('#setting_table_logs_qso_ena').prop( "checked", false ); }
       if(settings_op_table_logs['columns'][13]['visible'] == "true") { $('#setting_table_logs_notes_ena').prop( "checked", true ); } else { $('#setting_table_logs_notes_ena').prop( "checked", false ); }
     }
-  }
-  else
-  {
-    $('#setting_table_logs_date_ena').prop( "checked", true );
-    $('#setting_table_logs_time_ena').prop( "checked", true );
-    $('#setting_table_logs_call_ena').prop( "checked", true );
-    $('#setting_table_logs_freq_ena').prop( "checked", true );
-    $('#setting_table_logs_mode_ena').prop( "checked", true );
-    $('#setting_table_logs_rst_tx_ena').prop( "checked", true );
-    $('#setting_table_logs_rst_rx_ena').prop( "checked", true );
-    $('#setting_table_logs_name_ena').prop( "checked", true );
-    $('#setting_table_logs_qth_ena').prop( "checked", true );
-    $('#setting_table_logs_loc_ena').prop( "checked", true );
-    $('#setting_table_logs_dok_ena').prop( "checked", true );
-    $('#setting_table_logs_manager_ena').prop( "checked", true );
-    $('#setting_table_logs_qso_ena').prop( "checked", true );
-    $('#setting_table_logs_notes_ena').prop( "checked", true );
+    else
+    {
+      $('#setting_table_logs_date_ena').prop( "checked", true );
+      $('#setting_table_logs_time_ena').prop( "checked", true );
+      $('#setting_table_logs_call_ena').prop( "checked", true );
+      $('#setting_table_logs_freq_ena').prop( "checked", true );
+      $('#setting_table_logs_mode_ena').prop( "checked", true );
+      $('#setting_table_logs_rst_tx_ena').prop( "checked", true );
+      $('#setting_table_logs_rst_rx_ena').prop( "checked", true );
+      $('#setting_table_logs_name_ena').prop( "checked", true );
+      $('#setting_table_logs_qth_ena').prop( "checked", true );
+      $('#setting_table_logs_loc_ena').prop( "checked", true );
+      $('#setting_table_logs_dok_ena').prop( "checked", true );
+      $('#setting_table_logs_manager_ena').prop( "checked", true );
+      $('#setting_table_logs_qso_ena').prop( "checked", true );
+      $('#setting_table_logs_notes_ena').prop( "checked", true );
+    }
   }
 }
 
@@ -424,7 +424,7 @@ function display_callinfo(call,formchange)
   {
     if((typeof(callinfo_qrz['error']) == 'string') && (callinfo_qrz['error'] != ""))
     {
-      $('#div_log_change_error').append("<a class='class_log_change_callinfo'>Error QRZ.COM:"+callinfo_qrz['error']+"</a>");
+      $('#div_log_change_error').append("<a style=color:red; class='class_log_change_callinfo'>Error QRZ.COM:"+callinfo_qrz['error']+"</a>");
 
       callinfo_qrz['fname']="";
       callinfo_qrz['name']="";

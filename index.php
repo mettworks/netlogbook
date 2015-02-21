@@ -41,7 +41,6 @@
 	var table_monitor_qsos;
 
 	session=get_data('session','');
-	console.log(session);
 	// used anymore?
 	interval_log_change='NULL';
 
@@ -49,8 +48,6 @@
 	settings_op_table_logs=get_data('settings_table_logs','');
 	settings_op={};
 	settings_op=get_data('settings_op','');
-
-	change_settings_dxcluster_setting();
 
 	modes=get_data('mode','');
 	operators=get_data('operator','');
@@ -433,6 +430,8 @@
 	    set_title();
 	    set_table_logs();
 	    load();
+	    change_settings_dxcluster_setting();
+	    fill_dxcluster_setting();
 	  });
       </script></p>
       <div id="div_navi_top">
@@ -847,10 +846,12 @@
 	      <td><span class='help'>Passwort wiederholen<div>Passwort wiederholen</div></span></td>
 	      <td><input class='class_operator_change' type='password' name='operator_pass2' id='operator_pass2' value=''></td>
 	    </tr>
+	    <!--
 	    <tr class='class_operator_change'>
 	      <td><span class='help'>e-mail<div>e-mail Adresse</div></span></td>
 	      <td><input class='class_operator_change' type='text' name='operator_mail' id='operator_mail' value=''></td>
 	    </tr>
+	    -->
             <tr>
               <td><span class='help'>Berechtigungen<div>Berechtigungen</div></span></td>
               <td>
@@ -860,10 +861,12 @@
                 </select>
               </td>
             </tr>
+	    <!--
 	    <tr>
 	      <td><span class='help'>PW per Mail?<div>neues PW setzen und per Mail an die Mailadresse schicken?</div></span></td>
 	      <td><input type="checkbox" onchange="operator_change_pwm()" name="operator_pwm" id="operator_pwm" value=""></td>
 	    </tr>
+	    -->
 	    </table>
 	    <input class='class_operator_change' type='hidden' name='operator_id' id='operator_id' value=''>
 	    <input class="class_operator_change" type="button" onclick="write_data('operator')"; value="speichern" name="speichern">
@@ -1107,10 +1110,12 @@
 	    <td><span class="help">Schnittstelle qrz.com<div>Schnittstelle zu qrz.com aktiv oder inaktiv</div></span></td>
 	    <td><input id="setting_interface_qrz_ena" type="checkbox" value=""></td>
 	  </tr>
+	  <!--
 	  <tr>
 	    <td><span class="help">Schnittstelle Google-Maps<div>Schnittstelle zu Google-Maps aktiv oder inaktiv</div></span></td>
 	    <td><input id="setting_interface_gm_ena" type="checkbox" value=""></td>
 	  </tr>
+	  -->
 	</table>
 	<br>
 	<p>sichtbare Felder f&uuml;r Logeintr&auml;ge</p>
