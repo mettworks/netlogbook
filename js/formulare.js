@@ -248,7 +248,20 @@ function change_project(project_id)
 
   if(project_id)
   {
-    project_mod=get_data('projects',project_id);
+    project_mod=get_data('projects_all',project_id);
+    if(project_mod[project_id]['project_operator'] == '1')
+    {
+      $('#tr_project_short_name').hide();
+      $('#tr_project_modus').hide();
+      $('#tr_project_members').hide();
+    }
+    else
+    {
+      $('#tr_project_short_name').show();
+      $('#tr_project_modus').show();
+      $('#tr_project_members').show();
+    }
+
     project_short_name=project_mod[project_id]['project_short_name'];
     project_mode=project_mod[project_id]['project_mode'];
     project_call=project_mod[project_id]['project_call'];
@@ -306,6 +319,7 @@ function change_project(project_id)
   $('#project_smtp_username').val(project_smtp_username);
   $('#project_smtp_port').val(project_smtp_port);
 
+
   // operators
   temp="";
   $.each(operators,function(index,value)
@@ -359,7 +373,7 @@ function change_project(project_id)
   project_change_modus();
   project_change_clublog();
 }
-
+/*
 function delete_data_ask(typ,id)
 {
   interval_log_change='NULL';
@@ -377,6 +391,7 @@ function delete_data_ask(typ,id)
     $('#form_delete_data_ask').append("<input class='class_delete_data_ask' type='hidden' name='delete_data_ask_id' id='delete_data_ask_id' value='"+id+"'>");
   }
 }
+*/
 /*
 function delete_operator(operator_id)
 {

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.36, for FreeBSD9.2 (amd64)
+-- MySQL dump 10.13  Distrib 5.5.41, for FreeBSD10.0 (amd64)
 --
--- Host: localhost    Database: dxpad
+-- Host: localhost    Database: dev_netlogbook
 -- ------------------------------------------------------
--- Server version	5.5.36-log
+-- Server version	5.5.41-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `bands` (
   `band_start` int(20) NOT NULL,
   `band_end` int(20) NOT NULL,
   PRIMARY KEY (`band_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `bands` (
 
 LOCK TABLES `bands` WRITE;
 /*!40000 ALTER TABLE `bands` DISABLE KEYS */;
-INSERT INTO `bands` VALUES (1,'2m',144000,146000),(2,'70cm',430000,440000),(3,'23cm',1240000,1300000),(4,'80m',3500,3800),(5,'40m',7000,7200),(6,'20m',14000,14350),(7,'15m',21000,21450),(8,'17m',18068,18168),(9,'10m',28000,29700),(10,'30m',10100,10150);
+INSERT INTO `bands` VALUES (1,'2m',144000,146000),(2,'70cm',430000,440000),(3,'23cm',1240000,1300000),(4,'80m',3500,3800),(5,'40m',7000,7200),(6,'20m',14000,14350),(7,'15m',21000,21450),(8,'17m',18068,18168),(9,'10m',28000,29700),(10,'30m',10100,10150),(11,'12m',24890,24990),(12,'160m',1810,2000);
 /*!40000 ALTER TABLE `bands` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,6 +60,7 @@ CREATE TABLE `cronjob` (
 
 LOCK TABLES `cronjob` WRITE;
 /*!40000 ALTER TABLE `cronjob` DISABLE KEYS */;
+INSERT INTO `cronjob` VALUES (0,0);
 /*!40000 ALTER TABLE `cronjob` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,6 +94,7 @@ CREATE TABLE `logs` (
   `band_id` int(4) DEFAULT NULL,
   `time` int(10) NOT NULL,
   `typ` int(1) NOT NULL,
+  `operator_private` tinyint(1) NOT NULL,
   PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -118,7 +120,7 @@ CREATE TABLE `modes` (
   `mode_name` varchar(8) DEFAULT NULL,
   `mode_digital` int(1) DEFAULT NULL,
   PRIMARY KEY (`mode_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +129,7 @@ CREATE TABLE `modes` (
 
 LOCK TABLES `modes` WRITE;
 /*!40000 ALTER TABLE `modes` DISABLE KEYS */;
-INSERT INTO `modes` VALUES (1,'AM',0),(2,'FM',0),(3,'SSB',0),(4,'CW',1),(5,'PSK31',1),(6,'SSTV',0),(7,'RTTY',1),(8,'HELL',1);
+INSERT INTO `modes` VALUES (1,'AM',0),(2,'FM',0),(3,'SSB',0),(4,'CW',1),(5,'PSK31',1),(6,'SSTV',0),(7,'RTTY',1),(8,'HELL',1),(9,'D-STAR',1),(10,'ROS',1);
 /*!40000 ALTER TABLE `modes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,8 +147,9 @@ CREATE TABLE `operators` (
   `operator_mail` varchar(20) DEFAULT NULL,
   `operator_pass` varchar(40) DEFAULT NULL,
   `operator_role` varchar(1) DEFAULT NULL,
+  `last_project` int(10) DEFAULT NULL,
   PRIMARY KEY (`operator_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +158,7 @@ CREATE TABLE `operators` (
 
 LOCK TABLES `operators` WRITE;
 /*!40000 ALTER TABLE `operators` DISABLE KEYS */;
-INSERT INTO `operators` VALUES ('ADMIN','admin',1,NULL,'21232f297a57a5a743894a0e4a801fc3','0');
+INSERT INTO `operators` VALUES ('ADMIN','admin',0,NULL,'21232f297a57a5a743894a0e4a801fc3','0',NULL);
 /*!40000 ALTER TABLE `operators` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,8 +179,19 @@ CREATE TABLE `projects` (
   `project_qrz_sess_valid_until` varchar(10) DEFAULT NULL,
   `project_qrz_sess_created` int(10) DEFAULT NULL,
   `project_locator` varchar(10) DEFAULT NULL,
+  `project_call` varchar(15) DEFAULT NULL,
+  `project_mode` int(4) DEFAULT NULL,
+  `project_clublog_ena` tinyint(1) DEFAULT NULL,
+  `project_smtp_emailfrom` varchar(40) DEFAULT NULL,
+  `project_smtp_server` varchar(40) DEFAULT NULL,
+  `project_smtp_pass` varchar(40) DEFAULT NULL,
+  `project_clublog_auto` int(2) DEFAULT NULL,
+  `project_clublog_lastrun` int(10) DEFAULT NULL,
+  `project_smtp_username` varchar(40) DEFAULT NULL,
+  `project_smtp_port` int(4) DEFAULT NULL,
+  `project_operator` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`project_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,7 +200,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,'project',NULL,NULL,NULL,'',NULL,1395767987,NULL);
+INSERT INTO `projects` VALUES (0,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,8 +304,10 @@ CREATE TABLE `rel_operators_projects` (
   `setting_log_time_auto` int(1) DEFAULT NULL,
   `setting_incrementell_export_complete` int(10) DEFAULT NULL,
   `setting_incrementell_export_operator` int(10) DEFAULT NULL,
+  `settings_table_logs` text,
+  `settings` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,6 +316,7 @@ CREATE TABLE `rel_operators_projects` (
 
 LOCK TABLES `rel_operators_projects` WRITE;
 /*!40000 ALTER TABLE `rel_operators_projects` DISABLE KEYS */;
+INSERT INTO `rel_operators_projects` VALUES (0,0,0,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `rel_operators_projects` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -312,4 +329,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-03-25 18:20:13
+-- Dump completed on 2015-02-21 15:30:28

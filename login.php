@@ -32,11 +32,10 @@
       {
         $data=mysql_fetch_assoc($result);
 
-	$sql="SELECT project_id FROM rel_operators_projects WHERE operator_id='".$data['operator_id']."';";
+	//$sql="SELECT project_id FROM rel_operators_projects WHERE project_operator='0' AND operator_id='".$data['operator_id']."';";
+	$sql="SELECT projects.project_id FROM projects INNER JOIN rel_operators_projects ON rel_operators_projects.project_id=projects.project_id WHERE projects.project_operator='0' AND operator_id='".$data['operator_id']."';";
 	$result = mysql_query($sql);
 
-	if(mysql_num_rows($result) != 0)
-	{
 	  $operator_projects=mysql_fetch_assoc($result);
 	  $_SESSION['map_settings']=array();
 	  $_SESSION['operator_projects']=$operator_projects;
@@ -44,25 +43,21 @@
 	  $_SESSION['operator_id']=$data['operator_id'];
 	  $_SESSION['loggedin']=true;
 
+	  $sql="SELECT projects.project_id FROM projects INNER JOIN rel_operators_projects ON rel_operators_projects.project_id=projects.project_id WHERE projects.project_operator='1' AND operator_id='".$_SESSION['operator_id']."';";
+	  $private_project=mysql_fragen($sql);
+
+	  $_SESSION['private_project_id']=$private_project[0]['project_id'];	  
+
 	  if(is_numeric($data['last_project']))
 	  {
 	    $_SESSION['project_id']=$data['last_project'];
 	  }
 	  else
 	  {
-	    $_SESSION['project_id']=end($operator_projects);
+	    $_SESSION['project_id']=$_SESSION['private_project_id'];
 	  }
 	  save_session_locator();
 	  header('Location: /index.php');
-	}
-	else
-	{
-	  ?>
-	  <script language="javascript">
-	  alert("Benutzername und Passwort ok, du bist aber keinem Projekt zugeordnet und kein Admin.");
-	  </script>
-	  <?php
-	}
       }
       else
       {
@@ -78,7 +73,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>Zeug</title>
+    <title>NetLogBook</title>
   </head>
   <body>
 <div id="div_login_logo">

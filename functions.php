@@ -605,8 +605,8 @@
   {
     ?>
     <script>
-    document.getElementById('div_delete_data_ask').style.visibility='hidden';
-    table_<?=$typ?>s.fnDraw();
+    //document.getElementById('div_delete_data_ask').style.visibility='hidden';
+    table_<?=$typ?>s.draw();
     </script>
     <?
   }

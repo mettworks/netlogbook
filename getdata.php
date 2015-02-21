@@ -31,7 +31,7 @@
     {
       return ($a < $b) ? -1 : +1;
     } 
- }
+  }
 
   function ar_sortieren($array)
   {
@@ -57,7 +57,7 @@
   {
     $data_plain=mysql_fragen("SELECT * FROM cronjob");
   }
-  else if($table == "settings_table_logs")
+  else if(($table == "settings_table_logs") && (is_numeric($_SESSION['project_id'])))
   {
     $data_plain=mysql_fragen("SELECT settings_table_logs FROM rel_operators_projects WHERE project_id=".$_SESSION['project_id']." AND operator_id=".$_SESSION['operator_id'].";");
     $data_output=$data_plain[0]['settings_table_logs'];
@@ -147,14 +147,14 @@
     }
   }
 
-  if($table == "logs")
+  if(($table == "logs") && (is_numeric($_SESSION['project_id'])))
   {
     $operators=mysql_fragen('SELECT operators.* FROM operators INNER JOIN rel_operators_projects WHERE project_id='.$_SESSION['project_id'],"operator_id");
     $modes=mysql_fragen('SELECT * FROM modes;','mode_id');
     $sql="SELECT * FROM logs WHERE project_id=".$_SESSION['project_id'];
     if($_SESSION['onlyoperator'] == "1")
     {
-      $sql.=" AND operator_id=".$_SESSION['operator_id'];
+    $sql.=" AND operator_id=".$_SESSION['operator_id'];
     }
     $i=0;
     if($data_plain=mysql_fragen($sql,'log_id',$id))
@@ -196,7 +196,7 @@
     }
   }
 
-  else if($table == "monitor_total")
+  else if(($table == "monitor_total") && (is_numeric($_SESSION['project_id'])))
   {
     if($result=mysql_query("SELECT COUNT(*) FROM logs WHERE project_id=".$_SESSION['project_id'].";"))
     {
@@ -206,7 +206,7 @@
     }
   }
 
-  else if(($table == "monitor_modes") || ($table == "monitor_bands") || ($table == "monitor_qsos"))
+  else if((($table == "monitor_modes") || ($table == "monitor_bands") || ($table == "monitor_qsos")) && (is_numeric($_SESSION['project_id'])))
   {
     $data_plain=array();
     if($result=mysql_query("SELECT COUNT(*) FROM logs WHERE project_id=".$_SESSION['project_id'].";"))
@@ -229,7 +229,7 @@
 	}
       }
     }
-    if($table == "monitor_bands")
+    if(($table == "monitor_bands") && (is_numeric($_SESSION['project_id'])))
     {
       $bands=mysql_fragen('SELECT bands.band_name,bands.band_id FROM bands INNER JOIN rel_bands_projects ON rel_bands_projects.band_id=bands.band_id WHERE rel_bands_projects.project_id='.$_SESSION['project_id'],'band_id'); 
       foreach($bands as $band)
@@ -245,7 +245,7 @@
 	}
       }
     }
-    if($table == "monitor_qsos")
+    if(($table == "monitor_qsos") && (is_numeric($_SESSION['project_id'])))
     {
       $operators=mysql_fragen('SELECT operators.operator_call,operators.operator_id FROM operators INNER JOIN rel_operators_projects ON rel_operators_projects.operator_id=operators.operator_id WHERE rel_operators_projects.project_id='.$_SESSION['project_id'],'operator_id');
       foreach($operators as $operator)
@@ -276,7 +276,7 @@
     }
   }
 
-  else if($table == "monitor_logs")
+  else if(($table == "monitor_logs") && (is_numeric($_SESSION['project_id'])))
   {
     $modes=mysql_fragen('SELECT * FROM modes;','mode_id');
     $operators=mysql_fragen('SELECT operators.* FROM operators INNER JOIN rel_operators_projects WHERE project_id='.$_SESSION['project_id'],"operator_id");
@@ -300,7 +300,7 @@
     }
   }
 
-  else if($table == "logsfromme")
+  else if(($table == "logsfromme") && (is_numeric($_SESSION['project_id'])))
   {
     $modes=mysql_fragen('SELECT * FROM modes;','mode_id');
     $sql="SELECT * FROM logs WHERE project_id=".$_SESSION['project_id']." AND operator_id=".$_SESSION['operator_id']." ORDER BY log_time DESC LIMIT 5";
@@ -378,9 +378,16 @@
       }
     }
   }
-  else if($table == "projects")
+  else if(($table == "projects") || ($table == "projects_all"))
   {
-    $sql="SELECT * FROM projects";
+    if($table == "projects")
+    {
+      $sql="SELECT * FROM projects WHERE project_operator='0'";
+    }
+    else
+    {
+      $sql="SELECT * FROM projects";
+    }
     $i=0;
     $data_plain=mysql_fragen($sql,'project_id',$id);
     if($typ == "datatable")

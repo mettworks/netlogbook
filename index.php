@@ -40,6 +40,10 @@
 	var table_monitor_bands;
 	var table_monitor_qsos;
 
+	session=get_data('session','');
+	// used anymore?
+	interval_log_change='NULL';
+
 	settings_op_table_logs={};
 	settings_op_table_logs=get_data('settings_table_logs','');
 	settings_op={};
@@ -265,7 +269,7 @@
 		  {
 		    "mRender": function ( data, type, full )
 		    {
-		      return '<img src="images/delete.png" alt="loeschen" onclick="delete_data_ask(\'log\',\''+full[14]+'\');">';
+		      return '<img src="images/delete.png" alt="loeschen" onclick="delete_log(\''+full[14]+'\');">';
 		    },
 		    'bSortable': false,
 		  }
@@ -362,7 +366,7 @@
 		  {
                     "mRender": function ( data, type, full ) 
                     {
-                      return '<img src="images/delete.png" alt="loeschen" onclick="delete_data_ask(\'operator\',\''+full[1]+'\');">';
+                      return '<img src="images/delete.png" alt="loeschen" onclick="delete_operator(\''+full[1]+'\');">';
 
                     },
                     'bSortable': false,
@@ -423,7 +427,6 @@
 	    table_monitor_qsos.columns.adjust().draw();
 	    $('#table_dxcluster').css( 'display', 'block' );
 	    table_dxcluster.columns.adjust().draw();
-
 	    fill_form_settings_op_table_logs();
 	    fill_form_settings_op();
 	    set_title();
@@ -432,13 +435,17 @@
 	  });
       </script></p>
       <div id="div_navi_top">
-	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Log">
-	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('1');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Monitor">
-	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Karte">
-	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='visible';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Einstellungen">
-	<input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='visible';" value="DXCluster">
-
 	<?php
+	if($_SESSION['operator_id'] != 0 )
+	{
+	  ?>
+	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Log">
+	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('1');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Monitor">
+	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Karte">
+	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='visible';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Einstellungen">
+	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='visible';" value="DXCluster">
+	  <?
+	}
 	if($_SESSION['operator_role']==0)
 	{
 	  ?>
@@ -446,51 +453,52 @@
 	  <input type="button" onclick="set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';document.getElementById('div_dxcluster').style.visibility='hidden';" value="OP's">
 	<?php
 	}
-	?>
-	<select name="projects" id="projects" onchange="set_project()">
-	  <?php
-	  $sql="SELECT project_id,project_short_name FROM projects";
-	  $projects=mysql_fragen($sql,'project_id');
+	if($_SESSION['operator_id'] != 0 )
+	{
+	  ?>
+	  <select name="projects" id="projects" onchange="set_project()">
+	    <?php
+	    $sql="SELECT project_id,project_short_name FROM projects WHERE project_operator='0'";
+	    $projects=mysql_fragen($sql,'project_id');
+	    $sql="SELECT projects.project_id FROM projects INNER JOIN rel_operators_projects ON rel_operators_projects.project_id=projects.project_id WHERE projects.project_operator='1' AND operator_id='".$_SESSION['operator_id']."';";
+	    $private_project=mysql_fragen($sql,'project_id');
 
-	  if($_SESSION['operator_role'] == 0)
-	  {
-	    foreach($projects as $project_id => $project)
+	    if($_SESSION['project_id'] == key($private_project))
 	    {
-	      if($_SESSION['project_id'] == $project_id)
+	      ?>
+	      <option selected value=<?=key($private_project)?>>PRIVAT</option>
+	      <?
+	    }
+	    else
+	    {
+	      ?>
+	      <option value=<?=key($private_project)?>>PRIVAT</option>
+	      <?
+	    }
+	    firebug_debug($_SESSION['operator_projects']);
+	    if(count($_SESSION['operator_projects'] != 0))
+	    {
+	      foreach($_SESSION['operator_projects'] as $operator_projects)
 	      {
-		?>
-		<option selected value=<?=$project_id?>><?=$project['project_short_name']?></option>
-		<?php
-	      }
-	      else
-	      {
-		?>
-		<option value=<?=$project_id?>><?=$project['project_short_name']?></option>
-		<?php
+		if($_SESSION['project_id'] == $projects[$operator_projects]['project_id'])
+		{
+		  ?>
+		  <option selected value=<?=$projects[$operator_projects]['project_id']?>><?=$projects[$operator_projects]['project_short_name']?></option>
+		  <?php
+		}
+		else
+		{
+		  ?>
+		  <option value=<?=$projects[$operator_projects]['project_id']?>><?=$projects[$operator_projects]['project_short_name']?></option>
+		  <?php
+		}
 	      }
 	    }
-	  }
-	  else
-	  {
-	    foreach($_SESSION['operator_projects'] as $operator_projects)
-	    {
-	      if($_SESSION['project_id'] == $projects[$operator_projects]['project_id'])
-	      {
-		?>
-		<option selected value=<?=$projects[$operator_projects]['project_id']?>><?=$projects[$operator_projects]['project_short_name']?></option>
-		<?php
-	      }
-	      else
-	      {
-		?>
-		<option value=<?=$projects[$operator_projects]['project_id']?>><?=$projects[$operator_projects]['project_short_name']?></option>
-		<?php
-	      }
-
-	    }
-	  }
 	  ?>  
-	</select>
+	  </select>
+	<?php
+	}
+      ?>
       </div>
       <div id="div_dxcluster">
 	<a>Auto Reload (30sec)</a>
@@ -869,7 +877,7 @@
     <div id="div_project_change">
       <form method="POST" action="" class="form" id="form_project_change">
         <table class='class_project_change'>
-          <tr class='class_project_change'>
+          <tr class='class_project_change' id='tr_project_short_name'>
             <td>
 	      <span class='help'>Bezeichnung<div>Bezeichnung</div></span>
 	    </td>
@@ -877,7 +885,7 @@
 	      <input type='text' name='project_short_name' id='project_short_name' value=''>
 	    </td>
 	  </tr>
-	  <tr class='class_project_change'>
+	  <tr class='class_project_change' id='tr_project_modus'>
 	    <td>
 	      <span class='help'>Modus<div>Modus</div></span>
 	    </td>
@@ -890,7 +898,7 @@
 	  </tr>
 	  <tr class='class_project_change'>
 	    <td>
-	      <span class='help'>Clubstationsrufzeichen<div>Clubstationsrufzeichen</div></span>
+	      <span class='help'>Rufzeichen<div>Rufzeichen</div></span>
 	    </td>
 	    <td>
 	      <input class='class_project_change' type='text' name='project_call' id='project_call' value=''>
@@ -996,7 +1004,7 @@
 	      <input class='class_project_change' type='text' name='project_locator' id='project_locator' value=''>
 	    </td>
 	  </tr>
-	  <tr class='class_project_change'>
+	  <tr class='class_project_change' id='tr_project_members'>
 	    <td>
 	      <span class='help'>Mitglieder<div>Mitglieder des Projektes</div></span>
 	    </td>
@@ -1138,6 +1146,7 @@
 	    <td><input id="setting_table_logs_notes_ena" type="checkbox" value=""></td>
 	  </tr>
 	</table>
+	<input type="button" value="Projekt PRIVAT anpassen" onclick="change_project(<?=$_SESSION['private_project_id']?>)">
 	<input type="button" value="Speichern" onclick="settings_op_save();"> 
       </form>
     </div>
@@ -1156,5 +1165,23 @@
     </table>
     <input onclick="change_project();" type="button" value="neues Projekt anlegen" name="">
     </div>
+    <?php
+    if($_SESSION['operator_id'] == 0)
+    {
+      ?>
+      <script type="text/javascript">
+      set_reload_dxcluster('0');
+      set_reload_monitor('0');
+      document.getElementById('div_settings').style.visibility='hidden';
+      document.getElementById('div_map').style.visibility='hidden';
+      document.getElementById('div_monitor').style.visibility='hidden';
+      document.getElementById('div_logs').style.visibility='hidden'; 
+      document.getElementById('div_projects').style.visibility='visible'; 
+      document.getElementById('div_operators').style.visibility='hidden';
+      document.getElementById('div_dxcluster').style.visibility='hidden';
+      </script>
+      <?php
+    }
+    ?>
     </body>
   </html>

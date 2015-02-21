@@ -1,6 +1,8 @@
 <?
   include('functions.php');
 
+  ini_set('display_errors','0');
+
   checklogin();
   mysql_c();
   
@@ -247,6 +249,13 @@
 	div_err("du bist zwar Superuser, aber dem Projekt nicht zugewiesen!","logs");
 	die();
       }
+
+      if($_SESSION['operator_id'] == 0)
+      {
+	div_err("User ADMIN darf das nicht","logs");
+	die();
+      }
+
       // 
       // validieren!
 
@@ -409,11 +418,12 @@
 	}
       }
     }
+    /*
     else if($action=="del")
     {
       mysql_schreib("DELETE FROM logs WHERE log_id='".$data['log_id']."';");
     }
-
+    */
     if($action == "import")
     {
       $error_text="Import fertig. Es wurden ".$counter_ok." Logs erfolgreich importiert. ";
@@ -468,12 +478,23 @@
 	}
 	$data['operator_pass']=md5($data['operator_pass']);
       }
-      mysql_write_array('operators',$data,'operator_id',$data_temp['operator_id']);
+      $operator_id=mysql_write_array('operators',$data,'operator_id',$data_temp['operator_id']);
+      if(is_numeric($operator_id))
+      {
+	mysql_schreib("INSERT INTO projects SET project_operator='1';");
+	$project_id=mysql_insert_id();
+	mysql_schreib("INSERT INTO rel_operators_projects SET operator_id='".$operator_id."', project_id='".$project_id."';");
+      }
+
     }
+    /*
     else if($action=="del")
     {
-      mysql_schreib("DELETE FROM operators WHERE operator_id='".$data['operator_id']."';");
+      $logs=mysql_fragen("SELECT COUNT(*) FROM logs WHERE operator_id='".$data['operator_id']."';"); 
+      firebug_debug($logs);
+      //mysql_schreib("DELETE FROM operators WHERE operator_id='".$data['operator_id']."';");
     }
+    */
     end_edit("operator");
   }
 
@@ -494,7 +515,7 @@
     $data['project_locator']=mysql_real_escape_string($data_temp['project_locator']);
     $data['project_call']=mysql_real_escape_string($data_temp['project_call']);
     $data['project_mode']=mysql_real_escape_string($data_temp['project_mode']);
-
+    $data['project_operator']='0';
     if($action=="mod")
     {
       if(strlen($data_temp['project_short_name']) < 1) 
@@ -600,10 +621,30 @@
       mysql_schreib("DELETE FROM logs WHERE log_id='".$data['id']."';");
       end_del($typ);
     }
+    else if($typ == "project")
+    {
+      mysql_schreib("DELETE FROM logs WHERE project_id='".$data['id']."';");
+      mysql_schreib("DELETE FROM rel_bands_projects WHERE project_id='".$data['id']."';");
+      mysql_schreib("DELETE FROM rel_modes_projects WHERE project_id='".$data['id']."';");
+      mysql_schreib("DELETE FROM rel_operators_projects WHERE project_id='".$data['id']."';");
+      mysql_schreib("DELETE FROM projects WHERE project_id='".$data['id']."';");
+      end_del($typ);
+    }
     else if($typ == "operator")
     {
-      mysql_schreib("DELETE FROM operators WHERE operator_id='".$data['id']."';");
-      end_del($typ);
+      $r=mysql_query("SELECT log_id FROM logs WHERE operator_id='".$data['id']."';");
+      if(mysql_num_rows($r) != 0)
+      {
+	?>
+	<script>alert('Der Operator kann nicht geloescht werden, es sind noch Logeintraege vorhanden.');</script>
+	<?
+      }
+      else
+      {
+	mysql_schreib("DELETE FROM rel_operators_projects WHERE operator_id='".$data['id']."';");
+	mysql_schreib("DELETE FROM operators WHERE operator_id='".$data['id']."';");
+	end_del($typ);
+      }
     }
   } 
 ?>  

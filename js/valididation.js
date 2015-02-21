@@ -328,21 +328,63 @@ function write_data(typ,id)
     );
 }
 
-function delete_data(typ,id)
+function delete_log(id)
 {
-  var typ=$('#delete_data_ask_typ').val();
-  var id=$('#delete_data_ask_id').val();
-  $.ajax
+  log=get_data('logs',id);
+  check=confirm('Call: '+log[id]['log_call']+'\nwirklich loeschen?');
+  if(check == true)
+  {
+    $.ajax
     (
       {
         type: "GET",
-        url: "save.php",
-        data: "action=del&typ="+typ+"&id="+id,
-        success: function(html)
-        {
-          $("div#div_error").html(html);
-        }
+	url: "save.php",
+	data: "action=del&typ=log&id="+id,
+	success: function(html)
+	{
+	  $("div#div_error").html(html);
+	}
       }
     );
-
+  }
+}
+function delete_operator(id)
+{
+  operator=get_data('operators',id);
+  check=confirm('Operator: '+operator[id]['operator_call']+'\nwirklich loeschen?');
+  if(check == true)
+  {
+    $.ajax
+    (
+      {
+        type: "GET",
+	url: "save.php",
+	data: "action=del&typ=operator&id="+id,
+	success: function(html)
+	{
+	  $("div#div_error").html(html);
+	}
+      }
+    );
+  }
+}
+function delete_project(id)
+{
+  project=get_data('projects',id);
+  check=confirm('Project: '+project[id]['project_short_name']+'\nwirklich loeschen?');
+  if(check == true)
+  {
+    $.ajax
+    (
+      {
+        type: "GET",
+	url: "save.php",
+	data: "action=del&typ=project&id="+id,
+	success: function(html)
+	{
+	  $("div#div_error").html(html);
+	}
+      }
+    );
+  }
 }

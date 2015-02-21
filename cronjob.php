@@ -60,6 +60,10 @@
 	  mysql_schreib("DELETE FROM qrz_cache WHERE qrz_cache_id='".$qrz_cache['qrz_cache_id']."'");
 	}
       }
+      else
+      {
+	mysql_schreib("DELETE FROM qrz_cache WHERE qrz_cache_id='".$qrz_cache['qrz_cache_id']."'");
+      }
     } 
   }
   mysql_schreib("UPDATE cronjob SET lastrun='".time()."' WHERE id='0';");

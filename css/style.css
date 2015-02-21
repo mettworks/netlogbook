@@ -134,8 +134,9 @@ input[type=button]
   left: 0%;
   height: 100%;
   width: 100%;
-  z-index: 5;
+  z-index: 7;
   visibility: hidden;
+  background-color: #1D1C22;
 }
 img.class_complete
 {
@@ -345,7 +346,7 @@ span.help:hover div
   width: 33%;
   height: 50%;
 }
-#div_delete_data_ask
+/*#div_delete_data_ask
 {
   position: fixed;
   left: 0%;
@@ -353,7 +354,7 @@ span.help:hover div
   height:80%;
   visibility: hidden;
   z-index: 3;
-}
+}*/
 #div_operator_change
 {
   top: 0%;
@@ -364,6 +365,7 @@ span.help:hover div
   visibility: hidden;
   z-index: 6;
   background-color: white;
+  color: black;
 }
 #div_operators
 {
