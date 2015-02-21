@@ -194,7 +194,7 @@ function set_reload_map(stat)
   }
   else
   {
-    interval_map=setInterval("reload_map()",3000);
+    interval_map=setInterval("reload_map()",30000);
   }
 }
 
