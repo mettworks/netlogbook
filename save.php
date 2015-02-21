@@ -633,6 +633,7 @@
       //mysql_schreib("DELETE FROM operators WHERE operator_id='".$data['operator_id']."';");
     }
     */
+    save_session_locator();
     end_edit("project");
   }
   if($action == "del")

@@ -624,10 +624,17 @@
       document.getElementById('div_<?=$typ?>_change').style.visibility='hidden';
       <?
     }
+    
+    if($typ == "project")
+    {
+      ?>
+      load();
+      loadXML();
+      <?
+    }
     if($typ == "log")
     { 
       ?>
-      loadXML();
       document.getElementById('div_log_import').style.visibility='hidden';
       <?
       if($completed=="0")

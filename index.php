@@ -41,6 +41,7 @@
 	var table_monitor_qsos;
 
 	session=get_data('session','');
+	console.log(session);
 	// used anymore?
 	interval_log_change='NULL';
 
