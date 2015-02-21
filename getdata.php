@@ -361,9 +361,16 @@
     }
   }
 
-  else if($table == "operators")
+  else if(($table == "operators") || ($table == "operators_all"))
   {
-    $sql="SELECT * FROM operators";
+    if($table == "operators_all")
+    {
+      $sql="SELECT * FROM operators";
+    }
+    else
+    {
+      $sql="SELECT * FROM operators WHERE id != '0'";
+    }
     $i=0;
     $data_plain=mysql_fragen($sql,'operator_id',$id);
     if($typ == "datatable")

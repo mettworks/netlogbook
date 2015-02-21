@@ -348,7 +348,7 @@
 	      {
 		"bProcessing": true,
 		"bServerSide": true,
-		"sAjaxSource": "/getdata.php?typ=datatable&table=operators",
+		"sAjaxSource": "/getdata.php?typ=datatable&table=operators_all",
 		"aoColumns":
 		[
 		  null,
