@@ -183,6 +183,20 @@ function set_map_settings()
     }
   }
 }
+function set_reload_map(stat)
+{
+  if(stat == "0") 
+  {
+    if(typeof(interval_map) != 'undefined')
+    {
+      clearInterval(interval_map);
+    }
+  }
+  else
+  {
+    interval_map=setInterval("reload_map()",3000);
+  }
+}
 
 function set_reload_monitor(stat)
 {
@@ -211,6 +225,11 @@ function set_reload_dxcluster(stat)
   {
     interval_dxcluster=setInterval("reload_dxcluster()",30000);
   }
+}
+
+function reload_map()
+{
+  loadXML();
 }
 
 function reload_monitor()

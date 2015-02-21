@@ -633,6 +633,7 @@
       //mysql_schreib("DELETE FROM operators WHERE operator_id='".$data['operator_id']."';");
     }
     */
+    mysql_schreib("UPDATE projects SET project_qrz_sess_valid_until = NULL, project_qrz_sess = NULL, project_qrz_sess_created = NULL WHERE project_id='".$data['project_id']."'");
     save_session_locator();
     end_edit("project");
   }
