@@ -10,8 +10,8 @@
   $typ=$data_temp['typ'];
   $action=$data_temp['action'];
   $completed=$data_temp['completed'];
-  //firebug_debug($_SERVER);
-  //print_r($_POST);
+  //firebug_debug($_GET);
+  //print_r($_GET);
   //die();
 
   if($_SERVER['REQUEST_METHOD'] == "POST")
@@ -127,6 +127,8 @@
 	$data_all[0]['log_time']=mktime('0','0','0',$temp['1'],$temp['0'],$temp['2']);
 	$temp=explode(':',$data_temp['log_time_hr_time']);
 	$data_all[0]['log_time']=$data_all[0]['log_time']+(($temp['0']*3600)+($temp['1']*60));
+	$data_all[0]['log_qsl_tx']=$data_temp['log_qsl_tx'];
+	$data_all[0]['log_qsl_rx']=$data_temp['log_qsl_rx'];
       }
       else if($action == "import")
       {	
@@ -347,6 +349,9 @@
 	{
 	  $data['time']=$now;
 	  $data['typ']="0";
+	  # #44 , #43, #61
+	  $data['log_project_call']=$_SESSION['project_call'];
+	  $data['log_project_locator']=$_SESSION['project_locator'];
 	}
 
 	if(!(is_numeric($data['mode_id'])))
@@ -511,8 +516,8 @@
   {
     $data['project_id']=mysql_real_escape_string($data_temp['project_id']);
     $data['project_qrz_user']=mysql_real_escape_string($data_temp['project_qrz_user']);
-    $data['project_locator']=mysql_real_escape_string($data_temp['project_locator']);
-    $data['project_call']=mysql_real_escape_string($data_temp['project_call']);
+    $data['project_locator']=mysql_real_escape_string(strtoupper($data_temp['project_locator']));
+    $data['project_call']=mysql_real_escape_string(strtoupper($data_temp['project_call']));
     $data['project_mode']=mysql_real_escape_string($data_temp['project_mode']);
     $data['project_operator']=mysql_real_escape_string($data_temp['project_operator']);
     if($action=="mod")

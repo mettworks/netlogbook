@@ -224,6 +224,25 @@ function write_data(typ,id)
     var log_loc=$('#log_loc').val();
     var log_manager=$('#log_manager').val();
     var log_time_auto=$('#log_time_auto').prop('checked');
+    var log_qsl_tx=$('#log_qsl_tx').prop('checked');
+    var log_qsl_rx=$('#log_qsl_rx').prop('checked');
+
+    if(log_qsl_tx == true)
+    {
+      log_qsl_tx='1';
+    }
+    else
+    {
+      log_qsl_tx='0';
+    }
+    if(log_qsl_rx == true)
+    {
+      log_qsl_rx='1';
+    }
+    else
+    {
+      log_qsl_rx='0';
+    }
 
     //
     // If the checkbox is checked, we get the time from the client
@@ -258,7 +277,10 @@ function write_data(typ,id)
 					  "log_notes="+escape(log_notes)+"&"+
 					  "log_qth="+escape(log_qth)+"&"+
 					  "log_loc="+escape(log_loc)+"&"+
-					  "log_manager="+escape(log_manager);
+					  "log_manager="+escape(log_manager)+"&"+
+					  "log_qsl_tx="+escape(log_qsl_tx)+"&"+
+					  "log_qsl_rx="+escape(log_qsl_rx);
+
 
   }
 

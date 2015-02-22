@@ -27,20 +27,23 @@
     $i=1;
     foreach($contacts as $contact)
     {
-      if($_SESSION['map_settings']['filter'] == "1")
+      if($contact['log_loc'] != "")
       {
-	if(preg_match('/^[A-Z0-9]+$/',$contact['log_call']))
+	if($_SESSION['map_settings']['filter'] == "1")
+	{
+	  if(preg_match('/^[A-Z0-9]+$/',$contact['log_call']))
+	  {
+	    $deg=locator2degree($contact['log_loc']);
+	    print '<marker id="'.$i.'" name="'.$contact['log_call'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'"/>';
+	    $i++;
+	  }	      
+	}
+	else
 	{
 	  $deg=locator2degree($contact['log_loc']);
 	  print '<marker id="'.$i.'" name="'.$contact['log_call'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'"/>';
 	  $i++;
-	}	      
-      }
-      else
-      {
-	$deg=locator2degree($contact['log_loc']);
-	print '<marker id="'.$i.'" name="'.$contact['log_call'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'"/>';
-	$i++;
+	}
       }
     }
   }

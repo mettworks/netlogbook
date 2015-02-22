@@ -41,6 +41,7 @@
 	var table_monitor_qsos;
 
 	session=get_data('session','');
+	console.log(session);
 	// used anymore?
 	interval_log_change='NULL';
 
@@ -225,16 +226,19 @@
 		  null,
 		  null,
 		  null,
+		  null,
+		  null,
+		  null,
 		  {
 		    "mRender": function ( data, type, full ) 
 		    {
 		      if(settings_op['frequency_prefix'] == 0)
 		      {
-			return "<style=text-align:right;>"+(Math.round((full[3]/1000) * 1000 )/1000).toFixed(3)+"Mhz";
+			return "<style=text-align:right;>"+(Math.round((full[6]/1000) * 1000 )/1000).toFixed(3)+"Mhz";
 		      }
 		      else
 		      {	
-			return "<style=text-align:right;>"+full[3]+"khz";
+			return "<style=text-align:right;>"+full[6]+"khz";
 		      }
 		    },
 		    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) 
@@ -250,7 +254,40 @@
 		  null,
 		  null,
 		  null,
-		  null,
+		  {
+		    "mRender": function ( data, type, full ) 
+		    {
+		      if(full[15] == '0')
+		      {
+			return "nein";
+		      }
+		      else
+		      {	
+			return "ja";
+		      }
+		    },
+		    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) 
+                    {
+                      $(nTd).css('text-align', 'center');
+                    },
+		  },
+		  {
+		    "mRender": function ( data, type, full ) 
+		    {
+		      if(full[16] == '0')
+		      {
+			return "nein";
+		      }
+		      else
+		      {	
+			return "ja";
+		      }
+		    },
+		    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) 
+                    {
+                      $(nTd).css('text-align', 'center');
+                    },
+		  },
 		  null,
 		  { 
 		    "bVisible": false, 
@@ -259,7 +296,7 @@
 		  {
 		    "mRender": function ( data, type, full ) 
 		    {
-		      return '<img src="images/edit.png" alt="bearbeiten" onclick="change_log(\''+full[14]+'\');">';
+		      return '<img src="images/edit.png" alt="bearbeiten" onclick="change_log(\''+full[18]+'\');">';
 
 		    },
 		    'bSortable': false,
@@ -267,7 +304,7 @@
 		  {
 		    "mRender": function ( data, type, full )
 		    {
-		      return '<img src="images/delete.png" alt="loeschen" onclick="delete_log(\''+full[14]+'\');">';
+		      return '<img src="images/delete.png" alt="loeschen" onclick="delete_log(\''+full[18]+'\');">';
 		    },
 		    'bSortable': false,
 		  }
@@ -441,7 +478,7 @@
 	  ?>
 	  <input type="button" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Log">
 	  <input type="button" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('1');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Monitor">
-	  <input type="button" onclick="set_reload_map('1');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Karte">
+	  <input type="button" onclick="loadXML();set_reload_map('1');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Karte">
 	  <input type="button" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='visible';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Einstellungen">
 	  <input type="button" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='visible';" value="DXCluster">
 	  <?
@@ -734,6 +771,12 @@
 	      <td>
 		<span class='help'>Manager<div>Manager</div></span>
 	      </td>
+	      <td>
+		<span class='help'>QSL TX<div>QSL TX</div></span>
+	      </td>
+	       <td>
+		<span class='help'>QSL RX<div>QSL RX</div></span>
+	      </td>
 	    </tr>
 	    <tr class='class_log_change_inputs'>
 	      <td colspan="8">
@@ -744,6 +787,12 @@
 	      </td>
 	      <td>
 		<input tabindex="11" class='class_log_change' type='text' name='log_manager' id='log_manager' value=''>
+	      </td>
+	      <td>
+		<input class='class_log_change' type='checkbox' id='log_qsl_tx' name='log_qsl_tx'>
+	      </td>
+	      <td>
+		<input class='class_log_change' type='checkbox' id='log_qsl_rx' name='log_qsl_rx'>
 	      </td>
 	    </tr>
 	  </table>
@@ -1057,8 +1106,11 @@
       <thead>
 	<tr>
 	  <th>Datum</th>
-	  <th>Zeit</th>
+	  <th>Zeit</th>	 
 	  <th>Call</th>
+	  <th>eigenes Call</th>
+	  <th>QSO</th>
+	  <th>eigener Locator</th>
 	  <th>QRG</th>
 	  <th>Mode</th>
 	  <th>TX</th>
@@ -1068,7 +1120,8 @@
 	  <th>Locator</th>
 	  <th>DOK</th>
 	  <th>Manager</th>
-	  <th>QSO</th>
+	  <th>QSL Send</th>
+	  <th>QSL Rcvd</th>
 	  <th>Bemerkungen</th>
 	  <th></th>
 	  <th></th>
@@ -1125,6 +1178,9 @@
 	    <td>Datum</td>
 	    <td>Zeit</td>
 	    <td>Call</td>
+	    <td>eigenes Call</td>
+	    <td>QSO</td>
+	    <td>eigener Locator</td>
 	    <td>QRG</td>
 	    <td>Mode</td>
 	    <td>TX</td>
@@ -1134,13 +1190,17 @@
 	    <td>Locator</td>
 	    <td>DOK</td>
 	    <td>Manager</td>
-	    <td>QSO</td>
+	    <td>QSL Send</td>
+	    <td>QSL Rcvd</td>
 	    <td>Bemerkungen</td>
 	  </tr>
 	  <tr align="center">
 	    <td><input id="setting_table_logs_date_ena" type="checkbox" value=""></td>
 	    <td><input id="setting_table_logs_time_ena" type="checkbox" value=""></td>
 	    <td><input id="setting_table_logs_call_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_project_call_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_qso_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_project_locator_ena" type="checkbox" value=""></td>
 	    <td><input id="setting_table_logs_freq_ena" type="checkbox" value=""></td>
 	    <td><input id="setting_table_logs_mode_ena" type="checkbox" value=""></td>
 	    <td><input id="setting_table_logs_rst_tx_ena" type="checkbox" value=""></td>
@@ -1150,7 +1210,8 @@
 	    <td><input id="setting_table_logs_loc_ena" type="checkbox" value=""></td>
 	    <td><input id="setting_table_logs_dok_ena" type="checkbox" value=""></td>
 	    <td><input id="setting_table_logs_manager_ena" type="checkbox" value=""></td>
-	    <td><input id="setting_table_logs_qso_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_qsl_send_ena" type="checkbox" value=""></td>
+	    <td><input id="setting_table_logs_qsl_rcvd_ena" type="checkbox" value=""></td>
 	    <td><input id="setting_table_logs_notes_ena" type="checkbox" value=""></td>
 	  </tr>
 	</table>

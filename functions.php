@@ -107,7 +107,7 @@
 
   function save_session_locator()
   {
-    $sql="SELECT project_locator FROM projects WHERE project_id='".$_SESSION['project_id']."';";
+    $sql="SELECT project_operator,project_call,project_locator FROM projects WHERE project_id='".$_SESSION['project_id']."';";
     $result = mysql_query($sql);
     $data=mysql_fetch_assoc($result);
     if(strlen($data['project_locator']) < 6)
@@ -118,6 +118,8 @@
     $temp=locator2degree($_SESSION['project_locator']);
     $_SESSION['project_lon']=$temp['lon'];
     $_SESSION['project_lat']=$temp['lat'];
+    $_SESSION['project_call']=$data['project_call'];
+    $_SESSION['project_operator']=$data['project_operator'];
   }
 
   //  
@@ -157,57 +159,64 @@
 
   function locator2degree($locator_temp)
   {
-    //print "<pre>";
-    //print $locator_temp."\n";
-    //
-    // http://www.thestorff.de/amateurfunk-locator.php
-    // http://db6zh.darc.de/qthzz/qthxx03.htm
-    $locator=strtoupper($locator_temp);
-    $alphabet = range('A', 'Z');
-    $locator=str_split($locator);
-
-    //
-    // Laenge
-    $temp=(array_search($locator[0],$alphabet));
-    //print $temp."\n";
-    if($temp <= 9)
+    if(preg_match('/[A-Z]{2}[0-9]{2}[A-Z]{2}/i',$locator_temp))
     {
-      $laenge=($temp*20)-180;
+      //print "<pre>";
+      //print $locator_temp."\n";
+      //
+      // http://www.thestorff.de/amateurfunk-locator.php
+      // http://db6zh.darc.de/qthzz/qthxx03.htm
+      $locator=strtoupper($locator_temp);
+      $alphabet = range('A', 'Z');
+      $locator=str_split($locator);
+
+      //
+      // Laenge
+      $temp=(array_search($locator[0],$alphabet));
+      //print $temp."\n";
+      if($temp <= 9)
+      {
+	$laenge=($temp*20)-180;
+      }
+      else
+      {
+	$laenge=($temp*20)-180;
+      }
+      $laenge=$laenge+($locator['2']*2);
+
+      $temp=(array_search($locator[4],$alphabet));
+      $laenge=$laenge+($temp*0.0833333333333333333333333333333333333333333)+(0.0833333333333333333333333333333333333333333/2);
+
+      //print "Laenge: ".$laenge."\n"; 
+
+      // 
+      // Breite
+      $temp=(array_search($locator[1],$alphabet));
+      if($temp <= 9)
+      {
+	$breite=-90+(($temp)*10);
+      }
+      else
+      {
+	$breite=($temp*10)-90;
+      }
+      $breite=$breite+($locator['3']*1);
+
+      $temp=(array_search($locator[5],$alphabet));
+      // 2,5 Bogenminuten entsprechen 0,0416666666666666666666666666666666666666667 Grad
+      $breite=$breite+($temp*0.0416666666666666666666666666666666666666667)+(0.0416666666666666666666666666666666666666667/2);
+
+      //print "Breite: ".$breite."\n";
+
+      $data['lat']=$breite;
+      $data['lon']=$laenge;
+      //firebug_debug("Loc: ".$locator_temp."/ Lat: ".$breite." / Lon: ".$laenge);
+      return $data;
     }
     else
     {
-      $laenge=($temp*20)-180;
+      return false;
     }
-    $laenge=$laenge+($locator['2']*2);
-
-    $temp=(array_search($locator[4],$alphabet));
-    $laenge=$laenge+($temp*0.0833333333333333333333333333333333333333333)+(0.0833333333333333333333333333333333333333333/2);
-
-    //print "Laenge: ".$laenge."\n"; 
-
-    // 
-    // Breite
-    $temp=(array_search($locator[1],$alphabet));
-    if($temp <= 9)
-    {
-      $breite=-90+(($temp)*10);
-    }
-    else
-    {
-      $breite=($temp*10)-90;
-    }
-    $breite=$breite+($locator['3']*1);
-
-    $temp=(array_search($locator[5],$alphabet));
-    // 2,5 Bogenminuten entsprechen 0,0416666666666666666666666666666666666666667 Grad
-    $breite=$breite+($temp*0.0416666666666666666666666666666666666666667)+(0.0416666666666666666666666666666666666666667/2);
-
-    //print "Breite: ".$breite."\n";
-
-    $data['lat']=$breite;
-    $data['lon']=$laenge;
-    //firebug_debug("Loc: ".$locator_temp."/ Lat: ".$breite." / Lon: ".$laenge);
-    return $data;
   }
 
   function degree2locator($lon,$lat)

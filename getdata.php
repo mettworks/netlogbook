@@ -168,23 +168,27 @@
       {
 	foreach($data_plain as $data_temp)
 	{
-	  $data_c[$i][0]=$data_temp['log_time'];
+	  $data_c[$i][0]=$data_temp['log_time'];								
 	  $data_c[$i][1]="";
 	  $data_c[$i][2]=$data_temp['log_call'];
-	  $data_c[$i][3]=$data_temp['log_freq'];
-	  $data_c[$i][4]=$modes[$data_temp['mode_id']]['mode_name'];
-	  $data_c[$i][5]=$data_temp['log_rst_tx_0'].$data_temp['log_rst_tx_1'].$data_temp['log_rst_tx_2'];
-	  $data_c[$i][6]=$data_temp['log_rst_rx_0'].$data_temp['log_rst_rx_1'].$data_temp['log_rst_rx_2'];
-	  $data_c[$i][7]=$data_temp['log_name'];
-	  $data_c[$i][8]=$data_temp['log_qth'];
-	  $data_c[$i][9]=$data_temp['log_loc'];
-	  $data_c[$i][10]=$data_temp['log_dok'];
-	  $data_c[$i][11]=$data_temp['log_manager'];
-          $data_c[$i][12]=$operators[$data_temp['operator_id']]['operator_call'];
-	  $data_c[$i][13]=$data_temp['log_notes'];
-	  $data_c[$i][14]=$data_temp['log_id'];
-	  $data_c[$i][15]="";
-	  $data_c[$i][16]="";
+	  $data_c[$i][3]=$data_temp['log_project_call'];  // eigenes Call
+	  $data_c[$i][4]=$operators[$data_temp['operator_id']]['operator_call'];
+	  $data_c[$i][5]=$data_temp['log_project_locator'];  // Locator
+	  $data_c[$i][6]=$data_temp['log_freq'];
+	  $data_c[$i][7]=$modes[$data_temp['mode_id']]['mode_name'];
+	  $data_c[$i][8]=$data_temp['log_rst_tx_0'].$data_temp['log_rst_tx_1'].$data_temp['log_rst_tx_2'];
+	  $data_c[$i][9]=$data_temp['log_rst_rx_0'].$data_temp['log_rst_rx_1'].$data_temp['log_rst_rx_2'];
+	  $data_c[$i][10]=$data_temp['log_name'];
+	  $data_c[$i][11]=$data_temp['log_qth'];
+	  $data_c[$i][12]=$data_temp['log_loc'];
+	  $data_c[$i][13]=$data_temp['log_dok'];
+	  $data_c[$i][14]=$data_temp['log_manager'];
+	  $data_c[$i][15]=$data_temp['log_qsl_tx'];
+	  $data_c[$i][16]=$data_temp['log_qsl_rx'];
+	  $data_c[$i][17]=$data_temp['log_notes'];
+	  $data_c[$i][18]=$data_temp['log_id'];
+	  $data_c[$i][19]="";
+	  $data_c[$i][20]="";
 	  $i++;
 	}
       }

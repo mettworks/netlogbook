@@ -34,6 +34,14 @@ function export_log()
 }
 function change_log(log_id)
 {
+  if(session['project_operator'] == 0)
+  {
+    $('#div_log_change_logsfromall').show();
+  }
+  else
+  {
+    $('#div_log_change_logsfromall').hide();
+  }
   $('.class_log_change_callinfo').remove();
   $('.class_log_change_locinfo').remove();
   $('.error_text').remove();
@@ -62,6 +70,8 @@ function change_log(log_id)
     log_name=logs[log_id]['log_name'];
     log_time_hr_date=logs[log_id]['log_time_hr_date'];
     log_time_hr_time=logs[log_id]['log_time_hr_time'];
+    log_qsl_rx=logs[log_id]['log_qsl_rx'];
+    log_qsl_tx=logs[log_id]['log_qsl_tx'];
     $('#log_time_hr_date').val(log_time_hr_date);
     $('#log_time_hr_time').val(log_time_hr_time);
   }
@@ -131,6 +141,22 @@ function change_log(log_id)
   $('#log_loc').val(log_loc);
   $('#log_manager').val(log_manager);
 
+  if(log_qsl_rx == '1')
+  {
+    $('#log_qsl_rx').attr("checked",true); 
+  }
+  else
+  {
+    $('#log_qsl_rx').attr("checked",false); 
+  }
+  if(log_qsl_tx == '1')
+  {
+    $('#log_qsl_tx').attr("checked",true); 
+  }
+  else
+  {
+    $('#log_qsl_tx').attr("checked",false); 
+  }
 
   // modes
   temp=""; 
@@ -213,6 +239,9 @@ function change_log(log_id)
   interval_log_change='NULL';
   table_logsfromme.draw();
   table_logsfromall.draw();
+
+  console.log(session);
+
   // $(document).ready(function() { document.title = 'Netlogbook v0.1 - neues Log erfassen'; });
 }
 
@@ -265,7 +294,7 @@ function change_project(project_id)
     {
       $('#tr_project_short_name').hide();
       $('#tr_project_modus').hide();
-      $('#tr_project_members').hide();
+      $('#tr_project_members').hide();	
     }
     else
     {
@@ -282,7 +311,7 @@ function change_project(project_id)
     project_qrz_user=project_mod[project_id]['project_qrz_user'];
     project_qrz_pass=project_mod[project_id]['project_qrz_pass'];
     project_locator=project_mod[project_id]['project_locator'];
-        project_smtp_emailfrom=project_mod[project_id]['project_smtp_emailfrom'];
+    project_smtp_emailfrom=project_mod[project_id]['project_smtp_emailfrom'];
     project_smtp_server=project_mod[project_id]['project_smtp_server'];
     project_smtp_port=project_mod[project_id]['project_smtp_port'];
     project_smtp_username=project_mod[project_id]['project_smtp_username'];
@@ -382,7 +411,7 @@ function change_project(project_id)
   }
   );
   $('#project_bands').append(temp);
-  project_change_modus();
+  project_change_modus(project_mod[project_id]['project_operator']);
   project_change_clublog();
 }
 /*
