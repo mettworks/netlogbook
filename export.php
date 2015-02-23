@@ -42,7 +42,7 @@
   }
   else
   {
-    $data=make_adif($logs);
+    $data=make_adif($logs,$_SESSION['project_id']);
 
     if($_GET['log_export_incrementell'] == "on")
     {

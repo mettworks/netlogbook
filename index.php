@@ -41,7 +41,7 @@
 	var table_monitor_qsos;
 
 	session=get_data('session','');
-	console.log(session);
+	//console.log(session);
 	// used anymore?
 	interval_log_change='NULL';
 
@@ -888,6 +888,10 @@
 	      <td><input class='class_operator_change' type='text' name='operator_call' id='operator_call' value=''></td>
 	    </tr>
 	    <tr class='class_operator_change'>
+	      <td><span class='help'>Name<div>Name</div></span></td>
+	      <td><input class='class_operator_change' type='text' name='operator_name' id='operator_name' value=''></td>
+	    </tr>
+	    <tr class='class_operator_change'>
 	      <td><span class='help'>Passwort<div>Passwort</div></span></td>
 	      <td><input class='class_operator_change' type='password' name='operator_pass1' id='operator_pass1' value=''></td>
 	    </tr>
@@ -1215,7 +1219,7 @@
 	    <td><input id="setting_table_logs_notes_ena" type="checkbox" value=""></td>
 	  </tr>
 	</table>
-	<input type="button" value="Projekt PRIVAT anpassen" onclick="change_project(<?=$_SESSION['private_project_id']?>)">
+	<input type="button" value="meine Daten" onclick="change_project(<?=$_SESSION['private_project_id']?>)"><br>
 	<input type="button" value="Speichern" onclick="settings_op_save();"> 
       </form>
     </div>

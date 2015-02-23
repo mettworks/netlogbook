@@ -87,6 +87,23 @@
 
     foreach($logs as $log)
     {
+      if($log['log_qsl_rcvd'] == '0')
+      {
+	$data.=stringtoadif('N',"QSL_RCVD");
+      }
+      else
+      {
+	$data.=stringtoadif('Y',"QSL_RCVD");      
+      }
+      if($log['log_qsl_sent'] == '0')
+      {
+	$data.=stringtoadif('N',"QSL_SENT");
+      }
+      else
+      {
+	$data.=stringtoadif('Y',"QSL_SENT");      
+      }
+
       $data.=stringtoadif($log['log_call'],"CALL");
       $data.=stringtoadif(time_from_timestamp_adif($log['log_time'],"date"),"QSO_DATE");
       $data.=stringtoadif(time_from_timestamp_adif($log['log_time'],"time"),"TIME_ON");
@@ -100,6 +117,11 @@
       $data.=stringtoadif($log['log_notes'],"NOTES");
       $data.=stringtoadif($log['log_manager'],"QSL_VIA");
       $data.=stringtoadif($log['log_freq']/1000,"FREQ");
+      $data.=stringtoadif($log['log_project_call'],"STATION_CALLSIGN");
+      $data.=stringtoadif($log['log_project_locator'],"MY_GRIDSQUARE");
+      $data.=stringtoadif($log['log_dok'],"DARC_DOK");
+      $data.=stringtoadif($operators[$log['operator_id']]['operator_call'],"OPERATOR");
+      $data.=stringtoadif($operators[$log['operator_id']]['operator_name'],"MY_NAME");
       $data.="<eor>\n";
     }
     return $data;

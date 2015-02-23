@@ -251,6 +251,7 @@ function change_operator(operator_id)
   {
     operator_mod=get_data('operators_all',operator_id);
     operator_call=operator_mod[operator_id]['operator_call'];
+    operator_name=operator_mod[operator_id]['operator_name'];
     operator_mail=operator_mod[operator_id]['operator_mail'];
     operator_role=operator_mod[operator_id]['operator_role'];
     //
@@ -261,6 +262,7 @@ function change_operator(operator_id)
   {
     operator_call="";
     operator_mail="";
+    operator_name="";
     $('#operator_role').val('1');
   }
 
@@ -272,6 +274,7 @@ function change_operator(operator_id)
 
   $('#operator_call').val(operator_call);
   $('#operator_id').val(operator_id);
+  $('#operator_name').val(operator_name);
   $('#operator_mail').val(operator_mail);
   $('#operator_pass1').val(operator_pass1);
   $('#operator_pass2').val(operator_pass2);

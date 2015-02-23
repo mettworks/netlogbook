@@ -289,6 +289,7 @@ function write_data(typ,id)
     var operator_call=$('#operator_call').val();
     var operator_id=$('#operator_id').val();
     var operator_mail=$('#operator_mail').val();
+    var operator_name=$('#operator_name').val();
     var operator_pass1=$('#operator_pass1').val();
     var operator_pass2=$('#operator_pass2').val();
     var operator_role=$('#operator_role').val();
@@ -296,6 +297,7 @@ function write_data(typ,id)
     var datastring="action=mod&typ=operator&"+
 					  "operator_id="+operator_id+"&"+
 					  "operator_call="+operator_call+"&"+
+					  "operator_name="+operator_name+"&"+
 					  "operator_pass1="+operator_pass1+"&"+
 					  "operator_pass2="+operator_pass2+"&"+
 					  "operator_role="+operator_role+"&"+

@@ -194,6 +194,40 @@
 	    {
 	      $data_all[$i]['log_manager']=$value;
 	    }
+	    else if(preg_match('/<station_callsign:.*/i',$key))
+	    {
+	      $data_all[$i]['log_project_call']=$value;
+	    }
+	    else if(preg_match('/<my_gridsquare:.*/i',$key))
+	    {
+	      $data_all[$i]['log_project_locator']=$value;
+	    }
+	    else if(preg_match('/<darc_dok:.*/i',$key))
+	    {
+	      $data_all[$i]['log_dok']=$value;
+	    }
+	    else if(preg_match('/<qsl_rcvd:.*/i',$key))
+	    {
+	      if($value == "Y")
+	      {
+		$data_all[$i]['log_qsl_rx']='1';
+	      }
+	      else
+	      {
+		$data_all[$i]['log_qsl_rx']='0';
+	      }
+	    }
+	    else if(preg_match('/<qsl_sent:.*/i',$key))
+	    {
+	      if($value == "Y")
+	      {
+		$data_all[$i]['log_qsl_tx']='1';
+	      }
+	      else
+	      {
+		$data_all[$i]['log_qsl_tx']='0';
+	      }
+	    }
 	    else if(preg_match('/<rst_rcvd:.*/i',$key))
 	    {
 	      $rst=str_split($value);
@@ -201,7 +235,7 @@
 	      $data_all[$i]['log_rst_rx_1']=$rst['1'];
 	      $data_all[$i]['log_rst_rx_2']=$rst['2'];
 	    }
-	    else if(preg_match('/<rst_sent:.*/',$key))
+	    else if(preg_match('/<rst_sent:.*/i',$key))
 	    {
 	      $rst=str_split($value);
 	      $data_all[$i]['log_rst_tx_0']=$rst['0'];
@@ -456,6 +490,7 @@
     $data_temp['operator_id']=mysql_real_escape_string($data_temp['operator_id']);
     $data['operator_role']=$data_temp['operator_role'];
     $data['operator_mail']=$data_temp['operator_mail'];
+    $data['operator_name']=$data_temp['operator_name'];
 
     if($action=="mod")
     {

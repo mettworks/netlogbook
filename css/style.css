@@ -75,6 +75,16 @@ input[type=button]
   height: 1.8em;
   border: 0.1em solid;
 }
+input[type=submit]
+{
+  background-color: black;
+  color: white;
+  text-align: middle;
+  width: 10em;
+  height: 1.8em;
+  border: 0.1em solid;
+}
+
 #log_rst_tx_0
 {
   width: 1em;
@@ -425,7 +435,7 @@ span.help:hover div
   height:100%;
   visibility: hidden;
   z-index: 6;
-  background-color: white;
+  background-color: #1D1C22;
 }
 #div_log_export
 {
@@ -435,7 +445,7 @@ span.help:hover div
   height:100%;
   visibility: hidden;
   z-index: 6;
-  background-color: white;
+  background-color: #1D1C22;
 }
 #div_log_change
 {
