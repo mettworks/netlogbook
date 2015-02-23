@@ -13,6 +13,7 @@ function send_dxcluster_spot()
       {
 	type: "GET",
 	url: "save.php",
+	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	data: datastring,
 	success: function(html)
 	{
@@ -33,6 +34,7 @@ function export_clublog()
     {
       type: "GET",
       url: "save.php",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: datastring,
       success: function(html)
       {
@@ -49,6 +51,7 @@ function save_settings_op()
     {
       type: "POST",
       url: "save.php",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: settings_op,
       success: function(html)
       {
@@ -65,6 +68,7 @@ function save_settings_table_logs(setting_table_logs)
     {
       type: "POST",
       url: "save.php",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: setting_table_logs,
       success: function(html)
       {
@@ -83,6 +87,7 @@ function save_project_session(project_id)
     {
       type: "GET",
       url: "save.php",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: datastring,
       async: true,
       success: function(html)
@@ -102,6 +107,7 @@ function save_dxcluster_settings()
     {
       type: "GET",
       url: "save.php",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       async: false,
       data: datastring,
       success: function(html)
@@ -132,6 +138,7 @@ function save_map_settings()
     {
       type: "GET",
       url: "save.php",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       async: false,
       data: datastring,
       success: function(html)
@@ -152,6 +159,7 @@ function save_settings(onlyoperator)
     {
       type: "GET",
       url: "save.php",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: datastring,
       success: function(html)
       {
@@ -177,6 +185,7 @@ function save_settings_import(qrzcache)
     {
       type: "GET",
       url: "save.php",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: datastring,
       success: function(html)
       {
@@ -194,6 +203,7 @@ function import_log_file(filename)
     {
       type: "GET",
       url: "save.php",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       data: datastring,
       success: function(html)
       {
@@ -260,7 +270,7 @@ function write_data(typ,id)
     // durch den Zeilenumbruchkram wird es leserlicher...
     var datastring="action=mod&typ=log&"+
 					  "log_id="+log_id+"&"+
-					  "log_call="+escape(log_call)+"&"+
+					  "log_call="+log_call+"&"+
 					  "log_time_hr_date="+log_time_hr_date+"&"+
 					  "log_time_hr_time="+log_time_hr_time+"&"+
 					  "log_freq="+log_freq+"&"+
@@ -271,15 +281,15 @@ function write_data(typ,id)
 					  "log_rst_tx_0="+log_rst_tx_0+"&"+
 					  "log_rst_tx_1="+log_rst_tx_1+"&"+
 					  "log_rst_tx_2="+log_rst_tx_2+"&"+
-					  "log_dok="+escape(log_dok)+"&"+
-					  "log_name="+escape(log_name)+"&"+
+					  "log_dok="+log_dok+"&"+
+					  "log_name="+log_name+"&"+
 					  "log_time_auto="+log_time_auto+"&"+
-					  "log_notes="+escape(log_notes)+"&"+
-					  "log_qth="+escape(log_qth)+"&"+
-					  "log_loc="+escape(log_loc)+"&"+
-					  "log_manager="+escape(log_manager)+"&"+
-					  "log_qsl_tx="+escape(log_qsl_tx)+"&"+
-					  "log_qsl_rx="+escape(log_qsl_rx);
+					  "log_notes="+log_notes+"&"+
+					  "log_qth="+log_qth+"&"+
+					  "log_loc="+log_loc+"&"+
+					  "log_manager="+log_manager+"&"+
+					  "log_qsl_tx="+log_qsl_tx+"&"+
+					  "log_qsl_rx="+log_qsl_rx;
 
 
   }
@@ -344,6 +354,7 @@ function write_data(typ,id)
       {
         type: "GET",
         url: "save.php",
+	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: datastring,
         success: function(html)
         {
@@ -364,6 +375,7 @@ function delete_log(id)
       {
         type: "GET",
 	url: "save.php",
+	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	data: "action=del&typ=log&id="+id,
 	success: function(html)
 	{
@@ -384,6 +396,7 @@ function delete_operator(id)
       {
         type: "GET",
 	url: "save.php",
+	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	data: "action=del&typ=operator&id="+id,
 	success: function(html)
 	{
@@ -404,6 +417,7 @@ function delete_project(id)
       {
         type: "GET",
 	url: "save.php",
+	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	data: "action=del&typ=project&id="+id,
 	success: function(html)
 	{

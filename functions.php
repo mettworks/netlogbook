@@ -2,6 +2,12 @@
   include('settings.php');
   date_default_timezone_set('Europe/Berlin');
 
+  function utf8_urldecode($str) 
+  {
+    $str = preg_replace("/%u([0-9a-f]{3,4})/i","&#x\\1;",urldecode($str));
+    return html_entity_decode($str,null,'UTF-8');;
+  }
+
   function stringtoadif($string,$name)
   {
     $data="<".$name.":".strlen($string).">".$string." ";
@@ -764,7 +770,8 @@
     if($mysql=mysql_connect($mysql_host,$mysql_user,$mysql_pass))
     {
       mysql_select_db($mysql_db);
-      mysql_query("SET NAMES 'utf8'");
+      //mysql_query("SET NAMES 'utf8'");
+      mysql_set_charset("utf8",$mysql);
       return $mysql;
     }
     else

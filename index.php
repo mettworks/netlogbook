@@ -1145,7 +1145,7 @@
 	</tr>
       </thead>
     </table>
-    <input onclick="change_operator();" type="button" value="neuen Operator anlegen" name="">
+    <input onclick="change_operator();" type="button" value="neuer Operator" name="">
     </div>
     <div id="div_settings">
       <form id="form_settings" class="form" action="" method="POST">
@@ -1236,7 +1236,7 @@
         </tr>
           </thead>
     </table>
-    <input onclick="change_project();" type="button" value="neues Projekt anlegen" name="">
+    <input onclick="change_project();" type="button" value="neues Projekt" name="">
     </div>
     <?php
     if($_SESSION['operator_id'] == 0)

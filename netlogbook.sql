@@ -28,7 +28,7 @@ CREATE TABLE `bands` (
   `band_start` int(20) NOT NULL,
   `band_end` int(20) NOT NULL,
   PRIMARY KEY (`band_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `cronjob`;
 CREATE TABLE `cronjob` (
   `lastrun` int(10) DEFAULT NULL,
   `id` int(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +60,7 @@ CREATE TABLE `cronjob` (
 
 LOCK TABLES `cronjob` WRITE;
 /*!40000 ALTER TABLE `cronjob` DISABLE KEYS */;
-INSERT INTO `cronjob` VALUES (0,0);
+INSERT INTO `cronjob` VALUES (1424704440,0);
 /*!40000 ALTER TABLE `cronjob` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,8 +95,12 @@ CREATE TABLE `logs` (
   `time` int(10) NOT NULL,
   `typ` int(1) NOT NULL,
   `operator_private` tinyint(1) NOT NULL,
+  `log_qsl_rx` tinyint(1) DEFAULT NULL,
+  `log_qsl_tx` tinyint(1) DEFAULT NULL,
+  `log_project_call` varchar(20) DEFAULT NULL,
+  `log_project_locator` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +124,7 @@ CREATE TABLE `modes` (
   `mode_name` varchar(8) DEFAULT NULL,
   `mode_digital` int(1) DEFAULT NULL,
   PRIMARY KEY (`mode_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +153,7 @@ CREATE TABLE `operators` (
   `operator_role` varchar(1) DEFAULT NULL,
   `last_project` int(10) DEFAULT NULL,
   PRIMARY KEY (`operator_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +195,7 @@ CREATE TABLE `projects` (
   `project_smtp_port` int(4) DEFAULT NULL,
   `project_operator` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`project_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,7 +204,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (0,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
+INSERT INTO `projects` VALUES (0,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(1,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,7 +234,7 @@ CREATE TABLE `qrz_cache` (
   `imagesize` int(10) DEFAULT NULL,
   `qrz_cache_id` int(4) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`qrz_cache_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +258,7 @@ CREATE TABLE `rel_bands_projects` (
   `band_id` int(4) NOT NULL,
   `id` int(4) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,7 +282,7 @@ CREATE TABLE `rel_modes_projects` (
   `mode_id` int(4) NOT NULL,
   `id` int(4) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -307,7 +311,7 @@ CREATE TABLE `rel_operators_projects` (
   `settings_table_logs` text,
   `settings` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -316,7 +320,7 @@ CREATE TABLE `rel_operators_projects` (
 
 LOCK TABLES `rel_operators_projects` WRITE;
 /*!40000 ALTER TABLE `rel_operators_projects` DISABLE KEYS */;
-INSERT INTO `rel_operators_projects` VALUES (0,0,0,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `rel_operators_projects` VALUES (0,0,0,NULL,NULL,NULL,'{\"time\":\"1424704459788\",\"start\":\"0\",\"length\":\"10\",\"order\":[[\"0\",\"asc\"]],\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"},\"columns\":[{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"false\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"true\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}},{\"visible\":\"true\",\"search\":{\"search\":\"\",\"smart\":\"true\",\"regex\":\"false\",\"caseInsensitive\":\"true\"}}]}','{\"frequency_prefix\":\"0\",\"aprs_ena\":\"true\",\"qrz_ena\":\"true\"}');
 /*!40000 ALTER TABLE `rel_operators_projects` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -329,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-21 15:30:28
+-- Dump completed on 2015-02-23 15:14:34
