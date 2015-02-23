@@ -17,6 +17,7 @@ function fill_dxcluster_setting()
   if(typeof(last_log[0]) != 'undefined')
   {
     $('#dxcluster_send_qrg').val(last_log[0]['log_freq']);
+    $('#dxcluster_send_call').val(last_log[0]['log_project_call']);
   }
 }
 function import_log()

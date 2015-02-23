@@ -77,7 +77,7 @@
   }
   else if($table == "callinfo_last_log")
   {
-    $sql="SELECT log_freq,band_id FROM logs WHERE project_id=".$_SESSION['project_id']." AND operator_id=".$_SESSION['operator_id']." ORDER BY log_time DESC LIMIT 1";
+    $sql="SELECT log_freq,band_id,log_project_call FROM logs WHERE project_id=".$_SESSION['project_id']." AND operator_id=".$_SESSION['operator_id']." ORDER BY log_time DESC LIMIT 1";
     $data_plain=mysql_fragen($sql);
   }
   else if($table == "callinfo_logs")

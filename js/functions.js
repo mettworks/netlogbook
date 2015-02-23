@@ -133,6 +133,7 @@ function set_project()
   table_monitor_total.draw();
   fill_form_settings_op_table_logs();
   fill_form_settings_op();
+  fill_dxcluster_setting();
   set_table_logs();
 }
 
