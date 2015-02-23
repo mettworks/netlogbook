@@ -447,22 +447,52 @@
   {
     if(strlen($call) != 0)
     {
-      global $qrzcom_cachetime;
       // CALL/p OR CALL/m OR CALL/mm
       if(preg_match('/^([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
       {
-	$call=preg_replace('/^(([a-z0-9])+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$1',$call);
+	$return=qrz_lookup_call_real($call);
+	if(isset($return['error']))
+	{
+	  $call=preg_replace('/^(([a-z0-9])+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$1',$call);
+	  $return=qrz_lookup_call_real($call);
+	}
       }
       // */CALL
       else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i',$call))
       {
-	$call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i','$3',$call);
+	$return=qrz_lookup_call_real($call);
+        if(isset($return['error']))
+        {
+	  $call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i','$3',$call);
+	  $return=qrz_lookup_call_real($call);
+	}    
       }
       // */CALL/p OR */CALL/m OR */CALL/mm
       else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
       {
-	$call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$3',$call);
+	$return=qrz_lookup_call_real($call);
+        if(isset($return['error']))
+        {
+	  $call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$3',$call);
+	  $return=qrz_lookup_call_real($call);
+	}
       }
+      else  
+      {
+	$return=qrz_lookup_call_real($call);
+      }
+      return $return;
+    }
+    else
+    {
+      return false;
+    }
+  } 
+  function qrz_lookup_call_real($call)
+  {
+    if(strlen($call) != 0)
+    {
+      global $qrzcom_cachetime;
       $timestamp=time()-$qrzcom_cachetime;
       if($data_temp=mysql_fragen("SELECT * FROM qrz_cache WHERE qrz_call='".$call."' AND timestamp >= '".$timestamp."'"))
       {
