@@ -14,6 +14,8 @@
   //print_r($_GET);
   //die();
 
+  $error_text="";
+
   if($_SERVER['REQUEST_METHOD'] == "POST")
   {
     $action=$_POST['action'];
@@ -364,13 +366,17 @@
 	    {
 	      if($action == "import")
 	      {
+		$error_text.="keine valide Frequenz erkannt! (Frequenz: ".$data['log_freq'].")";
 		firebug_debug("break:");
 		firebug_debug($dataid);
 		firebug_debug($data);
 		$error=1; 
 	      }
-	      div_err("keine valide Frequenz erkannt! (Frequenz: ".$data['log_freq'].")","logs");
-	      die();
+	      else
+	      {
+		div_err("keine valide Frequenz erkannt! (Frequenz: ".$data['log_freq'].")","logs");
+		die();
+	      }
 	    }
  
 	    //
@@ -388,6 +394,7 @@
 	    {
 	      if($action == "import")
 	      {
+		$error_text.="kein valides Band erkannt!";
 		firebug_debug("fehlerhaftes Band:");
 		firebug_debug($data);
 		$errors['bands']++;
@@ -418,6 +425,7 @@
 	{
 	  if($action == "import")
 	  {
+	    $error_text.="kein validen Mode erkannt!";
 	    //firebug_debug("fehlerhafter Mode:");
 	    //firebug_debug($data);
 	    $errors['modes']++;
