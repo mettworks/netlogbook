@@ -99,6 +99,8 @@ CREATE TABLE `logs` (
   `log_qsl_tx` tinyint(1) DEFAULT NULL,
   `log_project_call` varchar(20) DEFAULT NULL,
   `log_project_locator` varchar(20) DEFAULT NULL,
+  `log_signal_rx` varchar(5) DEFAULT NULL,
+  `log_signal_tx` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -123,8 +125,9 @@ CREATE TABLE `modes` (
   `mode_id` int(4) NOT NULL AUTO_INCREMENT,
   `mode_name` varchar(8) DEFAULT NULL,
   `mode_digital` int(1) DEFAULT NULL,
+  `mode_rapport_signal` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`mode_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +136,7 @@ CREATE TABLE `modes` (
 
 LOCK TABLES `modes` WRITE;
 /*!40000 ALTER TABLE `modes` DISABLE KEYS */;
-INSERT INTO `modes` VALUES (1,'AM',0),(2,'FM',0),(3,'SSB',0),(4,'CW',1),(5,'PSK31',1),(6,'SSTV',0),(7,'RTTY',1),(8,'HELL',1),(9,'D-STAR',1),(10,'ROS',1);
+INSERT INTO `modes` VALUES (1,'AM',0,0),(2,'FM',0,0),(3,'SSB',0,0),(4,'CW',1,0),(5,'PSK31',1,0),(6,'SSTV',0,0),(7,'RTTY',1,0),(8,'HELL',1,0),(9,'D-STAR',1,0),(10,'ROS',1,0),(11,'JT65',1,1);
 /*!40000 ALTER TABLE `modes` ENABLE KEYS */;
 UNLOCK TABLES;
 
