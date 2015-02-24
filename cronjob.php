@@ -12,7 +12,14 @@
   include('functions.php');
   include('settings.php');
 
-  $lockfile='/tmp/cronjobrunning';
+  if($_SERVER['argv'][1] == "dev")
+  {
+    $lockfile='/tmp/cronjobrunning_dev';
+  }
+  else
+  {
+    $lockfile='/tmp/cronjobrunning';
+  }
 
   mysql_c();
 

@@ -115,8 +115,16 @@
       $data.=stringtoadif(time_from_timestamp_adif($log['log_time'],"time"),"TIME_ON");
       $data.=stringtoadif($modes[$log['mode_id']]['mode_name'],"MODE");
       $data.=stringtoadif($bands[$log['band_id']]['band_name'],"BAND");
-      $data.=stringtoadif($log['log_rst_rx_0'].$log['log_rst_rx_1'].$log['log_rst_rx_2'],"RST_RCVD");
-      $data.=stringtoadif($log['log_rst_tx_0'].$log['log_rst_tx_1'].$log['log_rst_tx_2'],"RST_SENT");
+      if($modes[$log['mode_id']]['mode_rapport_signal'] == '0')
+      {
+	$data.=stringtoadif($log['log_rst_rx_0'].$log['log_rst_rx_1'].$log['log_rst_rx_2'],"RST_RCVD");
+	$data.=stringtoadif($log['log_rst_tx_0'].$log['log_rst_tx_1'].$log['log_rst_tx_2'],"RST_SENT");
+      }
+      else
+      {
+	$data.=stringtoadif($log['log_signal_rx'],"RST_RCVD");
+    	$data.=stringtoadif($log['log_signal_tx'],"RST_SENT");
+      }
       $data.=stringtoadif($log['log_loc'],"GRIDSQUARE");
       $data.=stringtoadif($log['log_qth'],"QTH");
       $data.=stringtoadif($log['log_name'],"NAME");
@@ -189,56 +197,53 @@
   {
     if(preg_match('/[A-Z]{2}[0-9]{2}[A-Z]{2}/i',$locator_temp))
     {
-      //print "<pre>";
-      //print $locator_temp."\n";
       //
+      //  http://dev.unclassified.de/files/source/MaidenheadLocator.cs
       // http://www.thestorff.de/amateurfunk-locator.php
-      // http://db6zh.darc.de/qthzz/qthxx03.htm
       $locator=strtoupper($locator_temp);
       $alphabet = range('A', 'Z');
       $locator=str_split($locator);
 
       //
       // Laenge
-      $temp=(array_search($locator[0],$alphabet));
-      //print $temp."\n";
-      if($temp <= 9)
-      {
-	$laenge=($temp*20)-180;
-      }
-      else
-      {
-	$laenge=($temp*20)-180;
-      }
-      $laenge=$laenge+($locator['2']*2);
+      $laenge=
+              (array_search($locator[0],$alphabet)*20)+
+              ($locator['2']*2)+
+              (array_search($locator[4],$alphabet)/12);
 
-      $temp=(array_search($locator[4],$alphabet));
-      $laenge=$laenge+($temp*0.0833333333333333333333333333333333333333333)+(0.0833333333333333333333333333333333333333333/2);
+      if(isset($locator['6']))
+      {
+	$laenge=$laenge+($locator['6']/120);
+      }
 
-      //print "Laenge: ".$laenge."\n"; 
+      if(isset($locator['8']))
+      {
+	$laenge=$laenge+(array_search($locator[8],$alphabet)/120/24);
+      }
+
+      $laenge=$laenge-180;
 
       // 
       // Breite
-      $temp=(array_search($locator[1],$alphabet));
-      if($temp <= 9)
-      {
-	$breite=-90+(($temp)*10);
-      }
-      else
-      {
-	$breite=($temp*10)-90;
-      }
-      $breite=$breite+($locator['3']*1);
+      $breite=
+              (array_search($locator[1],$alphabet)*10)+
+              ($locator['3'])+
+              (array_search($locator[5],$alphabet)/24);
 
-      $temp=(array_search($locator[5],$alphabet));
-      // 2,5 Bogenminuten entsprechen 0,0416666666666666666666666666666666666666667 Grad
-      $breite=$breite+($temp*0.0416666666666666666666666666666666666666667)+(0.0416666666666666666666666666666666666666667/2);
+      if(isset($locator['7']))
+      {
+	$breite=$breite+($locator['7']/240);
+      }
 
-      //print "Breite: ".$breite."\n";
+      if(isset($locator['9']))
+      {
+	$breite=$breite+(array_search($locator[9],$alphabet)/240/24);
+      }
+
+      $breite=$breite-90;
 
       $data['lat']=$breite;
       $data['lon']=$laenge;
-      //firebug_debug("Loc: ".$locator_temp."/ Lat: ".$breite." / Lon: ".$laenge);
       return $data;
     }
     else

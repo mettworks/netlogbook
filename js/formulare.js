@@ -62,6 +62,8 @@ function change_log(log_id)
     log_rst_tx_0=logs[log_id]['log_rst_tx_0'];
     log_rst_tx_1=logs[log_id]['log_rst_tx_1'];
     log_rst_tx_2=logs[log_id]['log_rst_tx_2'];
+    log_signal_rx=logs[log_id]['log_signal_rx'];
+    log_signal_tx=logs[log_id]['log_signal_tx'];
     log_dok=logs[log_id]['log_dok'];
     log_loc=logs[log_id]['log_loc'];
     log_manager=logs[log_id]['log_manager'];
@@ -129,6 +131,8 @@ function change_log(log_id)
   $('#log_call').val(log_call);
   $('#log_id').val(log_id);
   $('#log_freq').val(log_freq);
+  $('#log_signal_rx').val(log_signal_rx);
+  $('#log_signal_tx').val(log_signal_tx);
   $('#log_rst_rx_0').val(log_rst_rx_0);
   $('#log_rst_rx_1').val(log_rst_rx_1);
   $('#log_rst_rx_2').val(log_rst_rx_2);
@@ -240,8 +244,6 @@ function change_log(log_id)
   interval_log_change='NULL';
   table_logsfromme.draw();
   table_logsfromall.draw();
-
-  console.log(session);
 
   // $(document).ready(function() { document.title = 'Netlogbook v0.1 - neues Log erfassen'; });
 }

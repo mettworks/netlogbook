@@ -173,6 +173,7 @@
 	    else if(preg_match('/<mode:.*/i',$key))
 	    {
 	      $data_all[$i]['mode_id']=$modes[$value]['mode_id'];
+	      $mode=$modes[$value];
 	    }
 	    else if(preg_match('/<gridsquare:.*/i',$key))
 	    {
@@ -206,6 +207,10 @@
 	    {
 	      $data_all[$i]['log_dok']=$value;
 	    }
+	    else if(preg_match('/<band:-*/i',$key))
+	    {
+	      $data_all_temp[$i]['log_band']=$value;
+	    }
 	    else if(preg_match('/<qsl_rcvd:.*/i',$key))
 	    {
 	      if($value == "Y")
@@ -230,17 +235,31 @@
 	    }
 	    else if(preg_match('/<rst_rcvd:.*/i',$key))
 	    {
-	      $rst=str_split($value);
-	      $data_all[$i]['log_rst_rx_0']=$rst['0'];
-	      $data_all[$i]['log_rst_rx_1']=$rst['1'];
-	      $data_all[$i]['log_rst_rx_2']=$rst['2'];
+	      if($mode['mode_rapport_signal'] == 0)
+	      {
+		$rst=str_split($value);
+		$data_all[$i]['log_rst_rx_0']=$rst['0'];
+		$data_all[$i]['log_rst_rx_1']=$rst['1'];
+		$data_all[$i]['log_rst_rx_2']=$rst['2'];
+	      }
+	      else
+	      {
+		$data_all[$i]['log_signal_rx']=$value;
+	      }
 	    }
 	    else if(preg_match('/<rst_sent:.*/i',$key))
 	    {
-	      $rst=str_split($value);
-	      $data_all[$i]['log_rst_tx_0']=$rst['0'];
-	      $data_all[$i]['log_rst_tx_1']=$rst['1'];
-	      $data_all[$i]['log_rst_tx_2']=$rst['2'];
+	      if($mode['mode_rapport_signal'] == 0)
+              {
+		$rst=str_split($value);
+		$data_all[$i]['log_rst_tx_0']=$rst['0'];
+		$data_all[$i]['log_rst_tx_1']=$rst['1'];
+		$data_all[$i]['log_rst_tx_2']=$rst['2'];
+	      }
+	      else
+	      {
+		$data_all[$i]['log_signal_tx']=$value;
+	      }
 	    }
     	    else if(preg_match('/<qso_date:.*/i',$key))
 	    {
@@ -312,73 +331,80 @@
 	  $errors['duplicate']++;
 	  $error=1;
 	}
-	  //
-	  // PHP want's ".", replacing a "." ...
-	  $data['log_freq']=preg_replace('/,/','.',$data['log_freq']);
+	  if(strlen($data['log_freq']) != '0')
+	  {
+	    //
+	    // PHP want's ".", replacing a "." ...
+	    $data['log_freq']=preg_replace('/,/','.',$data['log_freq']);
 
-	  //
-	  // Check if frequency is valid, the db eats only kHz!
-	  // Frequency is calculated for kHz
-	  //
-	  // valid input format from frontend is:
-	  // 123 OR 123k OR 123.0 OR 123,0 -> 123kHz
-	  // m OR M stands for Mhz
-	  // g or G stands for GHz
+	    //
+	    // Check if frequency is valid, the db eats only kHz!
+	    // Frequency is calculated for kHz
+	    //
+	    // valid input format from frontend is:
+	    // 123 OR 123k OR 123.0 OR 123,0 -> 123kHz
+	    // m OR M stands for Mhz
+	    // g or G stands for GHz
  
-	  if(preg_match('/^[0-9]+[.]?[0-9]*[gG]{1}$/',$data['log_freq']))
-	  {
-	    $data['log_freq']=preg_replace('/[gG]$/','',$data['log_freq']);
-	    $data['log_freq']=$data['log_freq']*1000000;
-	  }
-	  else if(preg_match('/^[0-9]+[.]?[0-9]*[mM]{1}$/',$data['log_freq']))
-	  {
-	    $data['log_freq']=preg_replace('/[mM]$/','',$data['log_freq']);
-	    $data['log_freq']=$data['log_freq']*1000;
-	  }
-	  else if(preg_match('/^[0-9]+[.]?[0-9]*[kK]?$/',$data['log_freq']))
-	  {
-	    $data['log_freq']=preg_replace('/[kK]$/','',$data['log_freq']);
-	  }
-	  else
-	  {
-	    if($action == "import")
+	    if(preg_match('/^[0-9]+[.]?[0-9]*[gG]{1}$/',$data['log_freq']))
 	    {
-	      firebug_debug("break:");
-	      firebug_debug($dataid);
-	      firebug_debug($data);
-	      $error=1; 
+	      $data['log_freq']=preg_replace('/[gG]$/','',$data['log_freq']);
+	      $data['log_freq']=$data['log_freq']*1000000;
 	    }
-	    div_err("keine valide Frequenz erkannt! (Frequenz: ".$data['log_freq'].")","logs");
-	    die();
-	  }
- 
-	  //
-	  // Check if frequency is within valid band range AND the band is added to the project
-
-	  foreach($baender as $band)
-	  {
-	    if(($data['log_freq'] >= $band['band_start']) && ($data['log_freq'] <= $band['band_end'])) 
+	    else if(preg_match('/^[0-9]+[.]?[0-9]*[mM]{1}$/',$data['log_freq']))
 	    {
-	      $data['band_id']=$band['band_id'];
+	      $data['log_freq']=preg_replace('/[mM]$/','',$data['log_freq']);
+	      $data['log_freq']=$data['log_freq']*1000;
 	    }
-	  }
-
-	  if(!(is_numeric($data['band_id'])))
-	  {
-	    if($action == "import")
+	    else if(preg_match('/^[0-9]+[.]?[0-9]*[kK]?$/',$data['log_freq']))
 	    {
-	      firebug_debug("fehlerhaftes Band:");
-	      firebug_debug($data);
-	      $errors['bands']++;
-	      $error=1;
+	      $data['log_freq']=preg_replace('/[kK]$/','',$data['log_freq']);
 	    }
 	    else
 	    {
-	      div_err("kein valides Band erkannt! (Frequenz: ".$data['log_freq'].")","logs");
-	      die(); 
+	      if($action == "import")
+	      {
+		firebug_debug("break:");
+		firebug_debug($dataid);
+		firebug_debug($data);
+		$error=1; 
+	      }
+	      div_err("keine valide Frequenz erkannt! (Frequenz: ".$data['log_freq'].")","logs");
+	      die();
+	    }
+ 
+	    //
+	    // Check if frequency is within valid band range AND the band is added to the project
+
+	    foreach($baender as $band)
+	    {
+	      if(($data['log_freq'] >= $band['band_start']) && ($data['log_freq'] <= $band['band_end'])) 
+	      {
+		$data['band_id']=$band['band_id'];
+	      }
+	    }
+
+	    if(!(is_numeric($data['band_id'])))
+	    {
+	      if($action == "import")
+	      {
+		firebug_debug("fehlerhaftes Band:");
+		firebug_debug($data);
+		$errors['bands']++;
+		$error=1;
+	      }
+	      else
+	      {
+		div_err("kein valides Band erkannt! (Frequenz: ".$data['log_freq'].")","logs");
+		die(); 
+	      }
 	    }
 	  }
-
+	  else
+	  {
+	    firebug_debug('keine QRG!');
+	    die();
+	  }
 	if((!is_numeric($data['log_id'])) && ($action != "import"))
 	{
 	  $data['time']=$now;
@@ -392,8 +418,8 @@
 	{
 	  if($action == "import")
 	  {
-	    firebug_debug("fehlerhafter Mode:");
-	    firebug_debug($data);
+	    //firebug_debug("fehlerhafter Mode:");
+	    //firebug_debug($data);
 	    $errors['modes']++;
 	    $error=1;
 	  }

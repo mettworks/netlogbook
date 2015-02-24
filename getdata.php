@@ -176,8 +176,16 @@
 	  $data_c[$i][5]=$data_temp['log_project_locator'];  // Locator
 	  $data_c[$i][6]=$data_temp['log_freq'];
 	  $data_c[$i][7]=$modes[$data_temp['mode_id']]['mode_name'];
-	  $data_c[$i][8]=$data_temp['log_rst_tx_0'].$data_temp['log_rst_tx_1'].$data_temp['log_rst_tx_2'];
-	  $data_c[$i][9]=$data_temp['log_rst_rx_0'].$data_temp['log_rst_rx_1'].$data_temp['log_rst_rx_2'];
+	  if($modes[$data_temp['mode_id']]['mode_rapport_signal'] == '0')
+	  {
+	    $data_c[$i][8]=$data_temp['log_rst_tx_0'].$data_temp['log_rst_tx_1'].$data_temp['log_rst_tx_2'];
+	    $data_c[$i][9]=$data_temp['log_rst_rx_0'].$data_temp['log_rst_rx_1'].$data_temp['log_rst_rx_2'];
+	  }
+	  else
+	  {
+	    $data_c[$i][8]=$data_temp['log_signal_tx'];
+	    $data_c[$i][9]=$data_temp['log_signal_rx'];
+	  }
 	  $data_c[$i][10]=$data_temp['log_name'];
 	  $data_c[$i][11]=$data_temp['log_qth'];
 	  $data_c[$i][12]=$data_temp['log_loc'];

@@ -421,6 +421,28 @@ function log_change_mod()
 	$('#log_rst_rx_2').prop('disabled',false);
 	$('#log_rst_tx_2').prop('disabled',false);
       }
+      if(value['mode_rapport_signal'] == 0)
+      {
+      	$('#log_rst_rx_0').show();
+	$('#log_rst_rx_1').show();
+	$('#log_rst_rx_2').show();
+	$('#log_rst_tx_0').show();
+	$('#log_rst_tx_1').show();
+	$('#log_rst_tx_2').show();
+	$('#log_signal_rx').hide();
+	$('#log_signal_tx').hide();
+      }
+      else
+      {
+	$('#log_rst_rx_0').hide();
+	$('#log_rst_rx_1').hide();
+	$('#log_rst_rx_2').hide();
+	$('#log_rst_tx_0').hide();
+	$('#log_rst_tx_1').hide();
+	$('#log_rst_tx_2').hide();
+	$('#log_signal_rx').show();
+	$('#log_signal_tx').show();
+      }
     }
   }); 
 }

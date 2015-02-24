@@ -736,11 +736,13 @@
 		</select">
 	      </td>
 	      <td>
+		<input tabindex="2" class='class_log_change' type='text' maxlength="3" size="3" name='log_signal_tx' id='log_signal_tx' value=''>
 		<input tabindex="2" class='class_log_change' type='text' maxlength="1" size="1" name='log_rst_tx_0' id='log_rst_tx_0' value=''>
 		<input tabindex="3" class='class_log_change' type='text' maxlength="1" size="1" name='log_rst_tx_1' id='log_rst_tx_1' value=''>
 		<input tabindex="4" class='class_log_change' type='text' maxlength="1" size="1" name='log_rst_tx_2' id='log_rst_tx_2' value=''>
 	      </td>
 	      <td>
+		<input tabindex="5" class='class_log_change' type='text' maxlength="3" size="3" name='log_signal_rx' id='log_signal_rx' value=''>
 		<input tabindex="5" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_0' id='log_rst_rx_0' value=''>
 		<input tabindex="6" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_1' id='log_rst_rx_1' value=''>
 		<input tabindex="7" class='class_log_change' type='text' maxlength='1' size='1' name='log_rst_rx_2' id='log_rst_rx_2' value=''>
