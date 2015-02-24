@@ -14,7 +14,7 @@
   //print_r($_GET);
   //die();
 
-  $error_text="";
+  $failed_logs=array();
 
   if($_SERVER['REQUEST_METHOD'] == "POST")
   {
@@ -158,6 +158,7 @@
 	  {
 	    break;
 	  }
+	  $data_all[$i]['line']=$log;
 	  $temp=preg_split('/(<[a-z:_0-9]*>)/i',$log,'-1', PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 	  $c=0;
 	  while($c < count($temp))
@@ -318,7 +319,7 @@
 
       $baender=mysql_fragen('SELECT bands.* FROM bands INNER JOIN rel_bands_projects ON rel_bands_projects.band_id=bands.band_id WHERE rel_bands_projects.project_id='.$_SESSION['project_id']);
       //firebug_debug($data_all);
-
+      
       foreach($data_all as $dataid => $data)
       {
 	$error=0;
@@ -331,7 +332,7 @@
           firebug_debug($data);
 	  */
 	  $errors['duplicate']++;
-	  $error=1;
+	  //$error=1;
 	}
 	  if(strlen($data['log_freq']) != '0')
 	  {
@@ -366,10 +367,11 @@
 	    {
 	      if($action == "import")
 	      {
-		$error_text.="keine valide Frequenz erkannt! (Frequenz: ".$data['log_freq'].")";
-		firebug_debug("break:");
-		firebug_debug($dataid);
-		firebug_debug($data);
+		$failed_logs[]="keine valide Frequenz:";
+		$failed_logs[]=$data['line'];
+		//firebug_debug("break:");
+		//firebug_debug($dataid);
+		//firebug_debug($data);
 		$error=1; 
 	      }
 	      else
@@ -394,9 +396,10 @@
 	    {
 	      if($action == "import")
 	      {
-		$error_text.="kein valides Band erkannt!";
-		firebug_debug("fehlerhaftes Band:");
-		firebug_debug($data);
+		$failed_logs[]="kein valides Band:";
+		$failed_logs[]=$data['line'];
+		//firebug_debug("fehlerhaftes Band:");
+		//firebug_debug($data);
 		$errors['bands']++;
 		$error=1;
 	      }
@@ -425,7 +428,9 @@
 	{
 	  if($action == "import")
 	  {
-	    $error_text.="kein validen Mode erkannt!";
+	    $failed_logs[]="keine valide Modulationsart:";
+	    $failed_logs[]=$data['line'];
+	    //$error_text.="kein validen Mode erkannt!";
 	    //firebug_debug("fehlerhafter Mode:");
 	    //firebug_debug($data);
 	    $errors['modes']++;
@@ -453,6 +458,8 @@
 	    div_err("Frequenz ist nicht okay","logs");
 	    die();
 	  }
+	  unset($data['line']);
+
 	  if($error == 0)
 	  {
 	    $data_all_complete[$dataid]=$data;
@@ -499,20 +506,40 @@
     */
     if($action == "import")
     {
-      $error_text="Import fertig. Es wurden ".$counter_ok." Logs erfolgreich importiert. ";
+      $counter_ok=$counter_ok-$errors['duplicate'];
+      if($counter_ok == 0)
+      {
+	$error_text="Import fertig. Es wurden ".$errors['duplicate']." Duplikate gefunden.";
+      }
+      else
+      {
+	$error_text="Import fertig. Es wurden ".$counter_ok." Logs erfolgreich importiert (".$errors['duplicate']." Duplikate gefunden).";
+      }
       if($counter_error != 0)
       {
+	?>  
+	<script>
+	document.getElementById('div_log_import_error').style.visibility='visible';
+	$('#div_log_import_error_text').empty();
+	<?
+	foreach($failed_logs as $failed_log)
+	{ 
+	  ?>
+	  $('#div_log_import_error_text').append($("<a><?php print htmlentities($failed_log)?></a><br>"));
+	  <?
+	}
+	?>
+	</script>
+	<?
 	$error_text.="Es gab ".$counter_error." fehlerhafte(s) Logs. ";
 	$error_text.="(";
 	$error_text.=" ungueltige Betriebsart: ".$errors['modes'];
 	$error_text.=" ungueltiges Band: ".$errors['bands'];
-	$error_text.=" Duplikate: ".$errors['duplicate'];
 	$error_text.=")";
       }
-
       ?>
       <script>
-      alert("<?print $error_text?>");
+      alert('<?print $error_text?>');
       </script> 
       <?
     }

@@ -437,6 +437,19 @@ span.help:hover div
   z-index: 6;
   background-color: #1D1C22;
 }
+#div_log_import_error
+{
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  width:100%;
+  height:100%;
+  visibility: hidden;
+  z-index: 7;
+  background-color: red;
+  color: white;
+}
+
 #div_log_export
 {
   position: fixed;

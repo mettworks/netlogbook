@@ -579,6 +579,14 @@
 	  <input class='class_log_import' type='button' onclick=document.getElementById('div_log_import').style.visibility='hidden';document.getElementById('div_error').style.visibility='hidden'; value='Abbruch' name='Abbruch'>
 	</form>
       </div>
+      <div id="div_log_import_error">
+	<input class='class_log_import' type='button' onclick=document.getElementById('div_log_import_error').style.visibility='hidden'; value='OK' name='OK'>
+	<br><br>
+	<a>Fehlerhafte ADIF Zeilen:</a>
+	<br><br>
+	<div id="div_log_import_error_text">
+	</div>
+      </div>
       <div id="div_log_export">
 	<form action="export.php" method="GET">
 	  <table>
