@@ -38,15 +38,34 @@
   {
     foreach($export_clublogs as $export_clublog)
     {
-      if($export_clublog['project_clublog_auto'] == 1)
+      if($export_clublog['project_clublog_auto'] == 0)
       {
-	$min='10';
-      }
-      if(time()-$export_clublog['project_clublog_lastrun'] > $min*60)
-      {
-	if(export_clublog($export_clublog['project_id']))
+	if($export_clublog['project_clublog_auto'] == 1)
 	{
-	  mysql_schreib("UPDATE projects SET project_clublog_lastrun='".time()."' WHERE project_id='".$export_clublog['project_id']."';");
+	  $min='120';
+	}
+	else if($export_clublog['project_clublog_auto'] == 2)
+	{
+	  $min='240';
+	}
+	else if($export_clublog['project_clublog_auto'] == 3)
+	{
+	  $min='480';
+	}
+	else if($export_clublog['project_clublog_auto'] == 4)
+	{
+	  $min='960';
+	}
+	else if($export_clublog['project_clublog_auto'] == 5)
+	{
+	  $min='1440';
+	}
+	if(time()-$export_clublog['project_clublog_lastrun'] > $min*60)
+	{	
+	  if(export_clublog($export_clublog['project_id']))
+	  {
+	    mysql_schreib("UPDATE projects SET project_clublog_lastrun='".time()."' WHERE project_id='".$export_clublog['project_id']."';");
+	  }
 	}
       }
     }

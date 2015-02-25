@@ -1060,7 +1060,11 @@
 	    <td>
 	      <select class='class_projekt_change' name='project_clublog_auto' id='project_clublog_auto'>
 	        <option value="0">nur manuell</option>
-	        <option value="1">aller 10 Minuten</option>
+	        <option value="1">aller 2 Stunden</option>
+	        <option value="2">aller 4 Stunden</option>
+	        <option value="3">aller 8 Stunden</option>
+	        <option value="4">aller 12 Stunden</option>
+	        <option value="5">aller 24 Stunden</option>
 	      </select>
 	    </td>
 	  </tr>
