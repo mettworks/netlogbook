@@ -110,17 +110,15 @@ function change_log(log_id)
     $('#log_time_hr_date').datetimepicker({value: ('0'+now.getUTCDate()).slice(-2)+'.'+('0'+monat).slice(-2)+'.'+now.getUTCFullYear()});
     $('#log_time_hr_time').datetimepicker({value: ('0'+now.getUTCHours()).slice(-2)+':'+('0'+now.getUTCMinutes()).slice(-2)});
   }
-  if(log_freq > 1000)
+
+  settings_op=get_data('settings_op','');
+  if(settings_op['frequency_prefix'] == '0')
   {
-    log_freq=log_freq/1000+"m";
-  }
-  else if(log_freq > 1000000)
-  {
-    log_freq=log_freq/1000000+"G";
+    log_freq=log_freq;
   }
   else
-  {
-    log_freq=log_freq+"k";
+  { 
+    log_freq=log_freq/1000+"m";
   }
 
   $('.error_text').remove();

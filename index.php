@@ -232,7 +232,7 @@
 		  {
 		    "mRender": function ( data, type, full ) 
 		    {
-		      if(settings_op['frequency_prefix'] == 0)
+		      if(settings_op['frequency_prefix'] == 1)
 		      {
 			return "<style=text-align:right;>"+(Math.round((full[6]/1000) * 1000 )/1000).toFixed(3)+"Mhz";
 		      }
@@ -1164,8 +1164,8 @@
 	    <td><span class="help">Frequenzanzeige in<div>Frequenzanzeige in kHz oder MHz</div></span></td>
 	    <td>
 	      <select id="setting_frequency_prefix" name="setting_frequency_prefix" >
-		<option value="0">MHz</option>
-		<option value="1">kHz</option>
+		<option value="0">kHz</option>
+		<option value="1">MHz</option>
 	      </select>
 	    </td>
 	  </tr>
