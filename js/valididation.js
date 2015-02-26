@@ -221,6 +221,8 @@ function write_data(typ,id)
     var log_id=$('#log_id').val();
     var log_freq=$('#log_freq').val();
     var mode_id=$('#mode_id').val();
+    var log_signal_rx=$('#log_signal_rx').val();
+    var log_signal_tx=$('#log_signal_tx').val();
     var log_rst_rx_0=$('#log_rst_rx_0').val();
     var log_rst_rx_1=$('#log_rst_rx_1').val();
     var log_rst_rx_2=$('#log_rst_rx_2').val();
@@ -281,6 +283,8 @@ function write_data(typ,id)
 					  "log_rst_tx_0="+log_rst_tx_0+"&"+
 					  "log_rst_tx_1="+log_rst_tx_1+"&"+
 					  "log_rst_tx_2="+log_rst_tx_2+"&"+
+					  "log_signal_tx="+log_signal_tx+"&"+
+					  "log_signal_rx="+log_signal_rx+"&"+
 					  "log_dok="+log_dok+"&"+
 					  "log_name="+log_name+"&"+
 					  "log_time_auto="+log_time_auto+"&"+

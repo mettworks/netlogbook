@@ -1,3 +1,20 @@
+function set_display_mode()
+{
+  settings_op=get_data('settings_op','');
+  if(settings_op['netbook_ena'] == 'true')
+  {
+    $('#div_log_change_logsfromme').hide();
+    $('#div_log_change_logsfromall').hide();
+    $('#div_log_change_callinfo4').hide();
+  }
+  else
+  {
+    $('#div_log_change_logsfromme').show();
+    $('#div_log_change_logsfromall').show();
+    $('#div_log_change_callinfo4').show();
+  }
+}
+
 function set_title()
 {
   document.title='NetLogBook Projekt:'+($('#projects option:selected').text());
@@ -9,9 +26,11 @@ function settings_op_save()
   settings_op['frequency_prefix']=$('#setting_frequency_prefix').val();
   if($('#setting_interface_aprs_ena').prop("checked") == true) { settings_op['aprs_ena']="true"; } else { settings_op['aprs_ena']="false"; }
   if($('#setting_interface_qrz_ena').prop("checked") == true) { settings_op['qrz_ena']="true"; } else { settings_op['qrz_ena']="false"; }
+  if($('#setting_netbook_ena').prop("checked") == true) { settings_op['netbook_ena']="true"; } else { settings_op['netbook_ena']="false"; }
   //if($('#setting_interface_gm_ena').prop("checked") == true) { settings_op['gm_ena']="true"; } else { settings_op['gm_ena']="false"; }
   save_settings_op();
   set_table_logs();
+  set_display_mode();
 }
 
 function fill_form_settings_op()
@@ -21,6 +40,7 @@ function fill_form_settings_op()
   {
     if(settings_op['aprs_ena'] == "true") { $('#setting_interface_aprs_ena').prop( "checked", true ); } else { $('#setting_interface_aprs_ena').prop( "checked", false ); }
     if(settings_op['qrz_ena'] == "true") { $('#setting_interface_qrz_ena').prop( "checked", true ); } else { $('#setting_interface_qrz_ena').prop( "checked", false ); }
+    if(settings_op['netbook_ena'] == "true") { $('#setting_netbook_ena').prop( "checked", true ); } else { $('#setting_netbook_ena').prop( "checked", false ); }
     //if(settings_op['gm_ena'] == "true") { $('#setting_interface_gm_ena').prop( "checked", true ); } else { $('#setting_interface_gm_ena').prop( "checked", false ); }
     $('#setting_frequency_prefix').val(settings_op['frequency_prefix']);
   }
@@ -28,6 +48,7 @@ function fill_form_settings_op()
   {
     $('#setting_interface_aprs_ena').prop( "checked", true );
     $('#setting_interface_qrz_ena').prop( "checked", true );
+    $('#setting_netbook_ena').prop( "checked", false );
     //$('#setting_interface_gm_ena').prop( "checked", true );
     $('#setting_frequency_prefix').val('0');
     settings_op_save();

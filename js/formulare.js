@@ -35,13 +35,17 @@ function export_log()
 }
 function change_log(log_id)
 {
-  if(session['project_operator'] == 0)
+  settings_op=get_data('settings_op','');
+  if(settings_op['netbook_ena'] == 'false')
   {
-    $('#div_log_change_logsfromall').show();
-  }
-  else
-  {
-    $('#div_log_change_logsfromall').hide();
+    if(session['project_operator'] == 0)
+    {
+      $('#div_log_change_logsfromall').show();
+    }
+    else
+    {
+      $('#div_log_change_logsfromall').hide();
+    }
   }
   $('.class_log_change_callinfo').remove();
   $('.class_log_change_locinfo').remove();
@@ -105,6 +109,8 @@ function change_log(log_id)
     log_qth="";
     log_loc="";
     log_manager="";
+    log_signal_rx="";
+    log_signal_tx=""; 
     var now = new Date();
     var monat = 1 + parseInt(now.getUTCMonth());
     $('#log_time_hr_date').datetimepicker({value: ('0'+now.getUTCDate()).slice(-2)+'.'+('0'+monat).slice(-2)+'.'+now.getUTCFullYear()});
@@ -415,7 +421,10 @@ function change_project(project_id)
   }
   );
   $('#project_bands').append(temp);
-  project_change_modus(project_mod[project_id]['project_operator']);
+  if(typeof(project_mod) != 'undefined')
+  {
+    project_change_modus(project_mod[project_id]['project_operator']);
+  }
   project_change_clublog();
 }
 /*

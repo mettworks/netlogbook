@@ -469,6 +469,7 @@
 	    load();
 	    change_settings_dxcluster_setting();
 	    fill_dxcluster_setting();
+	    set_display_mode();
 	  });
       </script></p>
       <div id="div_navi_top">
@@ -1180,6 +1181,10 @@
 	  <tr>
 	    <td><span class="help">Schnittstelle qrz.com<div>Schnittstelle zu qrz.com aktiv oder inaktiv</div></span></td>
 	    <td><input id="setting_interface_qrz_ena" type="checkbox" value=""></td>
+	  </tr>
+	  <tr>
+	    <td><span class="help">Netbook<div>Anpassungen f&uuml;r kleine Aufl&ouml;sungen</div></span></td>
+	    <td><input id="setting_netbook_ena" type="checkbox" value=""></td>
 	  </tr>
 	  <!--
 	  <tr>

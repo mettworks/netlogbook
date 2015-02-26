@@ -112,6 +112,21 @@
 	$data_all[0]['operator_id']=$_SESSION['operator_id'];
 	$data_all[0]['mode_id']=$data_temp['mode_id'];
 	$data_all[0]['log_freq']=$data_temp['log_freq'];
+	$modes=mysql_fragen('SELECT * FROM modes;','mode_id');
+        if($modes[$data_temp['mode_id']]['mode_rapport_signal'] == 0)
+        {
+	  $data_all[0]['log_rst_rx_0']=$data_temp['log_rst_rx_0'];
+	  $data_all[0]['log_rst_rx_1']=$data_temp['log_rst_rx_1'];
+	  $data_all[0]['log_rst_rx_2']=$data_temp['log_rst_rx_2'];
+	  $data_all[0]['log_rst_tx_0']=$data_temp['log_rst_tx_0'];
+	  $data_all[0]['log_rst_tx_1']=$data_temp['log_rst_tx_1'];
+	  $data_all[0]['log_rst_tx_2']=$data_temp['log_rst_tx_2'];
+        }
+        else
+        {
+	  $data_all[0]['log_signal_rx']=$data_temp['log_signal_rx'];
+	  $data_all[0]['log_signal_tx']=$data_temp['log_signal_tx'];
+        }
 	$data_all[0]['log_rst_rx_0']=$data_temp['log_rst_rx_0'];
 	$data_all[0]['log_rst_rx_1']=$data_temp['log_rst_rx_1'];
 	$data_all[0]['log_rst_rx_2']=$data_temp['log_rst_rx_2'];
@@ -142,8 +157,7 @@
 
 	$modes=mysql_fragen('SELECT * FROM modes;','mode_name');
 	$file="files/".$data_temp['filename'];
-	$import=file_get_contents($file);
-	
+	$import=file_get_contents($file);	
 	unlink($file);
 	// Zeilenumbruch weg, Header weg
 	$import=preg_replace('/\n+/','',$import);
