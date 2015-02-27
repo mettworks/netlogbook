@@ -5,6 +5,7 @@ function set_display_mode()
   if(settings_op['gm_ena'] == 'true')
   {
     $('#navi_button_map').show();
+    load(); 
   }
   else
   {
