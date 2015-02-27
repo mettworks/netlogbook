@@ -6,18 +6,36 @@ function set_display_mode()
     $('#div_log_change_logsfromme').hide();
     $('#div_log_change_logsfromall').hide();
     $('#div_log_change_callinfo4').hide();
+    $('#div_log_change_callinfo1').css('top','50%');
+    $('#div_log_change_callinfo2').css('top','50%');
+    $('#div_log_change_callinfo3').css('top','50%');
+    $('#div_log_change_callinfo1_picture').css('top','50%');
+    $('#div_log_change_callinfo1').css('height','30%');
+    $('#div_log_change_callinfo2').css('height','30%');
+    $('#div_log_change_callinfo3').css('height','30%');
+    $('#div_log_change_callinfo1_picture').css('height','30%');
+    $('#div_log_change_form').css('height','50%');
   }
   else
   {
     $('#div_log_change_logsfromme').show();
     $('#div_log_change_logsfromall').show();
     $('#div_log_change_callinfo4').show();
+    $('#div_log_change_callinfo1').css('top','20%');
+    $('#div_log_change_callinfo2').css('top','20%');
+    $('#div_log_change_callinfo3').css('top','20%');
+    $('#div_log_change_callinfo1_picture').css('top','20%');
+    $('#div_log_change_callinfo1').css('height','20%');
+    $('#div_log_change_callinfo2').css('height','20%');
+    $('#div_log_change_callinfo3').css('height','20%');
+    $('#div_log_change_callinfo1_picture').css('height','20%');
+    $('#div_log_change_form').css('height','20%');
   }
 }
 
 function set_title()
 {
-  document.title='NetLogBook Projekt:'+($('#projects option:selected').text());
+  document.title='NLB:'+($('#projects option:selected').text());
 }
 function settings_op_save()
 {
@@ -518,6 +536,9 @@ function display_callinfo(call,formchange)
     }
     else
     {
+      $('#div_log_change_callinfo1').css('background-color','orange');
+      $('#div_log_change_callinfo2').css('background-color','orange');
+
       var div_width=$('#div_log_change_callinfo1_picture').width();
       var div_height=$('#div_log_change_callinfo1_picture').height();
 

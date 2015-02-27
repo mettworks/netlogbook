@@ -35,6 +35,9 @@ function export_log()
 }
 function change_log(log_id)
 {
+  $('#div_log_change_callinfo1').css('background-color','');
+  $('#div_log_change_callinfo2').css('background-color','');
+
   settings_op=get_data('settings_op','');
   if(settings_op['netbook_ena'] == 'false')
   {
