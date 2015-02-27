@@ -50,6 +50,18 @@ function change_log(log_id)
       $('#div_log_change_logsfromall').hide();
     }
   }
+  
+  if(settings_op['gm_ena'] == 'true')
+  {
+    $('#log_change_map').show();
+    $('#log_change_map_help').show();
+  }
+  else
+  {
+    $('#log_change_map').hide();
+    $('#log_change_map_help').hide();
+  }
+
   $('.class_log_change_callinfo').remove();
   $('.class_log_change_locinfo').remove();
   $('.error_text').remove();

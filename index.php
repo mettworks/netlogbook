@@ -481,7 +481,7 @@
 	  ?>
 	  <input type="button" style="width:7em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Log">
 	  <input type="button" style="width:7em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('1');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Monitor">
-	  <input type="button" style="width:7em;" onclick="loadXML();set_reload_map('1');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Karte">
+	  <input id="navi_button_map" type="button" style="width:7em;" onclick="loadXML();set_reload_map('1');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Karte">
 	  <input type="button" style="width:7em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='visible';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Einstellungen">
 	  <input type="button" style="width:7em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='visible';" value="DXCluster">
 	  <?
@@ -723,7 +723,7 @@
 		<span class='help'>QTH<div>QTH</div></span>
 	      </td>
 	      <td>
-		<span class='help'>Karte<div></div></span>
+		<span id='log_change_map_help' class='help'>Karte<div></div></span>
 	      </td>
 	      <td>
 		<span class='help'>Zeit<div>Zeit wird automatisch beim abspeichern &uuml;bernommen</div></span>
@@ -768,7 +768,7 @@
 		<input tabindex="9" class='class_log_change' type='text' name='log_qth' id='log_qth' value=''>
 	      </td>
 	      <td>
-		<input onclick='load_map2();' class='class_log_change' type="button" name="Karte" value="Karte" style="width:4em;">
+		<input id='log_change_map' onclick='load_map2();' class='class_log_change' type="button" name="Karte" value="Karte" style="width:4em;">
 	      </td>
 	      <td>
                 <input onchange='log_change_time();' class='class_log_change' type='checkbox' id='log_time_auto' name='log_time_auto'>
@@ -816,7 +816,7 @@
 	  <div id="div_map2_map">
 	  </div>
 	  <div id="div_map2_settings">
-	    <input class='class_log_change' type='button' onclick='save_map2_pos();' value='neue Position &uuml;bernehmen' name='neue Position &uuml;bernehmen'>
+	    <input class='class_log_change' type='button' onclick='save_map2_pos();' value='&uuml;bernehmen' name='&uuml;bernehmen'>
 	    <input class='class_log_change' type='button' onclick=document.getElementById('div_map2').style.visibility='hidden'; value='Abbruch' name='Abbruch'>
 	  </div>
 	</div>
@@ -1187,15 +1187,13 @@
 	    <td><input id="setting_interface_qrz_ena" type="checkbox" value=""></td>
 	  </tr>
 	  <tr>
-	    <td><span class="help">Netbook<div>Anpassungen f&uuml;r kleine Aufl&ouml;sungen</div></span></td>
-	    <td><input id="setting_netbook_ena" type="checkbox" value=""></td>
-	  </tr>
-	  <!--
-	  <tr>
 	    <td><span class="help">Schnittstelle Google-Maps<div>Schnittstelle zu Google-Maps aktiv oder inaktiv</div></span></td>
 	    <td><input id="setting_interface_gm_ena" type="checkbox" value=""></td>
 	  </tr>
-	  -->
+	  <tr>
+	    <td><span class="help">Netbook<div>Anpassungen f&uuml;r kleine Aufl&ouml;sungen</div></span></td>
+	    <td><input id="setting_netbook_ena" type="checkbox" value=""></td>
+	  </tr>
 	</table>
 	<br>
 	<p>sichtbare Felder f&uuml;r Logeintr&auml;ge</p>

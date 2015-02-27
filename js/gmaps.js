@@ -21,55 +21,58 @@ var newPos=[];
 
 function load_map2()
 {
-  loc=$('#log_loc').val();
-  if(loc.length < 5)
+  if(settings_op['gm_ena'] == "true")
   {
-    session=get_data('session','');
-    marker=[];
-    marker['lat']=session['project_lat'];
-    marker['lon']=session['project_lon'];
-    zoom=5;
-  }
-  else
-  {
-    marker=get_locinfo(loc);
-    zoom=10;
-  }
-  newPos['lat']=marker['lat'];
-  newPos['lon']=marker['lon'];
+    loc=$('#log_loc').val();
+    if(loc.length < 5)
+    {
+      session=get_data('session','');
+      marker=[];
+      marker['lat']=session['project_lat'];
+      marker['lon']=session['project_lon'];
+      zoom=5;
+    }
+    else
+    {
+      marker=get_locinfo(loc);
+      zoom=10;
+    }
+    newPos['lat']=marker['lat'];
+    newPos['lon']=marker['lon'];
 
-  map2 = new google.maps.Map(document.getElementById("div_map2_map"),
-  {
-    center: new google.maps.LatLng(marker['lat'], marker['lon']),
-    zoom: zoom,
-    mapTypeId: 'roadmap',
-    zoomControl: false,
-    panControl: false,
-    scaleControl: false,
-    streetViewControl: false,
-    overviewMapControl: false,
-  });
+    map2 = new google.maps.Map(document.getElementById("div_map2_map"),
+    {
+      center: new google.maps.LatLng(marker['lat'], marker['lon']),
+      zoom: zoom,
+      mapTypeId: 'roadmap',
+      zoomControl: false,
+      panControl: false,
+      scaleControl: false,
+      streetViewControl: false,
+      overviewMapControl: false,
+    });
 
-  var LatLng = new google.maps.LatLng(marker['lat'], marker['lon']);
-  var marker = new google.maps.Marker(
-  {
-    position: LatLng,
-    map: map2,
-    title: 'Hello World!'
-  });
-  markersArray2.push(marker);
-  google.maps.event.addListener(map2, "click", function(event)
-  {
-    // place a marker
-    placeMarker(event.latLng);
-    //alert('bla');
-    // display the lat/lng in your form's lat/lng fields
-    //document.getElementById("latFld").value = event.latLng.lat();
-    //document.getElementById("lngFld").value = event.latLng.lng();
-    newPos['lat']=event.latLng.lat();
-    newPos['lon']=event.latLng.lng();
-  });
-  document.getElementById('div_map2').style.visibility='visible';
+    var LatLng = new google.maps.LatLng(marker['lat'], marker['lon']);
+    var marker = new google.maps.Marker(
+    {
+      position: LatLng,
+      map: map2,
+      title: 'Hello World!'
+    });
+    markersArray2.push(marker);
+    google.maps.event.addListener(map2, "click", function(event)
+    {
+      // place a marker
+      placeMarker(event.latLng);
+      //alert('bla');
+      // display the lat/lng in your form's lat/lng fields
+      //document.getElementById("latFld").value = event.latLng.lat();
+      //document.getElementById("lngFld").value = event.latLng.lng();
+      newPos['lat']=event.latLng.lat();
+      newPos['lon']=event.latLng.lng();
+    });
+    document.getElementById('div_map2').style.visibility='visible';
+  }
 }
 function placeMarker(location)
 {
@@ -101,58 +104,69 @@ function deleteOverlays()
 //}
 function load()
 {
-  session=get_data('session','');
-  map = new google.maps.Map(document.getElementById("div_map_map"),
+  //settings_op=get_data('settings_op','');
+  if(settings_op['gm_ena'] == "true")
   {
-    center: new google.maps.LatLng(session['project_lat'], session['project_lon']),
-    zoom: 4,
-    mapTypeId: 'roadmap',
-    //disableDefaultUI: true,
-    zoomControl: false,
-    panControl: false,
-    scaleControl: false,
-    streetViewControl: false,
-    overviewMapControl: false,
-  });
-  infoWindow = new google.maps.InfoWindow;
-  loadXML();
-  set_map_settings();
+    map = new google.maps.Map(document.getElementById("div_map_map"),
+    {
+      center: new google.maps.LatLng(session['project_lat'], session['project_lon']),
+      zoom: 4,
+      mapTypeId: 'roadmap',
+      //disableDefaultUI: true,
+      zoomControl: false,
+      panControl: false,
+      scaleControl: false,
+      streetViewControl: false,
+      overviewMapControl: false,
+    });
+    infoWindow = new google.maps.InfoWindow;
+    loadXML();
+    set_map_settings();
+  }
 }
 function loadXML()
 {
-  if (markersArray)
+  if(settings_op['gm_ena'] == "true")
   {
-    for (i=0; i < markersArray.length; i++)
+    if (markersArray)
     {
-      markersArray[i].setMap(null);
-    }
-    markersArray.length = 0;
-  }
-  downloadUrl("/map_data.php", function(data)
-  {
-    var xml = data.responseXML;
-    markers = xml.documentElement.getElementsByTagName("marker");
-    for (var i = 0; i < markers.length; i++)
-    {
-      var name = markers[i].getAttribute("name");
-      var type = markers[i].getAttribute("type");
-      var point = new google.maps.LatLng(
-      parseFloat(markers[i].getAttribute("lat")),
-      parseFloat(markers[i].getAttribute("lng"))
-      );
-      var html = name;
-      //var icon = customIcons[type] || {};
-      var marker = new google.maps.Marker(
+      for (i=0; i < markersArray.length; i++)
       {
-	map: map,
-	position: point,
-	//icon: icon.icon,
-	//shadow: icon.shadow
-      });
-      bindInfoWindow(marker, map, infoWindow, html);
-      markersArray.push(marker);
+	markersArray[i].setMap(null);
+      }
+      markersArray.length = 0;
     }
-  });
+    downloadUrl("/map_data.php", function(data)
+    {
+      var xml = data.responseXML;
+      markers = xml.documentElement.getElementsByTagName("marker");
+      for (var i = 0; i < markers.length; i++)
+      {
+	var call = markers[i].getAttribute("call");
+	var freq = markers[i].getAttribute("freq");
+	var mode = markers[i].getAttribute("mode");
+	var time = markers[i].getAttribute("time");
+	var operator = markers[i].getAttribute("operator");
+
+	var type = markers[i].getAttribute("type");
+	var point = new google.maps.LatLng(
+	parseFloat(markers[i].getAttribute("lat")),
+	parseFloat(markers[i].getAttribute("lng"))
+	);
+	var html = "Call: "+call+"<br>Freq: "+freq+"kHz<br>Mode: "+mode+"<br>Zeit: "+time+" UTC<br>Operator: "+operator;
+	//var icon = customIcons[type] || {};
+	var marker = new google.maps.Marker(
+	{
+	 map: map,
+	 position: point,
+	  //icon: icon.icon,
+	  //shadow: icon.shadow
+	});
+	bindInfoWindow(marker, map, infoWindow, html);
+	markersArray.push(marker);
+      }
+    });
+  }
 }
 function bindInfoWindow(marker, map, infoWindow, html)
 {

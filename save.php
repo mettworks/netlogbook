@@ -38,7 +38,8 @@
   }
   if($action == "save_settings_op")
   {
-    $temp=json_encode($data_temp);    
+    $temp=json_encode($data_temp);   
+    //$_SESSION['settings_op']=$data_temp; 
     $sql="UPDATE rel_operators_projects SET settings='".$temp."'  WHERE operator_id='".$_SESSION['operator_id']."' AND project_id='".$_SESSION['project_id']."';";
     mysql_schreib($sql);
   }
