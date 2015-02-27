@@ -14,7 +14,7 @@
     return $data;
   }
 
-  function checkcronjob()
+  function check()
   {
     $sql="SELECT lastrun FROM cronjob WHERE id='0';";
     $lastrun=mysql_fragen($sql);
@@ -22,6 +22,15 @@
     {
       print "<script language='javascript'>alert('Achtung, Cronjob lief nicht oder hat Fehler!');</script>";
     }
+    if(!file_put_contents('cache/qrzcom/testfile','bla'))
+    {
+      print "<script language='javascript'>alert('Verzeichnis /cache/qrzcom/ ist nicht schreibbar!');</script>";
+    }
+    if(!file_put_contents('files/testfile','bla'))
+    {
+      print "<script language='javascript'>alert('Verzeichnis /files/ ist nicht schreibbar!');</script>";
+    }
+
   }
 
   function export_clublog($project_id)

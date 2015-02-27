@@ -1,9 +1,11 @@
 <?php
+  ini_set('display_errors','0');
   include('functions.php');
   checklogin();
   include('settings.php');
   $mysql=mysql_c();
-  checkcronjob();
+  check();
+  
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
   <html>
