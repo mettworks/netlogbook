@@ -2,47 +2,61 @@ var markersArray = [];
 var markersArray2 = [];
 var customIcons =
 {
-/*
-shack:
-{
-icon: '/images/d22_house.png',
-//icon: 'http://labs.google.com/ridefinder/images/mm_20_blue.png',
-//shadow: 'http://labs.google.com/ridefinder/images/mm_20_shadow.png'
-},
-aprs:
-{
-icon: '/images/d22_car.png',
-//icon: 'http://labs.google.com/ridefinder/images/mm_20_red.png',
-//shadow: 'http://labs.google.com/ridefinder/images/mm_20_shadow.png'
-}
-*/
+  shack:
+  {
+    icon: '/images/map/house.png',
+  },
+  aprs:
+  {
+    icon: '/images/map/car.png',
+  }
 };
 var newPos=[];
 
 function load_map2()
 {
+  z=0;
   if(settings_op['gm_ena'] == "true")
   {
-    loc=$('#log_loc').val();
-    if(loc.length < 5)
+    markers2=[];
+    $('#button_map2_pos_man').hide();
+    loc_aprs=$('#log_loc_aprs').val();
+    loc_qrz=$('#log_loc_qrz').val();
+
+    if(loc_aprs.length > 5)
     {
-      session=get_data('session','');
-      marker=[];
-      marker['lat']=session['project_lat'];
-      marker['lon']=session['project_lon'];
+      temp=get_locinfo(loc_aprs);
+      markers2[z]=[];
+      markers2[z]['lat']=temp['lat'];
+      markers2[z]['lon']=temp['lon'];
+      markers2[z]['type']='aprs';
+      markers2[z]['title']='Position von APRS ('+loc_aprs+')';
+      z++;
       zoom=5;
     }
-    else
+    if(loc_qrz.length > 5)
     {
-      marker=get_locinfo(loc);
-      zoom=10;
+      temp=get_locinfo(loc_qrz);
+      markers2[z]=[];
+      markers2[z]['lat']=temp['lat'];
+      markers2[z]['lon']=temp['lon'];
+      markers2[z]['type']='qrz';
+      markers2[z]['title']='Position von qrz.com ('+loc_qrz+')';
+      z++;
+      zoom=5;
     }
-    newPos['lat']=marker['lat'];
-    newPos['lon']=marker['lon'];
+    session=get_data('session','');
+    markers2[z]=[];
+    markers2[z]['lat']=session['project_lat'];
+    markers2[z]['lon']=session['project_lon'];
+    markers2[z]['type']='shack';
+    markers2[z]['title']='meine Position ('+session['project_locator']+')';
+    z++;
+    zoom=5;
 
     map2 = new google.maps.Map(document.getElementById("div_map2_map"),
     {
-      center: new google.maps.LatLng(marker['lat'], marker['lon']),
+      center: new google.maps.LatLng(markers2[0]['lat'], markers2[0]['lon']),
       zoom: zoom,
       mapTypeId: 'roadmap',
       zoomControl: false,
@@ -52,28 +66,45 @@ function load_map2()
       overviewMapControl: false,
     });
 
-    var LatLng = new google.maps.LatLng(marker['lat'], marker['lon']);
-    var marker = new google.maps.Marker(
+    for (var i = 0; i < markers2.length; i++)
     {
-      position: LatLng,
-      map: map2,
-      title: 'Hello World!'
-    });
-    markersArray2.push(marker);
-    google.maps.event.addListener(map2, "click", function(event)
-    {
-      // place a marker
-      placeMarker(event.latLng);
-      //alert('bla');
-      // display the lat/lng in your form's lat/lng fields
-      //document.getElementById("latFld").value = event.latLng.lat();
-      //document.getElementById("lngFld").value = event.latLng.lng();
-      newPos['lat']=event.latLng.lat();
-      newPos['lon']=event.latLng.lng();
-    });
+      var LatLng = new google.maps.LatLng(markers2[i]['lat'], markers2[i]['lon']);
+      var icon = customIcons[markers2[i]['type']] || {};
+      var marker = new google.maps.Marker(
+      {
+	position: LatLng,
+	map: map2,
+	icon: icon.icon,
+	title: markers2[i]['title'] 
+      });
+      //markersArray2.push(marker);
+    }
     document.getElementById('div_map2').style.visibility='visible';
   }
 }
+
+function act_map2_lis()
+{
+  if(map2_lis == '0')
+  {
+    $('#button_map2_pos_man').show();
+    map2_listener_handle=google.maps.event.addListener(map2, "click", function(event)
+    {
+      placeMarker(event.latLng);
+      newPos['lat']=event.latLng.lat();
+      newPos['lon']=event.latLng.lng();
+    });
+    map2_lis='1';
+  }
+  else
+  {
+    $('#button_map2_pos_man').hide();
+    google.maps.event.removeListener(map2_listener_handle);
+    deleteOverlays();
+    map2_lis='0';
+  }
+}
+
 function placeMarker(location)
 {
   // first remove all markers if there are any
@@ -87,7 +118,6 @@ function placeMarker(location)
   markersArray2.push(marker);
   //map.setCenter(location);
 }
-
 // Deletes all markers in the array by removing references to them
 function deleteOverlays()
 {
@@ -147,19 +177,23 @@ function loadXML()
 	var mode = markers[i].getAttribute("mode");
 	var time = markers[i].getAttribute("time");
 	var operator = markers[i].getAttribute("operator");
-
 	var type = markers[i].getAttribute("type");
 	var point = new google.maps.LatLng(
-	parseFloat(markers[i].getAttribute("lat")),
-	parseFloat(markers[i].getAttribute("lng"))
+	  parseFloat(markers[i].getAttribute("lat")),
+	  parseFloat(markers[i].getAttribute("lng"))
 	);
-	var html = "Call: "+call+"<br>Freq: "+freq+"kHz<br>Mode: "+mode+"<br>Zeit: "+time+" UTC<br>Operator: "+operator;
-	//var icon = customIcons[type] || {};
+	if(typeof(time) != 'string') { time=""; } else { time="<br>Zeit: "+time+" UTC"; }
+	if(typeof(freq) != 'string') { freq=""; } else { freq="<br>Freq: "+freq+" kHz"; }
+	if(typeof(mode) != 'string') { mode=""; } else { mode="<br>Mode: "+mode; }
+	if(typeof(operator) != 'string') { operator=""; } else { operator="<br>Operator: "+operator; }
+
+	var html = "Call: "+call+""+freq+mode+time+operator;
+	var icon = customIcons[type] || {};
 	var marker = new google.maps.Marker(
 	{
 	 map: map,
 	 position: point,
-	  //icon: icon.icon,
+	 icon: icon.icon,
 	  //shadow: icon.shadow
 	});
 	bindInfoWindow(marker, map, infoWindow, html);

@@ -160,10 +160,21 @@ function set_table_logs()
   table_logs.columns.adjust().draw();
 }
 
-function save_map2_pos()
+function save_map2_pos(type)
 {
-  loc=get_deginfo(newPos['lon'],newPos['lat']);
-  $('#log_loc').val(loc['loc']);
+  if(type == 'man')
+  {
+    loc=get_deginfo(newPos['lon'],newPos['lat']);
+    $('#log_loc').val(loc['loc']);
+  }
+  else if(type == 'aprs')
+  {
+    $('#log_loc').val($('#log_loc_aprs').val());
+  }
+  else if(type == 'qrz')
+  {
+    $('#log_loc').val($('#log_loc_qrz').val());
+  }
   document.getElementById('div_map2').style.visibility='hidden';
 }
 
@@ -595,6 +606,7 @@ function display_callinfo(call,formchange)
     if(formchange == '1')
     {
       $('#log_loc').val(callinfo_qrz['grid']);
+      $('#log_loc_qrz').val(callinfo_qrz['grid']);
       $('#log_qth').val(callinfo_qrz['addr2']);
       $('#log_name').val(callinfo_qrz['fname']);
       $('#log_manager').val(callinfo_qrz['qslmgr']);
@@ -613,6 +625,7 @@ function display_callinfo(call,formchange)
     if(callinfo_aprs['loc'] != null)
     {
       $('#log_loc').val(callinfo_aprs['loc']);
+      $('#log_loc_aprs').val(callinfo_aprs['loc']);
       log_change_loc();
     }
   }

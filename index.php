@@ -41,7 +41,8 @@
 	var table_monitor_modes;
 	var table_monitor_bands;
 	var table_monitor_qsos;
-
+	var map2_lis='0';
+	var map2_listener_handle;
 	session=get_data('session','');
 	//console.log(session);
 	// used anymore?
@@ -811,12 +812,17 @@
 	  </table>
 	</div>
 	<input class='class_log_change' type='hidden' name='log_id' id='log_id' value=''>
+	<input class='class_log_change' type='hidden' name='log_loc_qrz' id='log_loc_qrz' value=''>
+	<input class='class_log_change' type='hidden' name='log_loc_aprs' id='log_loc_aprs' value=''>
       </div>
 	<div id="div_map2">
 	  <div id="div_map2_map">
 	  </div>
 	  <div id="div_map2_settings">
-	    <input class='class_log_change' type='button' onclick='save_map2_pos();' value='&uuml;bernehmen' name='&uuml;bernehmen'>
+	    <input class='class_log_change' type='button' onclick='act_map2_lis();' value='MANUELL' style="width:17em;">
+	    <input class='class_log_change' id='button_map2_pos_man' type='button' onclick='save_map2_pos("man");' value='manuelle Position &uuml;bernehmen' style="width:17em;">
+	    <input class='class_log_change' type='button' onclick='save_map2_pos("aprs");' value='APRS Position &uuml;bernehmen' style="width:17em;">
+	    <input class='class_log_change' type='button' onclick='save_map2_pos("qrz");' value='qrz.com Position &uuml;bernehmen' style="width:17em;">
 	    <input class='class_log_change' type='button' onclick=document.getElementById('div_map2').style.visibility='hidden'; value='Abbruch' name='Abbruch'>
 	  </div>
 	</div>

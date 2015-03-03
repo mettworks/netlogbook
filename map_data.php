@@ -21,13 +21,17 @@
   $modes=mysql_fragen('SELECT * FROM modes;','mode_id');  
   $operators=mysql_fragen('SELECT * FROM operators;','operator_id');  
 
+  $i=1;
+
   header("Content-type: text/xml");
   print '<?xml version="1.0" encoding="UTF-8"?>';
   print '<markers>';
 
+  print '<marker id="'.$i.'" call="'.$_SESSION['project_call'].'" lat="'.$_SESSION['project_lat'].'" lng="'.$_SESSION['project_lon'].'" type="shack"/>'; 
+
   if($contacts=mysql_fragen($sql,'log_id',$id))
   {
-    $i=1;
+    $i=2;
     foreach($contacts as $contact)
     {
       if($contact['log_loc'] != "")
@@ -37,14 +41,14 @@
 	  if(preg_match('/^[A-Z0-9]+$/',$contact['log_call']))
 	  {
 	    $deg=locator2degree($contact['log_loc']);
-	    print '<marker id="'.$i.'" time="'.date('d.m.Y H:i',$contact['log_time']).'" operator="'.$operators[$contact['operator_id']]['operator_call'].'" call="'.$contact['log_call'].'" mode="'.$modes[$contact['mode_id']]['mode_name'].'" freq="'.$contact['log_freq'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'"/>';
+	    print '<marker id="'.$i.'" time="'.date('d.m.Y H:i',$contact['log_time']).'" operator="'.$operators[$contact['operator_id']]['operator_call'].'" call="'.$contact['log_call'].'" mode="'.$modes[$contact['mode_id']]['mode_name'].'" freq="'.$contact['log_freq'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'" type="aprs"/>';
 	    $i++;
 	  }	      
 	}
 	else
 	{
 	  $deg=locator2degree($contact['log_loc']);
-	  print '<marker id="'.$i.'" time="'.date('d.m.Y H:i',$contact['log_time']).'" operator="'.$operators[$contact['operator_id']]['operator_call'].'" call="'.$contact['log_call'].'" mode="'.$modes[$contact['mode_id']]['mode_name'].'" freq="'.$contact['log_freq'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'"/>';
+	  print '<marker id="'.$i.'" time="'.date('d.m.Y H:i',$contact['log_time']).'" operator="'.$operators[$contact['operator_id']]['operator_call'].'" call="'.$contact['log_call'].'" mode="'.$modes[$contact['mode_id']]['mode_name'].'" freq="'.$contact['log_freq'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'" type="aprs"/>';
 	  $i++;
 	}
       }

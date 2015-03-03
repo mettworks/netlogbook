@@ -163,6 +163,8 @@ function change_log(log_id)
   $('#log_name').val(log_name);
   $('#log_qth').val(log_qth);
   $('#log_loc').val(log_loc);
+  $('#log_loc_qrz').val('');
+  $('#log_loc_aprs').val('');
   $('#log_manager').val(log_manager);
 
   if(log_qsl_rx == '1')
