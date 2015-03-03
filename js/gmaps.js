@@ -2,14 +2,22 @@ var markersArray = [];
 var markersArray2 = [];
 var customIcons =
 {
-  shack:
+  house:
   {
     icon: '/images/map/house.png',
   },
   aprs:
   {
-    icon: '/images/map/car.png',
-  }
+    icon: '/images/map/aprs.png',
+  },
+  qrz:
+  {
+    icon: '/images/map/qrz.png',
+  },
+  qso:
+  {
+    icon: '/images/map/qso.png',
+  },
 };
 var newPos=[];
 
@@ -49,7 +57,7 @@ function load_map2()
     markers2[z]=[];
     markers2[z]['lat']=session['project_lat'];
     markers2[z]['lon']=session['project_lon'];
-    markers2[z]['type']='shack';
+    markers2[z]['type']='house';
     markers2[z]['title']='meine Position ('+session['project_locator']+')';
     z++;
     zoom=5;

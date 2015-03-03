@@ -404,39 +404,39 @@
   {
     if(strlen($call) != 0)
     {
-      $aprs=0;
+      //$aprs=0;
       unlink($aprspos);
       if(preg_match('/^([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
       {
 	$call=preg_replace('/^(([a-z0-9])+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$1',$call);
-	$aprs=1;
+	//$aprs=1;
       }
       // */CALL
       else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i',$call))
       {
 	$call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i','$3',$call);
-	$aprs=1;
+	//$aprs=1;
       }
       // */CALL/p OR */CALL/m OR */CALL/mm
       else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
       {
 	$call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$3',$call);
-	$aprs=1;
+	//$aprs=1;
       }
 
       //
       // APRS stuff
-      if($aprs == 1)
-      {
+      //if($aprs == 1)
+      //{
 	// TODO: apikey!
 	//
 	// only the clean call should be used!
-	$url="http://api.aprs.fi/api/get?name=".$call."-9,".$c."-15,".$c."-1,".$c."-2,".$c."-3,".$c."-4,".$c."-5,".$c."-6,".$c."-7,".$c."-8,".$c."-0,".$c."-10,".$c."-11,".$c."-12,".$c."-13,".$c."-14,".$c."&what=loc&apikey=64914.fHkYJ7I5MUm9f&format=json";
+	$url="http://api.aprs.fi/api/get?name=".$call.",".$call."-9,".$call."-15,".$call."-1,".$call."-2,".$call."-3,".$call."-4,".$call."-5,".$call."-6,".$call."-7,".$call."-8,".$call."-0,".$call."-10,".$call."-11,".$call."-12,".$call."-13,".$call."-14&what=loc&apikey=64914.fHkYJ7I5MUm9f&format=json";
 	$xml=file_get_contents($url);
 	$data=json_decode($xml,TRUE);
 	// TODO: time global?
-	// TODO TIME!!	
-	if((time() - $data['entries'][0]['lasttime'] < 2160000000) && (preg_match("/".$call."-[0-9]+/i",$data['entries']['0']['name'])))
+	// TODO TIME!!
+	if((time() - $data['entries'][0]['lasttime'] < 10800) && (preg_match("/".$call."[-0-9]?/i",$data['entries']['0']['name'])))
 	{
 	  $aprspos=degree2locator($data['entries'][0]['lng'],$data['entries'][0]['lat']);
 	  return $aprspos;
@@ -445,11 +445,13 @@
 	{
 	  return false;
 	}
+    /*
       }
       else
       {
 	return false;
       }
+      */
     }
     else
     {

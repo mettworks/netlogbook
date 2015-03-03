@@ -27,7 +27,7 @@
   print '<?xml version="1.0" encoding="UTF-8"?>';
   print '<markers>';
 
-  print '<marker id="'.$i.'" call="'.$_SESSION['project_call'].'" lat="'.$_SESSION['project_lat'].'" lng="'.$_SESSION['project_lon'].'" type="shack"/>'; 
+  print '<marker id="'.$i.'" call="'.$_SESSION['project_call'].'" lat="'.$_SESSION['project_lat'].'" lng="'.$_SESSION['project_lon'].'" type="house"/>'; 
 
   if($contacts=mysql_fragen($sql,'log_id',$id))
   {
@@ -41,14 +41,14 @@
 	  if(preg_match('/^[A-Z0-9]+$/',$contact['log_call']))
 	  {
 	    $deg=locator2degree($contact['log_loc']);
-	    print '<marker id="'.$i.'" time="'.date('d.m.Y H:i',$contact['log_time']).'" operator="'.$operators[$contact['operator_id']]['operator_call'].'" call="'.$contact['log_call'].'" mode="'.$modes[$contact['mode_id']]['mode_name'].'" freq="'.$contact['log_freq'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'" type="aprs"/>';
+	    print '<marker id="'.$i.'" time="'.date('d.m.Y H:i',$contact['log_time']).'" operator="'.$operators[$contact['operator_id']]['operator_call'].'" call="'.$contact['log_call'].'" mode="'.$modes[$contact['mode_id']]['mode_name'].'" freq="'.$contact['log_freq'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'" type="qso"/>';
 	    $i++;
 	  }	      
 	}
 	else
 	{
 	  $deg=locator2degree($contact['log_loc']);
-	  print '<marker id="'.$i.'" time="'.date('d.m.Y H:i',$contact['log_time']).'" operator="'.$operators[$contact['operator_id']]['operator_call'].'" call="'.$contact['log_call'].'" mode="'.$modes[$contact['mode_id']]['mode_name'].'" freq="'.$contact['log_freq'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'" type="aprs"/>';
+	  print '<marker id="'.$i.'" time="'.date('d.m.Y H:i',$contact['log_time']).'" operator="'.$operators[$contact['operator_id']]['operator_call'].'" call="'.$contact['log_call'].'" mode="'.$modes[$contact['mode_id']]['mode_name'].'" freq="'.$contact['log_freq'].'" lat="'.$deg['lat'].'" lng="'.$deg['lon'].'" type="qso"/>';
 	  $i++;
 	}
       }
