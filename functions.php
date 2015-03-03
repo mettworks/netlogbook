@@ -436,7 +436,7 @@
 	$data=json_decode($xml,TRUE);
 	// TODO: time global?
 	// TODO TIME!!
-	if((time() - $data['entries'][0]['lasttime'] < 10800) && (preg_match("/".$call."[-0-9]?/i",$data['entries']['0']['name'])))
+	if((time() - $data['entries'][0]['lasttime'] < 43200) && (preg_match("/".$call."[-0-9]?/i",$data['entries']['0']['name'])))
 	{
 	  $aprspos=degree2locator($data['entries'][0]['lng'],$data['entries'][0]['lat']);
 	  return $aprspos;
