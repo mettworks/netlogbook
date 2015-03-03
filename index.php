@@ -44,7 +44,7 @@
 	var map2_lis='0';
 	var map2_listener_handle;
 	session=get_data('session','');
-	//console.log(session);
+	console.log(session);
 	// used anymore?
 	interval_log_change='NULL';
 
@@ -299,7 +299,14 @@
 		  {
 		    "mRender": function ( data, type, full ) 
 		    {
-		      return '<img src="images/edit.png" alt="bearbeiten" onclick="change_log(\''+full[18]+'\');">';
+		      if(session['operator_role'] != '2')
+		      {
+			return '<img src="images/edit.png" alt="bearbeiten" onclick="change_log(\''+full[18]+'\');">';
+		      }
+		      else
+		      {
+			return '';
+		      }
 
 		    },
 		    'bSortable': false,
@@ -307,7 +314,14 @@
 		  {
 		    "mRender": function ( data, type, full )
 		    {
-		      return '<img src="images/delete.png" alt="loeschen" onclick="delete_log(\''+full[18]+'\');">';
+                      if(session['operator_role'] != '2')
+                      {
+			return '<img src="images/delete.png" alt="loeschen" onclick="delete_log(\''+full[18]+'\');">';
+		      }
+		      else
+		      {
+			return '';
+		      }
 		    },
 		    'bSortable': false,
 		  }
@@ -480,18 +494,18 @@
 	if($_SESSION['operator_id'] != 0 )
 	{
 	  ?>
-	  <input type="button" style="width:7em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Log">
-	  <input type="button" style="width:7em;" onclick="reload_monitor();set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('1');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Monitor">
-	  <input id="navi_button_map" type="button" style="width:7em;" onclick="loadXML();set_reload_map('1');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Karte">
-	  <input type="button" style="width:7em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='visible';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Einstellungen">
-	  <input type="button" style="width:7em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='visible';" value="DXCluster">
+	  <input type="button" style="width:8em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='visible'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Log">
+	  <input type="button" style="width:8em;" onclick="reload_monitor();set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('1');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden'; document.getElementById('div_monitor').style.visibility='visible';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Monitor">
+	  <input id="navi_button_map" type="button" style="width:8em;" onclick="loadXML();set_reload_map('1');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='visible';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Karte">
+	  <input type="button" style="width:8em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='visible';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Einstellungen">
+	  <input type="button" style="width:8em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='visible';" value="DXCluster">
 	  <?
 	}
 	if($_SESSION['operator_role']==0)
 	{
 	  ?>
-	  <input type="button" style="width:7em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';document.getElementById('div_dxcluster').style.visibility='hidden';" value="OP's">
-	  <input type="button" style="width:7em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Projekte">
+	  <input type="button" style="width:8em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='hidden'; document.getElementById('div_operators').style.visibility='visible';document.getElementById('div_dxcluster').style.visibility='hidden';" value="OP's">
+	  <input type="button" style="width:8em;" onclick="set_reload_map('0');set_reload_dxcluster('0');set_reload_monitor('0');document.getElementById('div_settings').style.visibility='hidden';document.getElementById('div_map').style.visibility='hidden';document.getElementById('div_monitor').style.visibility='hidden';document.getElementById('div_logs').style.visibility='hidden'; document.getElementById('div_projects').style.visibility='visible'; document.getElementById('div_operators').style.visibility='hidden';document.getElementById('div_dxcluster').style.visibility='hidden';" value="Projekte">
 
 	<?php
 	}
@@ -548,25 +562,32 @@
 	<a>B&auml;nder</a>
         <select onchange='save_dxcluster_settings();' name='setting_table_dxcluster_bands' id='setting_table_dxcluster_bands'>
         </select>
-	<a>QRG(kHz)</a>
-	<input name='dxcluster_send_qrg' id='dxcluster_send_qrg'>
-	<a>Bemerkung</a>
-	<input name='dxcluster_send_comment' id='dxcluster_send_comment'>
-	<a>Spotter</a>
-	<input name='dxcluster_send_spotter' id='dxcluster_send_spotter'>
-	<a>Rufzeichen</a>
-	<input name='dxcluster_send_call' id='dxcluster_send_call'>
-	<input type='button' onclick='send_dxcluster_spot();' value='Send'>
+	<?php
+	if($_SESSION['operator_role'] != '2')
+        {
+          ?>
+	  <a>QRG(kHz)</a>
+	  <input name='dxcluster_send_qrg' id='dxcluster_send_qrg'>
+	  <a>Bemerkung</a>
+	  <input name='dxcluster_send_comment' id='dxcluster_send_comment'>
+	  <a>Spotter</a>
+	  <input name='dxcluster_send_spotter' id='dxcluster_send_spotter'>
+	  <a>Rufzeichen</a>
+	  <input name='dxcluster_send_call' id='dxcluster_send_call'>
+	  <input type='button' onclick='send_dxcluster_spot();' value='Send'>
+	  <?php
+	}
+	?>
 	<table id="table_dxcluster" class="compact" width="100%">
 	  <thead>
 	    <tr>
 	      <th>Spotter</th>
-              <th>QRG</th>
-              <th>DX Call</th>
-              <th>Comment</th>
-              <th>Zeit</th>
-              <th>Band</th>
-              <th>QTH</th>
+	      <th>QRG</th>
+	      <th>DX Call</th>
+	      <th>Comment</th>
+	      <th>Zeit</th>
+	      <th>Band</th>
+	      <th>QTH</th>
 	    </tr>
 	  </thead>
 	</table>
@@ -930,6 +951,7 @@
                 <select name='operator_role' id='operator_role'>
                   <option value='0'>Superuser</option>
                   <option value='1'>User</option>
+		  <option value='2'>Monitor</option>
                 </select>
               </td>
             </tr>
@@ -1126,11 +1148,25 @@
     <div id="div_error">
     </div>
     <div id="div_logs">
-    <input onclick="change_log();" type="button" value="Log neu" name="">
-    <input onclick="import_log();" type="button" value="Log importieren" name="">
+    <?php
+    if($_SESSION['operator_role'] != '2')
+    {
+      ?>
+      <input onclick="change_log();" type="button" value="Log neu" name="">
+      <input onclick="import_log();" type="button" value="Log importieren" name="">
+      <?php
+    }
+    ?>
     <input onclick="export_log();" type="button" value="Log exportieren" name="">
     <input onchange='logs_autoreload();' type="checkbox" name="logs_autoreload" id="logs_autoreload" value="logs_autoreload">Auto Reload/30s</>
-    <input onchange='logs_onlyoperator();' type="checkbox" name="logs_onlyoperator" id="logs_onlyoperator" value="logs_onlyoperator">nur meine zeigen</>
+    <?php
+    if($_SESSION['operator_role'] != '2')
+    {
+      ?>
+      <input onchange='logs_onlyoperator();' type="checkbox" name="logs_onlyoperator" id="logs_onlyoperator" value="logs_onlyoperator">nur meine zeigen</>
+      <?php
+    }
+    ?>
     <table id="table_logs" class="compact" width="100%">
       <thead>
 	<tr>
@@ -1246,7 +1282,14 @@
 	    <td><input id="setting_table_logs_notes_ena" type="checkbox" value=""></td>
 	  </tr>
 	</table>
-	<input type="button" value="meine Daten" onclick="change_project(<?=$_SESSION['private_project_id']?>)"><br>
+	<?php
+	if($_SESSION['operator_role'] != '2')
+	{
+	  ?>
+	  <input type="button" value="meine Daten" onclick="change_project(<?=$_SESSION['private_project_id']?>)"><br>
+	  <?php
+	}
+	?>
 	<input type="button" value="Speichern" onclick="settings_op_save();"> 
       </form>
     </div>
