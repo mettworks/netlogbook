@@ -1,5 +1,6 @@
 <?php
   include('settings.php');
+  include('settings2.php');
   date_default_timezone_set('Europe/Berlin');
 
   function utf8_urldecode($str) 
@@ -402,6 +403,7 @@
 
   function aprs_lookup_call($call)
   {
+    global $d22_apikey;
     if(strlen($call) != 0)
     {
       //$aprs=0;
@@ -426,32 +428,18 @@
 
       //
       // APRS stuff
-      //if($aprs == 1)
-      //{
-	// TODO: apikey!
-	//
-	// only the clean call should be used!
-	$url="http://api.aprs.fi/api/get?name=".$call.",".$call."-9,".$call."-15,".$call."-1,".$call."-2,".$call."-3,".$call."-4,".$call."-5,".$call."-6,".$call."-7,".$call."-8,".$call."-0,".$call."-10,".$call."-11,".$call."-12,".$call."-13,".$call."-14&what=loc&apikey=64914.fHkYJ7I5MUm9f&format=json";
-	$xml=file_get_contents($url);
-	$data=json_decode($xml,TRUE);
-	// TODO: time global?
-	// TODO TIME!!
-	if((time() - $data['entries'][0]['lasttime'] < 43200) && (preg_match("/".$call."[-0-9]?/i",$data['entries']['0']['name'])))
-	{
-	  $aprspos=degree2locator($data['entries'][0]['lng'],$data['entries'][0]['lat']);
-	  return $aprspos;
-	}
-	else
-	{
-	  return false;
-	}
-    /*
+      $url="http://api.ov-d22.de/data.php?apikey=".$d22_apikey."&typ=aprs_last_pos&call=".$call;
+      $json=file_get_contents($url);
+      $data=json_decode($json,TRUE);
+      if(time() - $data['data']['aprs_last_pos'][0]['ReportTime'] < 43200) 
+      {
+        $aprspos=degree2locator($data['data']['aprs_last_pos'][0]['Longitude'],$data['data']['aprs_last_pos'][0]['Latitude']);
+        return $aprspos;
       }
       else
       {
-	return false;
+        return false;
       }
-      */
     }
     else
     {
