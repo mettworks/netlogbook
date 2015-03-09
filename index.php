@@ -44,7 +44,7 @@
 	var map2_lis='0';
 	var map2_listener_handle;
 	session=get_data('session','');
-	console.log(session);
+	//console.log(session);
 	// used anymore?
 	interval_log_change='NULL';
 

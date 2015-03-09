@@ -38,7 +38,7 @@
   {
     foreach($export_clublogs as $export_clublog)
     {
-      if($export_clublog['project_clublog_auto'] == 0)
+      if($export_clublog['project_clublog_auto'] != 0)
       {
 	if($export_clublog['project_clublog_auto'] == 1)
 	{
@@ -79,7 +79,7 @@
   {
     foreach($qrz_caches as $qrz_cache)
     {
-      if(isset($qrz_cache['image']))
+      if((isset($qrz_cache['image'])) && (is_file($path.'/cache/qrzcom/'.$qrz_cache['image'])))
       {
 	if(unlink($path.'/cache/qrzcom/'.$qrz_cache['image']))
 	{
