@@ -103,7 +103,7 @@
 
     foreach($logs as $log)
     {
-      if($log['log_qsl_rcvd'] == '0')
+      if($log['log_qsl_rx'] == '0')
       {
 	$data.=stringtoadif('N',"QSL_RCVD");
       }
@@ -111,7 +111,7 @@
       {
 	$data.=stringtoadif('Y',"QSL_RCVD");      
       }
-      if($log['log_qsl_sent'] == '0')
+      if($log['log_qsl_tx'] == '0')
       {
 	$data.=stringtoadif('N',"QSL_SENT");
       }
