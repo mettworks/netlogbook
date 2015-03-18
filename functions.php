@@ -452,38 +452,38 @@
     if(strlen($call) != 0)
     {
       // CALL/p OR CALL/m OR CALL/mm
-      if(preg_match('/^([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
+      if(preg_match('/^([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1})|(qrp{1}))$/i',$call))
       {
-	$return=qrz_lookup_call_real($call);
-	if(isset($return['error']))
-	{
-	  $call=preg_replace('/^(([a-z0-9])+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$1',$call);
-	  $return=qrz_lookup_call_real($call);
-	}
+        $return=qrz_lookup_call_real($call);
+        if(isset($return['error']))
+        {
+          $call=preg_replace('/^(([a-z0-9])+)(\\/)((p{1})|(m{1})|(mm{1})|(qrp{1}))$/i','$1',$call);
+          $return=qrz_lookup_call_real($call);
+        }
       }
       // */CALL
       else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i',$call))
       {
-	$return=qrz_lookup_call_real($call);
+        $return=qrz_lookup_call_real($call);
         if(isset($return['error']))
         {
-	  $call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i','$3',$call);
-	  $return=qrz_lookup_call_real($call);
-	}    
+          $call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)$/i','$3',$call);
+          $return=qrz_lookup_call_real($call);
+        } 
       }
       // */CALL/p OR */CALL/m OR */CALL/mm
-      else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i',$call))
+      else if(preg_match('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1})|(qrp{1}))$/i',$call))
       {
-	$return=qrz_lookup_call_real($call);
+        $return=qrz_lookup_call_real($call);
         if(isset($return['error']))
         {
-	  $call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}))$/i','$3',$call);
-	  $return=qrz_lookup_call_real($call);
-	}
+          $call=preg_replace('/^([a-z0-9]+)(\\/)([a-z0-9]+)(\\/)((p{1})|(m{1})|(mm{1}|(qrp{1})))$/i','$3',$call);
+          $return=qrz_lookup_call_real($call);
+        }
       }
-      else  
+      else
       {
-	$return=qrz_lookup_call_real($call);
+        $return=qrz_lookup_call_real($call);
       }
       return $return;
     }
