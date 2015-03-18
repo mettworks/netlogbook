@@ -16,8 +16,6 @@
     ini_set('session.cookie_lifetime', 168*60*60); // 1 woche
     ini_set('session.gc_probability', 1);
     ini_set('session.gc_divisor', 100);
-    ini_set('session.cookie_secure', FALSE);
-    ini_set('session.use_only_cookies', TRUE);
     session_start();
     $uname=mysql_real_escape_string($_POST['uname']);
     $pass=md5(mysql_real_escape_string($_POST['pass']));
