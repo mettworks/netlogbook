@@ -289,6 +289,22 @@
 	    }
 	    $c=$c+2;
 	  }
+	  if(!isset($data_all[$i]['log_qsl_tx']))
+	  {
+	    $data_all[$i]['log_qsl_tx']="0";
+	  }
+	  if(!isset($data_all[$i]['log_qsl_rx']))
+	  {
+	    $data_all[$i]['log_qsl_rx']="0";
+	  }
+	  if(!isset($data_all[$i]['log_project_call']))
+	  {
+	    $data_all[$i]['log_project_call']=$_SESSION['project_call'];
+	  }
+	  if(!isset($data_all[$i]['log_project_locator']))
+	  {
+	    $data_all[$i]['log_project_locator']=$_SESSION['project_locator'];
+	  }
 	  // date and time string to timestamp
 	  if(is_string($temp_date))
 	  {
@@ -334,10 +350,11 @@
 
       $baender=mysql_fragen('SELECT bands.* FROM bands INNER JOIN rel_bands_projects ON rel_bands_projects.band_id=bands.band_id WHERE rel_bands_projects.project_id='.$_SESSION['project_id']);
       //firebug_debug($data_all);
-      
+     
       foreach($data_all as $dataid => $data)
       {
 	$error=0;
+	$duplicate=0;
 	// Doubles?
 	if((mysql_fragen('SELECT log_id FROM logs WHERE project_id="'.$_SESSION['project_id'].'" AND operator_id="'.$_SESSION['operator_id'].'" AND log_call="'.$data['log_call'].'" AND log_time="'.$data['log_time'].'"')) && (!is_numeric($data['log_id'])))
 	{
@@ -347,7 +364,7 @@
           firebug_debug($data);
 	  */
 	  $errors['duplicate']++;
-	  //$error=1;
+	  $duplicate=1;
 	}
 	  if(strlen($data['log_freq']) != '0')
 	  {
@@ -475,14 +492,21 @@
 	  }
 	  unset($data['line']);
 
-	  if($error == 0)
+	  if(($error == 0) && ($duplicate == 0))
 	  {
 	    $data_all_complete[$dataid]=$data;
 	    $counter_ok++;
 	  }
 	  else
 	  {
-	    $counter_error++;
+	    if($duplicate == 0)
+	    {
+	      $counter_error++;
+	    }
+	    else
+	    {
+	      $counter_ok++;
+	    }
 	  }
 	}
       if(is_array($data_all_complete))
