@@ -32,10 +32,33 @@
       return ($a < $b) ? -1 : +1;
     } 
   }
+  function vergleich2($wert_a, $wert_b)
+  {
+    $a = $wert_a['count'];
+    $b = $wert_b['count'];
 
+    if ($a == $b)
+    {
+      return 0;
+    }
+    if($a > $b)
+    {
+      return -1;
+    }
+    else
+    {
+      return +1;
+    }
+  }
   function ar_sortieren($array)
   {
     usort($array, 'vergleich');
+    return $array;
+  }
+
+  function ar_sortieren2($array)
+  {
+    usort($array,'vergleich2');
     return $array;
   }
 
@@ -232,58 +255,44 @@
     }
     if($table == "monitor_modes")
     {
-      $modes=mysql_fragen('SELECT modes.mode_name,modes.mode_id FROM modes INNER JOIN rel_modes_projects ON rel_modes_projects.mode_id=modes.mode_id WHERE rel_modes_projects.project_id='.$_SESSION['project_id'],'mode_id'); 
+      $modes=mysql_fragen('select modes.mode_name, count(logs.mode_id) FROM logs LEFT OUTER JOIN modes ON modes.mode_id=logs.mode_id WHERE logs.project_id='.$_SESSION['project_id'].' GROUP BY modes.mode_id ORDER by COUNT(*) DESC LIMIT 6');
       foreach($modes as $mode)
       {
-	if($result=mysql_query("SELECT COUNT(*) FROM logs WHERE mode_id=".$mode['mode_id']." AND project_id=".$_SESSION['project_id'].";"))
+	$percent=round((($mode['count(logs.mode_id)']*100)/$total),1);
+	if($percent != 0)
 	{
-	  $count=mysql_result($result,0); 
-	  $percent=round((($count*100)/$total),1);
-	  if($percent != 0)
-	  {
-	    $counter[$mode['mode_name']]['percent']=round($percent,1);
-	  }
+	  $counter[$mode['mode_name']]['percent']=round($percent,1);
 	}
       }
     }
     if(($table == "monitor_bands") && (is_numeric($_SESSION['project_id'])))
     {
-      $bands=mysql_fragen('SELECT bands.band_name,bands.band_id FROM bands INNER JOIN rel_bands_projects ON rel_bands_projects.band_id=bands.band_id WHERE rel_bands_projects.project_id='.$_SESSION['project_id'],'band_id'); 
+      $bands=mysql_fragen('select bands.band_name, count(logs.band_id) FROM logs LEFT OUTER JOIN bands ON bands.band_id=logs.band_id WHERE logs.project_id='.$_SESSION['project_id'].' GROUP BY bands.band_id ORDER by COUNT(*) DESC LIMIT 6;');
       foreach($bands as $band)
       {
-	if($result=mysql_query("SELECT COUNT(*) FROM logs WHERE band_id=".$band['band_id']." AND project_id=".$_SESSION['project_id'].";"))
-	{
-	  $count=mysql_result($result,0); 
-	  $percent=round((($count*100)/$total),1);
-	  if($percent != 0)
-	  { 
-	    $counter[$band['band_name']]['percent']=$percent;
-	  }
+	$percent=round((($band['count(logs.band_id)']*100)/$total),1);
+	if($percent != 0)
+	{ 
+	  $counter[$band['band_name']]['percent']=$percent;
 	}
       }
     }
     if(($table == "monitor_qsos") && (is_numeric($_SESSION['project_id'])))
     {
-      $operators=mysql_fragen('SELECT operators.operator_call,operators.operator_id FROM operators INNER JOIN rel_operators_projects ON rel_operators_projects.operator_id=operators.operator_id WHERE rel_operators_projects.project_id='.$_SESSION['project_id'],'operator_id');
+      $operators=mysql_fragen('select operators.operator_call, count(logs.operator_id) FROM logs LEFT OUTER JOIN operators ON operators.operator_id=logs.operator_id WHERE logs.project_id='.$_SESSION['project_id'].' GROUP BY operators.operator_id ORDER by COUNT(*) DESC LIMIT 6;');
       foreach($operators as $operator)
       {
-	if($result=mysql_query("SELECT COUNT(*) FROM logs WHERE operator_id=".$operator['operator_id']." AND project_id=".$_SESSION['project_id'].";"))
-	{
-	  $count=mysql_result($result,0); 
-	  $percent=round((($count*100)/$total),1);
-	  if($percent != 0)
-	  { 
-	    $counter[$operator['operator_call']]['percent']=$percent;
-	    $counter[$operator['operator_call']]['count']=$count;
-	  }
+	$percent=round((($operator['count(logs.operator_id)']*100)/$total),1);
+	if($percent != 0)
+	{ 
+	  $counter[$operator['operator_call']]['percent']=$percent;
+	  $counter[$operator['operator_call']]['count']=$operator['count(logs.operator_id)'];
 	}
       }
     }
 
-    arsort($counter);
-    $counter=array_slice($counter,'0','5');
-    asort($counter);
     $i=0;
+
     foreach($counter as $name => $counts)
     {
       $data_c[$i][0]=$name;
@@ -528,7 +537,8 @@
       }
     }
 
-    if($table != "dxcluster")
+
+    if(($table != "dxcluster") && (!preg_match('/^monitor_.*$/',$table)))
     {
       if(($_GET['iSortCol_0'] != '0') && ($_GET['iSortCol_0'] != '3'))
       {
@@ -537,6 +547,7 @@
 	$data_c=ar_sortieren($data_c);
       }
     }
+
     $count_total=count($data_c);
 
     // 
@@ -602,7 +613,6 @@
   {
     $output=$data_plain;
   }
-  //firebug_debug($output);
   if($data_output)
   {
     echo $data_output;
