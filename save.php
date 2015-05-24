@@ -703,6 +703,11 @@
 	$data['project_clublog_ena']="0";
       }
 
+      if($data['project_call'] == '')
+      {
+	$data['project_call']=$_SESSION['operator_call'];	
+      }
+
       $project_id_new=mysql_write_array('projects',$data,'project_id',$data_temp['project_id']);
       if(is_numeric($project_id_new))
       {

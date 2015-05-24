@@ -24,7 +24,7 @@
 
     if(mysql_num_rows($result) == 1)
     {
-      $sql="SELECT last_project,operator_role,operator_id from operators WHERE operator_call='".$uname."' AND operator_pass='".$pass."';";
+      $sql="SELECT last_project,operator_call,operator_role,operator_id from operators WHERE operator_call='".$uname."' AND operator_pass='".$pass."';";
       $result = mysql_query($sql) or die("Error " . mysql_error($mysql));
       if(mysql_num_rows($result) == 1)
       {
@@ -39,6 +39,7 @@
 	  $_SESSION['operator_projects']=$operator_projects;
 	  $_SESSION['operator_role']=$data['operator_role'];
 	  $_SESSION['operator_id']=$data['operator_id'];
+	  $_SESSION['operator_call']=$data['operator_call'];
 	  $_SESSION['loggedin']=true;
 
 	  $sql="SELECT projects.project_id FROM projects INNER JOIN rel_operators_projects ON rel_operators_projects.project_id=projects.project_id WHERE projects.project_operator='1' AND operator_id='".$_SESSION['operator_id']."';";

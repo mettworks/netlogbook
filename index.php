@@ -5,7 +5,7 @@
   include('settings.php');
   $mysql=mysql_c();
   check();
-  
+  //firebug_debug($_SESSION);  
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
   <html>
