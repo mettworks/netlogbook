@@ -732,10 +732,10 @@
 		<span class='help'>Mode<div>Mode</div></span>
 	      </td>
 	      <td>
-		<span class='help'>RST TX<div>RST TX</div></span>
+		<span class='help'>RST TX<div>RST TX, Rapport fuer die Gegenstation</div></span>
 	      </td>
 	      <td>
-		<span class='help'>RST RX<div>RST RX</div></span>
+		<span class='help'>RST RX<div>RST RX, Rapport fuer mein Signal</div></span>
 	      </td>
 	      <td>
 		<span class='help'>Name<div>Name</div></span>
