@@ -38,7 +38,7 @@
   {
     require('phpmailer/PHPMailerAutoload.php');
     $project=mysql_fragen("SELECT project_call,project_smtp_emailfrom,project_smtp_server,project_smtp_pass,project_smtp_username,project_smtp_port FROM projects WHERE project_id=".$project_id.";");
-    $sql="SELECT * FROM logs WHERE project_id=".$project_id." AND log_project_call=".$project['0']['project_call'].";";
+    $sql="SELECT * FROM logs WHERE project_id=".$project_id." AND log_project_call='".$project['0']['project_call']."'";
     if($logs=mysql_fragen($sql))
     {
       file_put_contents('/tmp/export.adif',make_adif($logs,$project_id));
