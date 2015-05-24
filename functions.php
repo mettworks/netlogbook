@@ -436,7 +436,7 @@
 
       //
       // APRS stuff
-      $url="http://api.ov-d22.de/data.php?apikey=".$d22_apikey."&typ=aprs_last_pos&call=".$call;
+      $url="http://api.dg3az.de/data.php?apikey=".$d22_apikey."&typ=aprs_last_pos&call=".$call;
       $json=file_get_contents($url);
       $data=json_decode($json,TRUE);
       if(time() - $data['data']['aprs_last_pos'][0]['ReportTime'] < 43200) 
