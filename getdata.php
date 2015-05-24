@@ -201,8 +201,16 @@
 	  $data_c[$i][7]=$modes[$data_temp['mode_id']]['mode_name'];
 	  if($modes[$data_temp['mode_id']]['mode_rapport_signal'] == '0')
 	  {
-	    $data_c[$i][8]=$data_temp['log_rst_tx_0'].$data_temp['log_rst_tx_1'].$data_temp['log_rst_tx_2'];
-	    $data_c[$i][9]=$data_temp['log_rst_rx_0'].$data_temp['log_rst_rx_1'].$data_temp['log_rst_rx_2'];
+	    if($modes[$data_temp['mode_id']]['mode_digital'] == '0')
+	    {
+	      $data_c[$i][8]=$data_temp['log_rst_tx_0'].$data_temp['log_rst_tx_1'];
+	      $data_c[$i][9]=$data_temp['log_rst_rx_0'].$data_temp['log_rst_rx_1'];
+	    }
+	    else
+	    {
+	      $data_c[$i][8]=$data_temp['log_rst_tx_0'].$data_temp['log_rst_tx_1'].$data_temp['log_rst_tx_2'];
+	      $data_c[$i][9]=$data_temp['log_rst_rx_0'].$data_temp['log_rst_rx_1'].$data_temp['log_rst_rx_2'];
+	    }
 	  }
 	  else
 	  {

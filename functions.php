@@ -127,8 +127,16 @@
       $data.=stringtoadif($bands[$log['band_id']]['band_name'],"BAND");
       if($modes[$log['mode_id']]['mode_rapport_signal'] == '0')
       {
-	$data.=stringtoadif($log['log_rst_rx_0'].$log['log_rst_rx_1'].$log['log_rst_rx_2'],"RST_RCVD");
-	$data.=stringtoadif($log['log_rst_tx_0'].$log['log_rst_tx_1'].$log['log_rst_tx_2'],"RST_SENT");
+	if($modes[$log['mode_id']]['mode_digital'] == '0')
+	{
+	  $data.=stringtoadif($log['log_rst_rx_0'].$log['log_rst_rx_1'],"RST_RCVD");
+	  $data.=stringtoadif($log['log_rst_tx_0'].$log['log_rst_tx_1'],"RST_SENT");
+	}
+	else
+	{
+	  $data.=stringtoadif($log['log_rst_rx_0'].$log['log_rst_rx_1'].$log['log_rst_rx_2'],"RST_RCVD");
+	  $data.=stringtoadif($log['log_rst_tx_0'].$log['log_rst_tx_1'].$log['log_rst_tx_2'],"RST_SENT");
+	}
       }
       else
       {
@@ -525,7 +533,8 @@
 
 	if($response=xmlget('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call))
 	{
-	  //firebug_debug($response);
+	  firebug_debug('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call);
+	  firebug_debug($response);
 	  if((!isset($response['Session']['Error'])) && ($response['Session']['SubExp'] != "non-subscriber"))
 	  {
 	    if($data_temp=mysql_fragen("SELECT qrz_cache_id FROM qrz_cache WHERE qrz_call='".$call."'"))

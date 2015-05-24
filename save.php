@@ -131,9 +131,9 @@
 	$data_all[0]['log_rst_rx_0']=$data_temp['log_rst_rx_0'];
 	$data_all[0]['log_rst_rx_1']=$data_temp['log_rst_rx_1'];
 	$data_all[0]['log_rst_rx_2']=$data_temp['log_rst_rx_2'];
-	$data_all[0]['log_rst_tx_0']=$data_temp['log_rst_rx_0'];
-	$data_all[0]['log_rst_tx_1']=$data_temp['log_rst_rx_1'];
-	$data_all[0]['log_rst_tx_2']=$data_temp['log_rst_rx_2'];
+	$data_all[0]['log_rst_tx_0']=$data_temp['log_rst_tx_0'];
+	$data_all[0]['log_rst_tx_1']=$data_temp['log_rst_tx_1'];
+	$data_all[0]['log_rst_tx_2']=$data_temp['log_rst_tx_2'];
 	$data_all[0]['log_dok']=$data_temp['log_dok'];
 	$data_all[0]['log_notes']=$data_temp['log_notes'];
 	$data_all[0]['log_manager']=$data_temp['log_manager'];
