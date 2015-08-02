@@ -22,6 +22,27 @@ function get_callinfo_logs(call)
   return(data);
 }
 
+function get_interface_qrg()
+{
+  url="http://"+session['project_interface_address']+":"+session['project_interface_port']+"/get_freq";
+  var data=new Array();
+  $.ajax
+  (
+    {
+      url: url,
+      //dataType: "json",
+      type: "get",
+      //contentType : "application/json; charset=utf-8",
+      async: false,
+      success: function(temp)
+      {
+	data=temp;
+      }
+    }
+  );
+  return(data);
+}
+
 function get_callinfo_qrz(call)
 {
   url="/getdata.php?table=callinfo_qrz&call="+call;

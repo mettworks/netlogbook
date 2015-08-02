@@ -703,7 +703,7 @@
 	    </tr>
 	    <tr>
 	      <td>
-		<input class='class_log_change' type='button' onclick=document.getElementById('div_log_change').style.visibility='hidden';shortcut.remove("Ctrl+S");clearInterval(interval_log_change); value='Abbruch' name='Abbruch'>
+		<input class='class_log_change' type='button' onclick=document.getElementById('div_log_change').style.visibility='hidden';shortcut.remove("Ctrl+S");clearInterval(interval_log_change);set_qrg_auto(0); value='Abbruch' name='Abbruch'>
 	      </td>
 	    </tr>
 	  </table>
@@ -752,6 +752,9 @@
 	      <td>
 		<span class='help'>Zeit<div>Zeit wird automatisch beim abspeichern &uuml;bernommen</div></span>
 	      </td>
+	      <td>
+		<span class='help'>QRG via CAT<div>QRG wird ueber die Schnittstelle geholt</div></span>
+	      </td>
 	    </tr>
 	    <tr class='class_log_change_inputs'>
 	      <td>
@@ -796,6 +799,9 @@
 	      </td>
 	      <td>
                 <input onchange='log_change_time();' class='class_log_change' type='checkbox' id='log_time_auto' name='log_time_auto'>
+	      </td>
+	      <td>
+                <input onchange='log_change_qrg();' class='class_log_change' type='checkbox' id='log_qrg_auto' name='log_qrg_auto'>
 	      </td>
 	    </tr>
 	    <tr class='class_log_change_desc_text'>
@@ -1032,6 +1038,38 @@
 	    </td>
 	  </tr>
 
+          <tr class='class_project_change'>
+            <td>
+              <span class='help'>Schnittstelle "netlogbook.pl"<div>Schnittstelle "netlogbook.pl"</div></span>
+            </td>
+            <td>
+              <input class='class_project_change' type='checkbox' name='project_interface_ena' id='project_interface_ena' value='' onchange='project_change_interface()'>
+            </td>
+          </tr>
+          <tr class='class_project_change'>
+            <td>
+              <span class='help'>netlogbook.pl IP<div>IP</div></span>
+            </td>
+            <td>
+              <input class='class_project_change' type='text' name='project_interface_address' id='project_interface_address' value=''>
+            </td>
+          </tr>
+          <tr class='class_project_change'>
+            <td>
+              <span class='help'>netlogbook.pl Port<div>Port</div></span>
+            </td>
+            <td>
+              <input class='class_project_change' type='text' name='project_interface_port' id='project_interface_port' value=''>
+            </td>
+          </tr>
+          <tr class='class_project_change'>
+            <td>
+              <span class='help'>netlogbook.pl Voice<div>Voice</div></span>
+            </td>
+            <td>
+              <input class='class_project_change' type='checkbox' name='project_interface_voice' id='project_interface_voice'>
+            </td>
+          </tr>
 	  <tr class='class_project_change'>
 	    <td>
 	      <span class='help'>Schnittstelle Clublog<div>Schnittstelle Clubblog</div></span>

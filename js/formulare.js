@@ -39,6 +39,7 @@ function change_log(log_id)
   $('#div_log_change_callinfo2').css('background-color','');
 
   settings_op=get_data('settings_op','');
+  session=get_data('session','');
   if(settings_op['netbook_ena'] == 'false')
   {
     if(session['project_operator'] == 0)
@@ -215,29 +216,37 @@ function change_log(log_id)
   );
   $('#mode_id').append(temp);
 
-  if(!log_id)
+  if(session['setting_log_time_auto'] == 0)
   {
-    if(typeof(settings[0]) != 'undefined')
+    $('#log_time_auto').removeAttr("checked");
+  }
+  else
+  {
+    $('#log_time_auto').attr("checked",true);
+  }
+
+  console.log(session);
+
+  if(session['project_interface_ena'] == 1)
+  {
+    $('#log_qrg_auto').show();
+    if(session['setting_log_qrg_auto'] == 0)
     {
-      if(settings[0]['setting_log_time_auto'])
-      {
-	$('#log_time_auto').attr("checked",true); 
-      }
-      else
-      {
-	$('#log_time_auto').removeAttr("checked");
-      }
+      $('#log_qrg_auto').removeAttr("checked");
     }
     else
     {
-      $('#log_time_auto').attr("checked",true);
+      $('#log_qrg_auto').attr("checked",true);
     }
   }
   else
   {
-    $('#log_time_auto').removeAttr("checked");
+    $('#log_qrg_auto').removeAttr("checked");
+    $('#log_qrg_auto').hide();
   }
+  
   log_change_time();
+  log_change_qrg();
   log_change_mod();
 
   shortcut.add("Ctrl+Y",function() 
@@ -342,7 +351,11 @@ function change_project(project_id)
     project_smtp_server=project_mod[project_id]['project_smtp_server'];
     project_smtp_port=project_mod[project_id]['project_smtp_port'];
     project_smtp_username=project_mod[project_id]['project_smtp_username'];
+    project_interface_address=project_mod[project_id]['project_interface_address'];
+    project_interface_port=project_mod[project_id]['project_interface_port'];
     if(project_mod[project_id]['project_clublog_ena'] == "1") { $('#project_clublog_ena').prop( "checked", true ); } else { $('#project_clublog_ena').prop( "checked", false ); }
+    if(project_mod[project_id]['project_interface_ena'] == "1") { $('#project_interface_ena').prop( "checked", true ); } else { $('#project_interface_ena').prop( "checked", false ); }
+    if(project_mod[project_id]['project_interface_voice'] == "1") { $('#project_interface_voice').prop( "checked", true ); } else { $('#project_interface_voice').prop( "checked", false ); }
     $('#project_clublog_auto').val(project_mod[project_id]['project_clublog_auto']);
   }
   else
@@ -359,6 +372,8 @@ function change_project(project_id)
     project_smtp_server="";
     project_smtp_username="";
     project_smtp_port="";
+    project_interface_address="";
+    project_interface_port=""; 
   }
 
   project_qrz_pass1="";
@@ -386,7 +401,8 @@ function change_project(project_id)
   $('#project_smtp_server').val(project_smtp_server);
   $('#project_smtp_username').val(project_smtp_username);
   $('#project_smtp_port').val(project_smtp_port);
-
+  $('#project_interface_address').val(project_interface_address);
+  $('#project_interface_port').val(project_interface_port);
 
   // operators
   temp="";
@@ -443,6 +459,7 @@ function change_project(project_id)
     project_change_modus(project_mod[project_id]['project_operator']);
   }
   project_change_clublog();
+  project_change_interface();
 }
 /*
 function delete_data_ask(typ,id)

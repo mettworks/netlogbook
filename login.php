@@ -34,29 +34,34 @@
 	$sql="SELECT projects.project_id FROM projects INNER JOIN rel_operators_projects ON rel_operators_projects.project_id=projects.project_id WHERE projects.project_operator='0' AND operator_id='".$data['operator_id']."';";
 	$result = mysql_query($sql);
 
-	  $operator_projects=mysql_fetch_assoc($result);
-	  $_SESSION['map_settings']=array();
-	  $_SESSION['operator_projects']=$operator_projects;
-	  $_SESSION['operator_role']=$data['operator_role'];
-	  $_SESSION['operator_id']=$data['operator_id'];
-	  $_SESSION['operator_call']=$data['operator_call'];
-	  $_SESSION['loggedin']=true;
+	$operator_projects=mysql_fetch_assoc($result);
+	$_SESSION['map_settings']=array();
+	$_SESSION['operator_projects']=$operator_projects;
+	$_SESSION['operator_role']=$data['operator_role'];
+	$_SESSION['operator_id']=$data['operator_id'];
+	$_SESSION['operator_call']=$data['operator_call'];
+	$_SESSION['loggedin']=true;
 
-	  $sql="SELECT projects.project_id FROM projects INNER JOIN rel_operators_projects ON rel_operators_projects.project_id=projects.project_id WHERE projects.project_operator='1' AND operator_id='".$_SESSION['operator_id']."';";
-	  $private_project=mysql_fragen($sql);
-
-	  $_SESSION['private_project_id']=$private_project[0]['project_id'];	  
-
-	  if(is_numeric($data['last_project']))
-	  {
-	    $_SESSION['project_id']=$data['last_project'];
-	  }
-	  else
-	  {
-	    $_SESSION['project_id']=$_SESSION['private_project_id'];
-	  }
-	  save_session_locator();
-	  header('Location: /index.php');
+	$sql="SELECT projects.project_interface_ena,projects.project_interface_address,projects.project_interface_port,rel_operators_projects.setting_log_qrg_auto,rel_operators_projects.setting_log_time_auto,projects.project_id FROM projects INNER JOIN rel_operators_projects ON rel_operators_projects.project_id=projects.project_id WHERE projects.project_operator='1' AND operator_id='".$_SESSION['operator_id']."';";
+	$private_project=mysql_fragen($sql);
+	$_SESSION['private_project_id']=$private_project[0]['project_id'];	  
+	$_SESSION['setting_log_time_auto']=$private_project[0]['setting_log_time_auto'];
+	$_SESSION['setting_log_qrg_auto']=$private_project[0]['setting_log_qrg_auto'];
+	$_SESSION['project_interface_address']=$private_project[0]['project_interface_address'];
+	$_SESSION['project_interface_port']=$private_project[0]['project_interface_port'];
+	$_SESSION['project_interface_ena']=$private_project[0]['project_interface_ena'];
+	if(is_numeric($data['last_project']))
+	{
+	  $_SESSION['project_id']=$data['last_project'];
+	}
+	else
+	{
+	  $_SESSION['project_id']=$_SESSION['private_project_id'];
+	}
+	save_session_locator();
+	// CORS TODO!
+	header("Access-Control-Allow-Origin: *");
+	header('Location: /index.php');
       }
       else
       {

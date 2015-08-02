@@ -48,6 +48,16 @@ function set_title()
 {
   document.title='NLB:'+($('#projects option:selected').text());
 }
+
+function settings_operators_projects_save()
+{
+  settings_operators_projects={};
+  settings_operators_projects['action']='save_settings_operators_projects';
+  if($('#log_time_auto').prop("checked") == true) { settings_operators_projects['setting_log_time_auto']="true"; } else { settings_operators_projects['setting_log_time_auto']="false"; }
+  if($('#log_qrg_auto').prop("checked") == true) { settings_operators_projects['setting_log_qrg_auto']="true"; } else { settings_operators_projects['setting_log_qrg_auto']="false"; }
+  save_settings_operators_projects();
+}
+
 function settings_op_save()
 {
   settings_op={};
@@ -257,6 +267,22 @@ function set_map_settings()
     }
   }
 }
+
+function set_qrg_auto(stat)
+{
+  if(stat == "0")
+  {
+    if(typeof(interval_qrg) != 'undefined')
+    {
+      clearInterval(interval_qrg);
+    }
+  }
+  else
+  {
+    interval_qrg=setInterval("reload_qrg()",1000);
+  }
+}
+
 function set_reload_map(stat)
 {
   if(stat == "0") 
@@ -304,6 +330,12 @@ function set_reload_dxcluster(stat)
 function reload_map()
 {
   loadXML();
+}
+
+function reload_qrg()
+{
+  interface_qrg=get_interface_qrg();
+  $('#log_freq').val(interface_qrg);
 }
 
 function reload_monitor()
@@ -399,7 +431,22 @@ function project_change_clublog()
     $('#project_button_export_clublog').prop('disabled',false);
   }
 }
-
+function project_change_interface()
+{
+  interface_ena=$('#project_interface_ena').prop('checked');
+  if(interface_ena == false)
+  {
+    $('#project_interface_address').prop('disabled',true);
+    $('#project_interface_port').prop('disabled',true);
+    $('#project_interface_voice').prop('disabled',true);
+  }
+  else
+  {
+    $('#project_interface_address').prop('disabled',false);
+    $('#project_interface_port').prop('disabled',false);
+    $('#project_interface_voice').prop('disabled',false);
+  }
+}
 function project_change_modus(project_operator)
 {
   project_modus=$('#project_mode').val();
@@ -424,6 +471,7 @@ function project_change_modus(project_operator)
 // aendert beim aendern der checkbox fuer die Zeiteingabe die input Box fuer die Zeit
 function log_change_time()
 {
+  settings_operators_projects_save();
   var log_time_auto=$('#log_time_auto').prop('checked');
   if(log_time_auto == true)
   {
@@ -436,6 +484,24 @@ function log_change_time()
     $('#log_time_hr_time').prop('disabled',false);
   }
 }
+
+function log_change_qrg()
+{
+  settings_operators_projects_save();
+  var log_qrg_auto=$('#log_qrg_auto').prop('checked');
+  if(log_qrg_auto == true)
+  {
+    reload_qrg();
+    $('#log_freq').prop('disabled',true);
+    set_qrg_auto(1);
+  }
+  else
+  {
+    $('#log_freq').prop('disabled',false);
+    set_qrg_auto(0);
+  }
+}
+
 
 function log_change_loc()
 {

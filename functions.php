@@ -524,11 +524,15 @@
       {
 	$project=mysql_fragen('SELECT * from projects','project_id',$_SESSION['project_id']);
 	// TODO 300s gilt die Session?
+	/*
 	if((strlen($project[$_SESSION['project_id']]['project_qrz_sess_created']) < 1 ) || (time() - $project[$_SESSION['project_id']]['project_qrz_sess_created'] > 300))
-	{	
+	{
+	  */	
 	  qrz_session();
+	  /*
 	  $project=mysql_fragen('SELECT * from projects','project_id',$_SESSION['project_id']);
 	}
+	*/
 	$qrz_sess=$project[$_SESSION['project_id']]['project_qrz_sess'];
 
 	if($response=xmlget('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call))
@@ -730,6 +734,7 @@
 	shortcut.remove("Ctrl+S");
 	shortcut.remove("Ctrl+X");
 	clearInterval(interval_log_change);
+	set_qrg_auto(0);
 	<?
       }
     }

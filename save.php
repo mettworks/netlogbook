@@ -70,6 +70,30 @@
     socket_close($sock);
   }
 
+  if($action == "save_settings_operators_projects")
+  {
+    if($data_temp['setting_log_time_auto'] == "true")
+    {
+      mysql_schreib("UPDATE rel_operators_projects SET setting_log_time_auto='1' WHERE project_id='".$_SESSION['project_id']."' AND operator_id='".$_SESSION['operator_id']."';");
+      $_SESSION['setting_log_time_auto']=1;
+    }
+    else
+    {
+      mysql_schreib("UPDATE rel_operators_projects SET setting_log_time_auto='0' WHERE project_id='".$_SESSION['project_id']."' AND operator_id='".$_SESSION['operator_id']."';");
+      $_SESSION['setting_log_time_auto']=0;
+    }
+    if($data_temp['setting_log_qrg_auto'] == "true")
+    {
+      mysql_schreib("UPDATE rel_operators_projects SET setting_log_qrg_auto='1' WHERE project_id='".$_SESSION['project_id']."' AND operator_id='".$_SESSION['operator_id']."';");
+      $_SESSION['setting_log_qrg_auto']=1;
+    }
+    else
+    {
+      mysql_schreib("UPDATE rel_operators_projects SET setting_log_qrg_auto='0' WHERE project_id='".$_SESSION['project_id']."' AND operator_id='".$_SESSION['operator_id']."';");
+      $_SESSION['setting_log_qrg_auto']=0;
+    }
+  }
+
   if($action == "export_clublog")
   {
     export_clublog($_GET['project_id']);
@@ -525,17 +549,6 @@
 	}
       }
 
-      if($action == "mod")
-      {
-	if($data_temp['log_time_auto'] == "true")
-	{
-	  mysql_schreib("UPDATE rel_operators_projects SET setting_log_time_auto='1' WHERE project_id='".$_SESSION['project_id']."' AND operator_id='".$_SESSION['operator_id']."';");
-	}
-	else
-	{
-	  mysql_schreib("UPDATE rel_operators_projects SET setting_log_time_auto='0' WHERE project_id='".$_SESSION['project_id']."' AND operator_id='".$_SESSION['operator_id']."';");
-	}
-      }
     }
     /*
     else if($action=="del")
@@ -676,6 +689,31 @@
       if(strlen($data_temp['project_qrz_pass1']) != 0)
       { 
 	$data['project_qrz_pass']=$data_temp['project_qrz_pass1'];
+      }
+
+      if($data_temp['project_interface_ena'] == "true")
+      {
+	$data['project_interface_ena']="1";
+	$data['project_interface_address']=mysql_real_escape_string($data_temp['project_interface_address']);
+	$data['project_interface_port']=mysql_real_escape_string($data_temp['project_interface_port']);
+       
+	$_SESSION['project_interface_ena']=$data['project_interface_ena'];
+	$_SESSION['project_interface_address']=$data['project_interface_address'];
+	$_SESSION['project_interface_port']=$data['project_interface_port'];
+
+	if($data_temp['project_interface_voice'] == "true")
+	{
+	  $data['project_interface_voice']="1";
+	}
+	else
+	{
+	  $data['project_interface_voice']="0";
+	}
+      }
+      else
+      {
+	$data['project_interface_ena']="0";
+	$_SESSION['project_interface_ena']=$data['project_interface_ena'];
       }
 
       if($data_temp['project_clublog_ena'] == "true")
