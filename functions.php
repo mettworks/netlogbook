@@ -537,8 +537,8 @@
 
 	if($response=xmlget('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call))
 	{
-	  firebug_debug('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call);
-	  firebug_debug($response);
+	  //firebug_debug('http://xmldata.qrz.com/xml/current/?s='.$qrz_sess.';callsign='.$call);
+	  //firebug_debug($response);
 	  if((!isset($response['Session']['Error'])) && ($response['Session']['SubExp'] != "non-subscriber"))
 	  {
 	    if($data_temp=mysql_fragen("SELECT qrz_cache_id FROM qrz_cache WHERE qrz_call='".$call."'"))
