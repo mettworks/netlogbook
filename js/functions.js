@@ -268,6 +268,37 @@ function set_map_settings()
   }
 }
 
+function interface_voice_clear()
+{
+  if(voice_keyer_running == 1)
+  {
+    interface_voice_stop();
+    interface_vox_stop();
+    set_voice_auto(0);
+    voice_keyer_running='0';
+  }
+}
+
+function set_voice_auto(stat)
+{
+  if(stat == "0")
+  {
+    if(typeof(interval_voice) != 'undefined')
+    {
+      clearInterval(interval_voice);
+    }
+  }
+  else
+  {
+    interface_voice_int=$('#interface_voice_int').val();
+    if(interface_voice_int != 0)
+    {
+      interval_voice=setInterval("interface_voice_play()",interface_voice_int*1000);
+      voice_keyer_running='1';
+    }
+  }
+}
+
 function set_qrg_auto(stat)
 {
   if(stat == "0")

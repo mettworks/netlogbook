@@ -21,6 +21,79 @@ function get_callinfo_logs(call)
   );
   return(data);
 }
+function interface_vox_stop()
+{
+  url="http://"+session['project_interface_address']+":"+session['project_interface_port']+"/vox_stop";
+  var data=new Array();
+  $.ajax
+  (
+    {
+      url: url,
+      type: "get",
+      async: false,
+      success: function(temp)
+      {
+	data=temp;
+      }
+    }
+  );
+  return(data);
+}
+
+function interface_vox_start()
+{
+  url="http://"+session['project_interface_address']+":"+session['project_interface_port']+"/vox_start";
+  var data=new Array();
+  $.ajax
+  (
+    {
+      url: url,
+      type: "get",
+      async: false,
+      success: function(temp)
+      {
+	data=temp;
+      }
+    }
+  );
+  return(data);
+}
+function interface_voice_play()
+{
+  url="http://"+session['project_interface_address']+":"+session['project_interface_port']+"/voice_play";
+  var data=new Array();
+  $.ajax
+  (
+    {
+      url: url,
+      type: "get",
+      async: false,
+      success: function(temp)
+      {
+	data=temp;
+      }
+    }
+  );
+  return(data);
+} 
+function interface_voice_stop()
+{
+  url="http://"+session['project_interface_address']+":"+session['project_interface_port']+"/voice_stop";
+  var data=new Array();
+  $.ajax
+  (
+    {
+      url: url,
+      type: "get",
+      async: false,
+      success: function(temp)
+      {
+	data=temp;
+      }
+    }
+  );
+  return(data);
+} 
 
 function get_interface_qrg()
 {

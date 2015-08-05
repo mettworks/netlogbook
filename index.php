@@ -43,6 +43,7 @@
 	var table_monitor_qsos;
 	var map2_lis='0';
 	var map2_listener_handle;
+	var voice_keyer_running='0';
 	session=get_data('session','');
 	//console.log(session);
 	// used anymore?
@@ -636,6 +637,17 @@
 	</form>
       </div>
       <div id="div_log_change">
+	<div id="div_log_interface">
+	  <input class="class_log_change" type="button" onclick="interface_vox_start();interface_voice_play();set_voice_auto(1);"; value="Voice Start" name="Voice Start"> 
+	  <input class="class_log_change" type="button" onclick="interface_voice_clear();"; value="Voice Stop" name="Voice Stop">
+	  <select name='interface_voice_int' id='interface_voice_int' onchange="save_interface_voice_int();">
+	    <option value="10">10s</option>
+	    <option value="20">20s</option>
+	    <option value="30">30s</option>
+	    <option value="35">35s</option>
+	    <option value="40">40s</option>
+          </select> 
+	</div>
 	<div id="div_log_change_logsfromme">
 	  <a>Meine Logs</a>
 	  <table id="table_logsfromme" class="compact" width="100%">
@@ -690,6 +702,7 @@
 	<div id="div_log_change_error">
 	</div>
 	<div id="div_log_change_callinfo3">
+	  <br>
 	  <table>
 	    <tr>
 	      <td>
@@ -703,7 +716,7 @@
 	    </tr>
 	    <tr>
 	      <td>
-		<input class='class_log_change' type='button' onclick=document.getElementById('div_log_change').style.visibility='hidden';shortcut.remove("Ctrl+S");clearInterval(interval_log_change);set_qrg_auto(0); value='Abbruch' name='Abbruch'>
+		<input class='class_log_change' type='button' onclick=document.getElementById('div_log_change').style.visibility='hidden';interface_voice_clear();shortcut.remove("Ctrl+S");clearInterval(interval_log_change);set_qrg_auto(0); value='Abbruch' name='Abbruch'>
 	      </td>
 	    </tr>
 	  </table>
@@ -764,7 +777,7 @@
 		<input class='class_log_change' type='text' name='log_time_hr_time' id='log_time_hr_time' value=''>
 	      </td>
 	      <td>
-		<input size='12' tabindex="1" class='class_log_change' type='text' name='log_call' id='log_call' onChange="display_callinfo(this.value,'1')" value=''>
+		<input size='12' tabindex="1" class='class_log_change' type='text' name='log_call' id='log_call' oninput="interface_voice_clear();"  onChange="display_callinfo(this.value,'1')" value=''>
 	      </td>
 	      <td>
 		<input class='class_log_change' type='text' name='log_freq' id='log_freq' value=''>

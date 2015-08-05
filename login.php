@@ -42,7 +42,7 @@
 	$_SESSION['operator_call']=$data['operator_call'];
 	$_SESSION['loggedin']=true;
 
-	$sql="SELECT projects.project_interface_ena,projects.project_interface_address,projects.project_interface_port,rel_operators_projects.setting_log_qrg_auto,rel_operators_projects.setting_log_time_auto,projects.project_id FROM projects INNER JOIN rel_operators_projects ON rel_operators_projects.project_id=projects.project_id WHERE projects.project_operator='1' AND operator_id='".$_SESSION['operator_id']."';";
+	$sql="SELECT rel_operators_projects.setting_interface_voice_int,rel_operators_projects.setting_log_time_auto,projects.project_interface_ena,projects.project_interface_address,projects.project_interface_port,rel_operators_projects.setting_log_qrg_auto,rel_operators_projects.setting_log_time_auto,projects.project_id FROM projects INNER JOIN rel_operators_projects ON rel_operators_projects.project_id=projects.project_id WHERE projects.project_operator='1' AND operator_id='".$_SESSION['operator_id']."';";
 	$private_project=mysql_fragen($sql);
 	$_SESSION['private_project_id']=$private_project[0]['project_id'];	  
 	$_SESSION['setting_log_time_auto']=$private_project[0]['setting_log_time_auto'];
@@ -50,6 +50,7 @@
 	$_SESSION['project_interface_address']=$private_project[0]['project_interface_address'];
 	$_SESSION['project_interface_port']=$private_project[0]['project_interface_port'];
 	$_SESSION['project_interface_ena']=$private_project[0]['project_interface_ena'];
+	$_SESSION['setting_interface_voice_int']=$private_project[0]['setting_interface_voice_int'];
 	if(is_numeric($data['last_project']))
 	{
 	  $_SESSION['project_id']=$data['last_project'];
@@ -59,8 +60,6 @@
 	  $_SESSION['project_id']=$_SESSION['private_project_id'];
 	}
 	save_session_locator();
-	// CORS TODO!
-	header("Access-Control-Allow-Origin: *");
 	header('Location: /index.php');
       }
       else

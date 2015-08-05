@@ -40,6 +40,9 @@ function change_log(log_id)
 
   settings_op=get_data('settings_op','');
   session=get_data('session','');
+  
+  $("#interface_voice_int").val(session['setting_interface_voice_int']);
+
   if(settings_op['netbook_ena'] == 'false')
   {
     if(session['project_operator'] == 0)
@@ -224,8 +227,6 @@ function change_log(log_id)
   {
     $('#log_time_auto').attr("checked",true);
   }
-
-  console.log(session);
 
   if(session['project_interface_ena'] == 1)
   {

@@ -497,7 +497,8 @@
     }
     else
     {
-      return false;
+      //return false;
+      return 'error';
     }
   } 
   function qrz_lookup_call_real($call)

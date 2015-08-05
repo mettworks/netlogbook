@@ -44,6 +44,14 @@
     mysql_schreib($sql);
   }
 
+  if($action == "save_interface_voice_int")
+  {
+    $temp=mysql_real_escape_string($_GET['interface_voice_int']);
+    $sql="UPDATE rel_operators_projects SET setting_interface_voice_int='".$temp."'  WHERE operator_id='".$_SESSION['operator_id']."' AND project_id='".$_SESSION['project_id']."';";
+    mysql_schreib($sql);
+    $_SESSION['setting_interface_voice_int']=$temp;
+  }
+
   if($action == "send_dxcluster_spot")
   {
     // http://www.dxcluster.org/main/usermanual_en-4.html#ss4.2

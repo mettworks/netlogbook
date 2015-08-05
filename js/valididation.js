@@ -168,6 +168,24 @@ function save_map_settings()
   loadXML();
 }
 
+function save_interface_voice_int()
+{
+  var interface_voice_int=$('#interface_voice_int').val();
+  var datastring="action=save_interface_voice_int&interface_voice_int="+interface_voice_int;
+  $.ajax
+  (
+    {
+      type: "GET",
+      url: "save.php",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      data: datastring,
+      success: function(html)
+      {
+	$("div#div_error").html(html);
+      }
+    }
+  );
+}
 
 function save_settings(onlyoperator)
 {
