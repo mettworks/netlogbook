@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# benoetigt: libhttp-server-simple-perl
+# benoetigt: libhttp-server-simple-perl und libhamlib-utils
 
 $SIG{INT} = 'IGNORE';
 $SIG{INT} = \&interrupt;
